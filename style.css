@@ -1,0 +1,166 @@
+/*
+Theme Name: Match Point Custom Theme
+Theme URI: https://hashcrafter.com/
+Author: Your Name
+Author URI: https://hashcrafter.com/
+Description: A custom WordPress theme built for [project name].
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Tags: custom-theme, responsive, bootstrap
+Text Domain: matchpoint.com
+*/
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, .button {
+  font-family: 'Poppins', sans-serif;
+}
+p.copy-right {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+    color: #fff;
+}
+p.copy-right a {
+    color: #fff;
+    font-weight: 800;
+}
+.dashboard-footer {
+    position: inherit;
+    background: #1e6366;
+    /* height: 400px; */
+}
+
+.dashboard-footer p.copy-right {
+    position: relative!important;
+    bottom: 0;
+    padding-top: 20px;
+}
+
+
+.dasboard-wrapper-page {
+    padding-top: 100px;
+    padding-bottom:100px;
+    color: #000;
+}
+.dasboard-wrapper-page .acf-fields>.acf-field {
+  border-top-width: 0px;
+}
+.dasboard-wrapper-page a.acf-button {
+    background: #1e6366!important;
+    padding: 10px 20px!important;
+    color: #fff!important;
+    border-radius: 5px!important;
+}
+.dasboard-wrapper-page input.acf-button.button.button-primary.button-large {
+    background: #1e6366;
+    color: #fff;
+    border: 0px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.details-container h5 {
+    font-size: 15px;
+}
+
+.details-container ul {
+    padding-left: 0px;
+    list-style: none;
+    line-height: 28px;
+}
+
+.details-container ul a {
+    color: #1e6366;
+}.marker-card a {
+    color: #1e6366;
+}
+
+.marker-card a.btn.general-btn {
+    background: #1e6366;
+    color: #fff;
+}
+.sidebar-wrapper-single-service {
+    padding-top: 165px;
+}.contact-us-first-wrapper ul li a {
+    color: #1a1a1a;
+}
+.contact-us-first-wrapper ul  {
+    list-style: none;
+    padding-left:0px;
+}
+.contact-us-first-wrapper {
+    padding: 20px;
+    border-radius: 10px;
+    border: 1.5px solid var(--Soft-Grey, #D9D9D9);
+    background: var(--White, #FFF);
+    box-shadow: 0 3.989px 14.959px 0 rgba(0, 0, 0, 0.10);
+}#coach-booking-calendar {
+    min-height: 700px;
+}
+ul.step-1-wrapper {
+    list-style: none;
+    padding-left: 0px;
+}
+
+ul.step-1-wrapper li {
+    margin: 10px 5px;
+    padding: 0px;
+}
+ul.step-2-wrapper {
+    list-style: none;
+    padding-left: 0px;
+    display:flex;
+    flex-wrap:wrap;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+ul.step-2-wrapper li {
+    border: 1px solid #1e6366;
+    padding: 8px;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+ul.step-2-wrapper li:hover {
+    background:#1e6366;
+    color:#fff;
+    border:1px solid #000;
+}
+.day-booked {
+text-align: center;
+    background: #1e6266;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 18px;
+    color: #fff;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}.step-1-wrapper button.slick-prev.slick-arrow {
+    position: absolute;
+    top: 2%;
+    left: -3%;
+    background: transparent;
+    border: 0;
+    font-size: 30px;
+    color: #1e6366;
+}
+.step-1-wrapper button.slick-next.slick-arrow {
+    position: absolute;
+    top: 2%;
+    right: -3%;
+    background: transparent;
+    border: 0;
+    font-size: 30px;
+    color: #1e6366;
+}.text-paragraph h1 {
+    color: #fff;
+    font-size: 24px;
+}

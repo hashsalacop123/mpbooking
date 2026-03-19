@@ -1,0 +1,428 @@
+
+/*------------------------------------*\
+    RESPONSIVE
+\*------------------------------------*/
+		/*container bootstrap override*/
+		
+		@media only screen and (max-width:1440px) {
+
+		}
+		
+		@media only screen and (max-width:1366px) {
+            .home-landing-page {
+                min-height: 500px;
+            }
+            .wrapper-data {
+               padding-top: 40px;
+            }
+            .sidebar-wrapper-single-service {
+                padding-top: 145px;
+            }
+		}
+		
+		@media only screen and (max-width:1280px) {
+            .banner-pages {
+                 height: 350px;
+            }
+            .top-header-page h1 {
+                font-size: 60px;
+
+            }
+            .banner-pages h1 {
+    font-weight: 600;
+    font-size: 40px;
+}.about-second-col h2 {
+    font-size: 24px;
+}
+.our-mission-first-col h2 {
+    font-size: 24px;
+}
+            .content-landing-page h1 {
+                font-size:45px;
+            }
+              .home-landing-page {
+                min-height: 450px;
+            }
+            .service-gallery-main img {
+
+                height: 400px;
+
+            }
+            .service-gallery-thumbs img {
+
+                text-align: center;
+                margin: 0 auto;
+                border-radius: 20px;
+                width: 70%;
+                padding-left: 0px;
+                padding-right: 10px;
+                margin-top: 16px;
+                margin-bottom: 15px;
+
+            }
+            .wrapper-data h1 {
+                font-size: 40px;
+ 
+            }
+            .coach-inner-wrapper {
+                padding-top: 30px;
+                padding-bottom: 30px;
+            }
+    }
+		
+		@media only screen and (max-width:1024px) {
+            .banner-pages h1 {
+               font-size: 35px;
+            }
+            .top-header-page {
+                height: 210px;
+            }
+                .content-landing-page h1 {
+                    font-size: 35px;
+                }
+                .home-landing-page {
+                    min-height: 400px;
+                }
+                .item-wrapper-court {
+                    min-height: 225px;
+                    height:225px;
+                }
+               .about-wrapper {
+                padding-top: 9px;
+                padding-bottom: 9px;
+                font-size: 14px;
+            }
+            .item-wrapper-court::before {
+   
+                background: rgb(0 0 0 / 60%);
+            }
+                .banner-pages {
+        height: 300px;
+    }.banner-pages p {
+    font-size: 18px;
+}
+		}
+		
+		@media only screen and (max-width:991px) {
+            li.progrmas-li {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background: #ececee;
+    padding: 10px 7px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+ul.our-mission-list li img {
+    width: 100px;
+    height: 100px;
+    padding: 0px;
+    background: #dee4e4;
+    margin-right: 15px;
+    border-radius: 100%;
+}ul.our-mission-list li {
+    background: #f3f3f3;
+    margin-top: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+}.colab {
+    text-align: center;
+    padding-top: 15px;
+}.programs-list h5 {
+    color: #1e6366;
+    font-size: 15px;
+    padding-top: 20px;
+    text-align: center;
+}.programs-list {
+    text-align: center;
+    font-size: 16px;
+}section.our-programs h4 {
+    padding-bottom: 0px;
+}section.our-mission {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background: #e9ebea;
+}section.our-programs {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background: #dbe1e1;
+}
+
+
+
+                .top-header-page h1 {
+                    font-size: 45px;
+                }
+                .name-wrapper h4 {
+                    font-size: 16px;
+                }.count h5 {
+                    font-size: 14px !important;
+                    padding-top: 5px;
+                    margin-bottom: 0px;
+                }.coach-card {
+                    margin-top: 20px;
+                }
+                
+                    .location-wrapper {
+                        display: flex;
+                        flex-wrap: nowrap;
+                        overflow-x: auto;
+                        overflow-y: hidden;
+                        gap: 20px;
+                        padding-bottom: 10px; /* space for scrollbar */
+                    }
+
+                    /* Force items to stay inline */
+                    .wrapper-area {
+                        flex: 0 0 300px;
+                    }
+
+                    /* 👇 SCROLLBAR STYLE */
+                    .location-wrapper::-webkit-scrollbar {
+                        height: 10px; /* thickness */
+                    }
+
+                    .location-wrapper::-webkit-scrollbar-track {
+                        background: #f1f1f1; /* track color */
+                        border-radius: 10px;
+                    }
+
+                    .location-wrapper::-webkit-scrollbar-thumb {
+                        background: #888; /* scrollbar color */
+                        border-radius: 10px;
+                    }
+
+                    .location-wrapper::-webkit-scrollbar-thumb:hover {
+                        background: #555;
+                    }
+                    .location-wrapper {
+                        flex-wrap: nowrap; /* force single row */
+                    }.location-wrapper {
+                        scroll-behavior: smooth;
+                    }div#map {
+                        width: 100%;
+                        height: 100%;
+                    }.container-map {
+                        height: 100vh;
+                        padding-left: 35px;
+                        padding-right: 35px;
+                        margin-top:25px;
+                    }.card.marker-card img {
+                        width: 100%;
+                        height: 100px;
+                        object-fit: cover;
+                        border-radius: 10px 10px 0px 0px;
+                    }
+                    .marker-card {
+                        display: flex;
+                        flex-direction: column;
+                        height: 100%;
+                        align-items: center;
+                        justify-content: flex-start;
+                    }.card-body h3 {
+                        font-size: 18px;
+                    }
+                    .marker-card h5 {
+                        font-size: 16px;
+                        line-height: 1.6em;
+                        font-weight: 600;
+                    }
+
+                    .row-power h4 {
+                        display:block;
+                        text-align: center;
+                        color: #fff;
+                        padding-top: 20px;
+                        padding-bottom: 20px;
+                        font-size: 18px;
+                    }
+                    .left-menu-header ul {
+                        display: flex;
+                        list-style: none;
+                        justify-content: space-between;
+                        margin-top: 20px;
+                        flex-direction: row;
+                        align-content: center;
+                        padding-left:0px;
+                    }
+                    .left-menu-header ul li {
+                    margin-left: 0;
+                    }
+                    .navigation-wrapper ul li {
+                        margin-left: 3px;
+                        margin-right: 3px;
+                        padding: 8px 8px;
+                        border-radius: 0;
+                    }
+                .home-landing-page {
+                    min-height: 370px;
+                }
+                .court-inner-wrapper {
+                   padding-top: 20px;
+                }
+                .coach-inner-wrapper {
+                padding-top: 25px;
+            }
+            .menu-icon.on {
+    width: 0;
+}
+
+.menu-icon.on div {
+    background: #fffafa;
+}    .location-wrapper {
+        height: auto;
+        display: flex;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+
+
+		}
+        
+		
+		@media only screen and (max-width:768px) {
+            .sidebar-wrapper-single-service {
+                padding-top: 20px!important;
+                margin-bottom: 20px;
+            }
+            .service-gallery-main img {
+                height: 330px;
+            }
+            .deskotop-menu {
+                display: none;
+            }
+            .menu-icon {
+                display: block;
+            }
+            .search-wrapper {
+                width: 100%;
+            }
+            .content-landing-page h1 {
+               font-size: 30px;
+            }
+            .home-landing-page
+             {
+                min-height: 330px;
+            }
+		}	
+	
+		
+		@media only screen and (max-width:767px) {
+            ul.programs-ul {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    flex-direction: column;
+}
+
+            .step-1-wrapper button.slick-prev.slick-arrow {
+                top: 50%;
+                left: -5%;
+          
+            }
+            .step-1-wrapper button.slick-next.slick-arrow {
+                top: 50%;
+                right: -5%;
+            
+            }
+            .footer-column h5
+            {
+                    font-size: 14px;
+            }
+          .item-wrapper-court {
+                min-height: 225px;
+                height: 400px;
+            }
+            .footer-third-column ul {
+                display: flex;
+                justify-content: center;
+            }
+            .footer-column {
+                color: #2a3037;
+                text-align: center;
+            }
+            .footer-column {
+                padding-top: 10px;
+            }
+                .footer-column h5 {
+                font-size: 20px;
+                color: #1e6366;
+                font-weight: 700;
+            }
+		}
+			@media screen and (max-width:575px) {
+                    .banner-pages h1 {
+        font-size: 28px;
+    }
+            .inner-page-logo img {
+                width: 40%;
+            }
+            .menu-icon {
+                width: 85px;
+                height: 35px;
+                top: -45px;
+            }
+                .item-wrapper-court {
+                min-height: 225px;
+                height: 250px;
+            }
+                .wrapper-data h1
+             {
+                font-size: 30px;
+            }
+                .service-gallery-main img {
+        height: 280px;
+    }
+        .service-gallery-thumbs img {
+        text-align: center;
+        margin: 0 auto;
+        border-radius: 0px;
+        width: 100%;
+        padding-left: 0px;
+        padding-right: 10px;
+        margin-top: 16px;
+        margin-bottom: 15px;
+    }
+    .contact-us-first-wrapper {
+        text-align: center;
+    }.availability-of-coach h3 {
+    color: #1e6366;
+    font-weight: 600;
+    line-height: 2em;
+    font-size: 20px;
+    text-align: center;
+}
+
+
+        }
+		@media only screen and (max-height:375px) {
+
+		}
+		
+		@media only screen and (max-width:480px) {
+                .banner-pages {
+        height: 200px;
+    }
+		}
+		/*	//recaptcha*/
+		
+		@media screen and (max-height: 575px) {
+
+		}
+		
+		@media only screen and (max-width:320px) {
+
+		}

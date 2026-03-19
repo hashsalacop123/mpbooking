@@ -1,0 +1,202 @@
+.registration-form-box {
+    background: #1e626674;
+    padding: 15px;
+    text-align: left;
+    border-radius: 15px;
+    border: 1px solid #1e6366;
+}
+
+.registration-form-box .acf-field {
+    padding: 0px;
+    border: 0px;
+}
+
+.registration-form-box label {
+    color: #fff;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.registration-form-box h2 {
+    color: #fff;
+    text-align: center;
+    padding-bottom: 13px;
+    text-transform: uppercase;
+    font-size: 19px;
+    font-weight: 500;
+}
+
+.registration-form-box .acf-fields>.acf-field {
+   border-top-width: 0px;
+}
+
+.registration-form .acf-field {border-left: 0px!Important;margin-left: 0px;}
+.registration-form input {
+    background: #1e6366;
+    border: 1px;
+    color: #fff;
+    border-radius: 15px;
+    padding: 5px 15px!important;
+}
+.acf-image-uploader input {
+    padding: 0px ! Important;
+    width: 100%;
+}
+/* input.acf-button.button.button-primary.button-large {
+    left: 10px;
+    width: 100%;
+    cursor: pointer;
+        transition: all 0.3s ease;
+} */
+input.acf-button.button.button-primary.button-large {
+    left: 10px;
+    /* width: 100%; */
+    cursor: pointer;
+    transition: all 0.3s 
+ease;
+    margin-left: 15px;
+    padding-right: 25px !important;
+    padding-left: 25px !important;
+}
+input.acf-button.button.button-primary.button-large:hover {
+    left: 10px;
+    cursor: pointer;
+        transition: all 0.3s ease;
+         transition: all 0.3s ease;
+    border:1px solid #fff;
+    background: transparent;
+
+}.registration-page-data {
+    /* display: flex; */
+    padding-top: 0em;
+    padding-bottom: 0em;
+    text-align: center;
+    min-height: 700px;
+    position: relative;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.registration-page-data::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    pointer-events: none; /* keeps everything clickable */
+}
+
+/* keep content above overlay */
+.registration-page-data > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* make sure content stays above overlay */
+
+.login-form-box input {
+    width: 100%;
+}.login-form-box input#rememberme {
+    width: inherit;
+}
+.login-form-box a {
+    background: #1e6366;
+    padding: 6px;
+    font-size: 12px;
+    color: #fff;
+    border-radius: 3px;
+}.registration-form-box select#acf-field_6929b43f669a2 {
+    background: #1e6366;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+}.registration-page-wrapper input::placeholder {
+    color: #FFF;      /* your color */
+    opacity: 1;       /* ensure full visibility */
+}
+.header-dashboard {
+background: #1a446400;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}.dash-right {
+    display: flex;
+    justify-content: end;
+    padding-top: 40px;
+}
+
+.sidebar-wrapper ul {
+    list-style: none;
+    padding-left: 0;
+    background: #1e6366;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.sidebar-wrapper ul li a {
+    color: #fff;
+    font-size: 18px;
+}
+
+.sidebar-wrapper ul li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.sidebar-wrapper ul li a:hover {
+    color: #1a4463;
+}
+/* testing */
+.acf-field-695342a608250 {
+    display:none;
+}
+div#geocoder
+ {
+    background: #fff;
+    border:1px solid #eee;
+}
+.mapboxgl-ctrl-geocoder--icon-search {
+        left: -35px!important;
+}
+    .acf-field-695372c113ba9 {
+        display:none;
+    }
+    .acf-field-695372d913baa {
+        display:none;
+    }
+    .page-template-registration-page .logo img
+ {
+    width: 20%;
+    background: #ffffff8a;
+    padding: 15px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+    margin-top:20px;
+    border: 2px solid #1e6366;
+}
+/* .btn-primary {
+   color: #1e6366;
+    background-color: #1e636600;
+    border-color: #1e6366;
+} */
+.btn-primary:hover {
+    color: #fff;
+    background-color: #9dc6c8;
+    border-color: #1e6366;
+}
+.notification {
+    border: 1px solid red;
+    margin-bottom: 50px;
+    padding: 10px;
+    border-radius: 15px;
+    background: #a6d3d5;
+    color: red;
+    font-weight: bold;
+}
+.registration-form button {
+    background: #1e6366;
+    color: #fff;
+}
+.acf-field-6974b643e4c4d {
+    display: none;
+}

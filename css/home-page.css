@@ -1,0 +1,202 @@
+.landing-page-wrapper {
+    /* height: 100vh; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+.left-menu-header ul li
+ {
+    margin-left: 20px;
+}
+
+.left-menu-header ul {
+    display: flex;
+    list-style: none;
+    justify-content: end;
+    margin-top: 20px;
+}
+.header-wrapper {
+    position: absolute;
+    width: 100%;
+    z-index: 4;
+}
+a.button-general
+ {
+transition: all 0.3s 
+ease;
+    background: #1e6366;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    border: 1px solid #1e6366;
+}
+a.button-general:hover
+ {
+    transition: all 0.3s ease;
+    border:1px solid #fff;
+    background: transparent;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+.logo a {
+    font-weight: 800;
+    font-size: 25px;
+    color: #fff;
+}
+.home-landing-page {
+    position: relative; /* 🔥 IMPORTANT */
+    min-height: 600px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden; /* optional: keeps overlay clean inside */
+}
+
+.home-landing-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    pointer-events: none; /* prevents blocking clicks */
+}
+
+/* keep content above overlay */
+.home-landing-page > * {
+    position: relative;
+    z-index: 2;
+}
+/* optional: overlay */
+
+
+/* make sure content appears above overlay */
+.landing-page-wrapper > * {
+  position: relative;
+  z-index: 2;
+}.content-landing-page ul li a {
+    padding: 10px 25px 10px 25px;
+    color: #fff;
+    font-weight: 500;
+    text-transform: uppercase;
+    border-radius: 5px;
+    letter-spacing: 2px;
+}.content-landing-page h1 {
+    font-weight: 900;
+    color: #fff;
+    font-size: 50px;
+}
+
+.content-landing-page ul {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    padding-left: 0px;
+}
+
+.content-landing-page ul li {
+    display: block;
+    margin: 35px;
+        position: relative;
+}
+/*  */
+.item-wrapper-court {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 10px;
+    min-height: 280px; /* adjust if needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top:25px;
+
+}
+.item-wrapper-court:hover {
+    transform: scale(1.03) translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+/* Dark overlay */
+.item-wrapper-court::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35); /* adjust darkness */
+    z-index: 1;
+}
+
+/* Make content appear above overlay */
+.item-wrapper-court * {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+}
+/* Ensure content appears above video and overlay */
+.landing-page-wrapper .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Update overlay to appear above video if needed */
+
+.content-landing-page li i {
+    padding-top: 4px;
+    padding-left: 10px;
+}
+.content-landing-page ul li img
+ {
+    width: 120px;
+        border-radius: 100%;
+    position: relative;
+}.content-landing-page a span {
+z-index: 2;
+    color: #fff;
+    font-weight: 900;
+    display: block;
+}
+.neon-hover img {
+    transition: all 0.3s ease;
+    display: block;
+    height: auto;
+
+}
+
+/* Neon glow on hover */
+
+.logo img {
+width:50%;
+}
+.header-wrapper {
+    background: #f1f1f17a;
+}.court-section a:hover {
+    text-decoration: none;
+}
+
+
+.h3-class {
+    font-size:30px;
+    font-weight: 700;
+    color: #1e6366;
+}
+.item-wrapper-court h3 {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.wrapper-bot-comments h5 {
+        font-size: 16px;
+    line-height: 20px;
+}.wrapper-bot-comments .full {
+    color: #FFD700;
+}
+.wrapper-bot-comments .count h5 {
+    font-size: 13px;
+}
