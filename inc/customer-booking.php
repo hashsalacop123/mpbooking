@@ -115,16 +115,30 @@ if($dates) {
         // --- MOVED INPUT HERE ---
         // Placing it inside an existing div prevents it from breaking the UL layout
         $slots = [];
-        $temp_curr = clone $start;
+      $temp_curr = clone $start;
         while ($temp_curr < $end) {
             $slots[] = $temp_curr->format('g:00 A');
             $temp_curr->modify('+1 hour');
+        }
+
+        // Ensure at least 2 slots (important for 1-hour availability)
+        if (count($slots) === 1) {
+            $extra = clone $start;
+            $extra->modify('+1 hour');
+            $slots[] = $extra->format('g:00 A');
         }
         echo '<input type="hidden" class="day-slots" value="'.htmlspecialchars(json_encode($slots)).'">';
         // ------------------------
         echo '</div>'; // close day-booked
         echo '<ul class="step-2-wrapper">';
-foreach ($slots as $time_val) {
+$last_index = count($slots) - 1;
+
+foreach ($slots as $index => $time_val) {
+
+    // ❌ Skip last slot (end boundary only)
+    if ($index === $last_index) {
+        continue;
+    }
 
     $slot_date = $start->format('Y-m-d');
     $status = $blocked_slots[$slot_date][$time_val] ?? '';

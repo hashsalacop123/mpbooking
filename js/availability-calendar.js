@@ -73,7 +73,7 @@ var bookingEvents = availabilityData.booking_events || [];
         allDaySlot: false,
         timeZone: 'local', // Add this line
         slotMinTime: "06:00:00",
-        slotMaxTime: "22:00:00",
+        slotMaxTime: "24:00:00",
         slotDuration: '01:00:00', // <-- 1 hour slots
 
 events: existingEvents.concat(bookingEvents),

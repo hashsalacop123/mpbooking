@@ -54,9 +54,10 @@
                 $endTimeSelect.append(`<option value="${currentDaySlots[i]}">${currentDaySlots[i]}</option>`);
             }
 
-            if ($endTimeSelect.children().length === 0) {
-                $endTimeSelect.append(`<option value="${startTime}">${startTime}</option>`);
-            }
+           if ($endTimeSelect.children().length === 0) {
+    // Use the same slot but allow 1-hour calculation fallback
+    $endTimeSelect.append(`<option value="${startTime}">${startTime}</option>`);
+}
 
             // Run calculation immediately after updating dropdown
             calculateTotal();
@@ -70,10 +71,12 @@
             const endIndex = currentDaySlots.indexOf(endTime);
 
             // If user picks 5am to 7am: index 2 - index 0 = 2 hours
-            let hours = endIndex - startIndex;
-            
-            // Fallback for last slot
-            if (hours <= 0) hours = 1;
+         let hours = endIndex - startIndex;
+
+            // If only 1 slot (or invalid index), force 1 hour
+            if (endIndex === -1 || hours <= 0) {
+                hours = 1;
+            }
 
             const total = hours * hourlyRate;
 
