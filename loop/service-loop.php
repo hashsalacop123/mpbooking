@@ -4,7 +4,7 @@
                     if ($query->have_posts()) :
                         while ($query->have_posts()) : $query->the_post(); ?>
 
-                   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 court-item-wrapper">
+                   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 court-item-wrapper remove-bootstrap">
                         <?php 
                             $image = get_field('featured_image');
                             $address =  get_field('address');

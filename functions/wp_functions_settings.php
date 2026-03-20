@@ -351,4 +351,37 @@ function handle_update_user_status() {
         'status'  => $status
     ]);
 }
+/**
+ * Redirect wp-login.php to custom /login/ page
+ * (safe: does NOT break logout or admin)
+ */
+function hash_redirect_wp_login_safe() {
+
+    // Only target wp-login.php
+    if (strpos($_SERVER['REQUEST_URI'], 'wp-login.php') === false) {
+        return;
+    }
+
+    // Allow logout to proceed normally
+    if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+        return;
+    }
+
+    // Allow admin login (optional but recommended)
+    if (is_admin()) {
+        return;
+    }
+
+    // Build redirect URL
+    $redirect = home_url('/login/');
+
+    // Preserve redirect_to if exists
+    if (!empty($_GET['redirect_to'])) {
+        $redirect = add_query_arg('redirect_to', $_GET['redirect_to'], $redirect);
+    }
+
+    wp_redirect($redirect);
+    exit;
+}
+add_action('init', 'hash_redirect_wp_login_safe');
 ?>

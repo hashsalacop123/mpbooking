@@ -66,7 +66,7 @@
           nextArrow: '<button type="button" class="slick-next"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>',
                 responsive: [
                 {
-                    breakpoint: 768, // 👈 767 and below
+                    breakpoint: 992, // 👈 767 and below
                     settings: {
                         slidesToShow: 1,
                         slidesToScroll: 1

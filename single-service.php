@@ -78,7 +78,7 @@ if ( $images ) : ?>
                     <div class = "share-and-heart">
                         <ul>
                             <li><a href = "#"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href = "#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+                            <!-- <li><a href = "#"><i class="fa fa-heart" aria-hidden="true"></i></a></li> -->
                         </ul>
                     </div>
                 </div>

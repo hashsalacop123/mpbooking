@@ -101,7 +101,7 @@ if($dates) {
     });
 
     $timezone = new DateTimeZone('Asia/Manila'); 
-    echo '<ul id = "booknow" class="step-1-wrapper slider-calendar" data-rate="'.$clean_rate.'">';
+    echo '<ul id = "booknow-now" class="step-1-wrapper slider-calendar" data-rate="'.$clean_rate.'">';
     
     foreach ($dates as $date) {
         $start = new DateTime($date['start']);
@@ -155,26 +155,10 @@ foreach ($slots as $time_val) {
     echo '</ul>';
 }
 ?>
-                            <div class = "container">
-                                <div class = "row">
-                                    <div class = "col-md-6 col-xs-12">
+                       
 
-                                    </div>
-                                    <div class = "col-md-6 col-xs-12">
-                                
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-
-                </div>
-            </div>
-            </div> <!--row-->
-        </div>  <!-- <--CONTAINER CLOSE DIV --> 
-         
-    </div>
+</div>
+<!--  -->
 <div id="bookingModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content p-4">
