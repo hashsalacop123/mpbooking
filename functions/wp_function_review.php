@@ -324,13 +324,151 @@ function hash_display_rating_summary($post_id = null) {
 
         <div class="rating-right">
             <div class="stars-outer">
-                <div class="stars-inner" style="width: <?php echo $percentage; ?>%;"></div>
+                <div class="stars-inner" style="width: <?php echo $percentage; ?>%;"> </div>
             </div>
-            <div class="rating-number"><?php echo $avg; ?></div>
+            <div class="rating-number"><?php echo 'Rating '. $avg; ?></div>
         </div>
 
     </div>
 
     <?php
     return ob_get_clean();
+}
+
+//ADMIN REVIEW APPROVAL 
+/**
+ * Get reviews for DataTables (ONLY reviews created by current user)
+ */
+add_action('wp_ajax_hash_get_reviews_table', 'hash_get_reviews_table');
+
+function hash_get_reviews_table() {
+
+    if (!is_user_logged_in()) {
+        wp_send_json_error('Unauthorized');
+    }
+
+    // Get all comments
+$comments = get_comments([
+    'status'    => 'all',
+    'post_type' => ['coach', 'service'],
+    'include_unapproved' => true, // optional
+    'type' => 'comment',
+    'meta_query' => [], // keep safe
+]);
+
+// 🔥 FORCE include spam manually
+$comments = array_merge(
+    $comments,
+    get_comments([
+        'status'    => 'spam',
+        'post_type' => ['coach', 'service'],
+    ])
+);
+    $data = [];
+
+ foreach ($comments as $comment) {
+
+    $post = get_post($comment->comment_post_ID);
+    if (!$post) continue;
+
+    // ✅ ONLY show reviews for posts owned by current user
+    if ($post->post_author != get_current_user_id()) {
+        continue;
+    }
+
+    // Status
+  if ($comment->comment_approved == '1') {
+    $status = '<span class="badge badge-success">Approved</span>';
+} elseif ($comment->comment_approved == '0') {
+    $status = '<span class="badge badge-warning">Pending</span>';
+} elseif ($comment->comment_approved == 'spam') {
+    $status = '<span class="badge badge-danger">Rejected</span>';
+} else {
+    $status = '<span class="badge badge-secondary">Unknown</span>';
+}
+        // Safe values
+        $rating_value = get_comment_meta($comment->comment_ID, 'rating', true);
+        $rating = $rating_value ? str_repeat('⭐', $rating_value) : '-';
+
+        $comment_text = !empty($comment->comment_content)
+            ? wp_trim_words($comment->comment_content, 10, '...')
+            : '-';
+
+        $user = get_user_by('id', $comment->user_id);
+        $role = ($user && !empty($user->roles)) ? implode(', ', $user->roles) : 'Guest';
+
+        $data[] = [
+            'court'   => $post->post_title,
+            'name'    => $comment->comment_author,
+            'role'    => $role,
+            'comment' => $comment_text,
+            'rating'  => $rating,
+            'date'    => date('M-d-y', strtotime($comment->comment_date)),
+            'status'  => $status,
+            'view'    => get_permalink($post->ID) . '#comment-' . $comment->comment_ID,
+            'action'  => '<button class="btn btn-sm btn-primary manage-review" data-id="'.$comment->comment_ID.'">Action</button>'
+        ];
+    }
+
+    wp_send_json(['data' => $data]);
+}
+
+
+/**
+ * Reject comment (only post author)
+ */
+add_action('wp_ajax_hash_reject_comment', 'hash_reject_comment');
+
+function hash_reject_comment() {
+
+    if (!is_user_logged_in()) {
+        wp_send_json_error('Not allowed');
+    }
+
+    $comment_id = intval($_POST['comment_id']);
+    $comment    = get_comment($comment_id);
+
+    if (!$comment) {
+        wp_send_json_error('Invalid comment');
+    }
+
+    $post = get_post($comment->comment_post_ID);
+
+    if ($post->post_author != get_current_user_id()) {
+        wp_send_json_error('Not allowed');
+    }
+
+    wp_set_comment_status($comment_id, 'spam');
+
+    wp_send_json_success('Rejected');
+}
+
+
+/**
+ * Set comment to pending
+ */
+add_action('wp_ajax_hash_set_pending_comment', 'hash_set_pending_comment');
+
+function hash_set_pending_comment() {
+
+    if (!is_user_logged_in()) {
+        wp_send_json_error('Not allowed');
+    }
+
+    $comment_id = intval($_POST['comment_id']);
+    $comment    = get_comment($comment_id);
+
+    if (!$comment) {
+        wp_send_json_error('Invalid comment');
+    }
+
+    $post = get_post($comment->comment_post_ID);
+
+    if ($post->post_author != get_current_user_id()) {
+        wp_send_json_error('Not allowed');
+    }
+
+    wp_set_comment_status($comment_id, 'hold');
+
+    wp_send_json_success('Set to pending');
 }

@@ -125,8 +125,14 @@ if ( $images ) : ?>
              <?php 
 
 require_once get_template_directory() . '/inc/customer-booking.php';
-?>
+?>   <?php 
+   echo '<div class="review-list">';
+echo hash_display_rating_summary();
+comments_template();
+echo '</div>';
+   ?>
                     </div>
+                    
 </div>
-   
+
 <?php get_footer(); ?>

@@ -118,7 +118,7 @@ ul.step-2-wrapper {
     align-content: center;
     align-items: center;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 ul.step-2-wrapper li {

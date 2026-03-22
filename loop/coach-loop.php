@@ -46,26 +46,7 @@ if ($about_me) {
                                 </div>
                                 <div class = "review">
                                     <div class = "count">
-                                        <div class = "number-count">
-                                            <h5>Reviews</h5>
-                                            <h6>25</h6>
-                                        </div>
-                                        <div class = "rating">
-                                            <h5>Rating</h5>
-                                            <?php
-                                                $rating = 3.5; // dynamic value (1–5, supports .5)
-
-                                                for ($i = 1; $i <= 5; $i++) {
-                                                    if ($rating >= $i) {
-                                                        echo '<span class="star full">★</span>';
-                                                    } elseif ($rating >= ($i - 0.5)) {
-                                                        echo '<span class="star half">★</span>';
-                                                    } else {
-                                                        echo '<span class="star empty">★</span>';
-                                                    }
-                                                }
-                                                ?>
-                                        </div>
+                                        <?php echo hash_display_rating_summary(); ?>
                                     </div>
                                 </div>
                             </div>

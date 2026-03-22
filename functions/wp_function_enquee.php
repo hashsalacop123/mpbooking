@@ -44,7 +44,7 @@ function theme_enqueue_styles() {
 
     // JS Libraries
     // Replace the old Alpha 6 link with this stable 4.6 link
-            if ( is_page( array('dashboard', 'admin') ) ) {
+    if ( is_page('dashboard') || is_page_template('template-dashboard.php') || is_page() ) {
 
                 
                     // DataTables CSS

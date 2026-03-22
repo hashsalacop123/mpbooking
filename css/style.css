@@ -1484,7 +1484,12 @@ ul.comment-list {
     display: inline-block;
     font-size: 18px;
     color: #ccc;
+	margin-bottom: 10px;
 }
+.review-list .review-count {
+    margin-bottom: 5px;
+}
+
 
 .stars-outer::before {
     content: "\2605\2605\2605\2605\2605";
@@ -1504,9 +1509,9 @@ ul.comment-list {
 }
 
 .rating-number {
-    font-size: 14px;
-    margin-top: 5px;
-    color: #333;
+    font-size: 16px;
+    color: #000;
+    font-weight: 700;
 }.rating-left {
     text-align: center;
 }
@@ -1532,4 +1537,13 @@ p.must-log-in a {
     color: #1e6366;
     font-weight: 700;
     text-decoration: underline;
+}ul.comment-list .approve-review {
+    display: none;
+}div#reviewModal .modal-body {
+    margin-top: 20px;
+    padding-bottom: 20px;
+}.review .rating-box {
+    padding: 0px;
+}.review .count {
+    display: block;
 }
