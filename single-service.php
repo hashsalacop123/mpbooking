@@ -6,7 +6,7 @@
             <div class = "wrapper-data">
 
                 <?php 
-                $court_name = get_field('court_name');
+                $court_name = get_field('court_name_gym');
                     if($court_name ) {
                         echo '<h1>'.$court_name.'</h1>';
                     }else {
