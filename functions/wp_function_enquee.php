@@ -78,10 +78,10 @@ function theme_enqueue_styles() {
                 }
                 // Dashboard script
                 
-    wp_localize_script('general-script', 'booking_ajax', [
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce'    => wp_create_nonce('booking_nonce')
-    ]);
+    // wp_localize_script('general-script', 'booking_ajax', [
+    //         'ajax_url' => admin_url('admin-ajax.php'),
+    //         'nonce'    => wp_create_nonce('booking_nonce')
+    // ]);
 
     wp_enqueue_style('bootstrap','https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css');
     wp_enqueue_script('bootstrap-js','https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js', ['jquery'], null, true);
@@ -96,7 +96,7 @@ function theme_enqueue_styles() {
     wp_enqueue_script('slick-slider-js','//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', ['jquery'], null, true);
     wp_enqueue_script('geocoder-js','https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js', ['jquery'], null, true);
     wp_enqueue_script('mapbox-gl-directions-js','https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.3.1/mapbox-gl-directions.js', ['jquery'], null, true);
-    wp_enqueue_script('bootstrap-js','https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js', ['jquery'], null, true);
+    // wp_enqueue_script('bootstrap-js','https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js', ['jquery'], null, true);
     wp_enqueue_script('fancy-box','https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js', ['jquery'], null, true);
 
     // Theme JS
@@ -146,7 +146,8 @@ function enqueue_availability_calendar() {
     wp_enqueue_script('fullcalendar','https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js',['jquery'],null,true);
 
     // Your availability JS
-    wp_enqueue_script('availability-calendar', get_stylesheet_directory_uri() . '/js/availability-calendar.js', ['jquery','fullcalendar'], null, true);
+    wp_enqueue_script('availability-calendar', get_stylesheet_directory_uri() . '/js/coach-availability-calendar.js', ['jquery','fullcalendar'], null, true);
+    wp_enqueue_script('service-availability-calendar', get_stylesheet_directory_uri() . '/js/service-availability-calendar.js', ['jquery','fullcalendar'], null, true);
 
     // Note: DO NOT localize here; localize in template after $coach_post_id is defined
 }
@@ -202,15 +203,26 @@ if ( ! is_singular( ['service','coach'] ) ) return;
         true
     );
 
-    wp_localize_script('coach-booking-calendar', 'bookingData', [
-        'ajaxurl'  => admin_url('admin-ajax.php'),
-        'coach_id' => get_the_ID(),
-    ]);
+ wp_localize_script('coach-booking-calendar', 'bookingData', [
+    'ajaxurl'  => admin_url('admin-ajax.php'),
+    'coach_id' => get_the_ID(),
+    'nonce'    => wp_create_nonce('booking_nonce')
+]);
+wp_localize_script('service-booking-calendar', 'bookingData', [
+    'ajaxurl' => admin_url('admin-ajax.php'),
+    'nonce'   => wp_create_nonce('booking_nonce')
+]);
 /**
  * Pass AJAX URL to JS
  */
   
-
+  wp_enqueue_script(
+        'service-booking-calendar',
+        get_stylesheet_directory_uri() . '/js/service-booking-calendar.js',
+        ['jquery', 'fullcalendar-js'],
+        '1.0',
+        true
+    );
 }
 add_action('wp_enqueue_scripts', 'enqueue_coach_booking_calendar');
 

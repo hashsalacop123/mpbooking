@@ -466,7 +466,7 @@
             "save_terms": 1,
             "load_terms": 0,
             "return_format": "id",
-            "field_type": "select",
+            "field_type": "multi_select",
             "allow_null": 0,
             "allow_in_bindings": 0,
             "bidirectional": 0,

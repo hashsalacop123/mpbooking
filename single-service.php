@@ -124,7 +124,7 @@ if ( $images ) : ?>
         <div class = "container">
              <?php 
 
-require_once get_template_directory() . '/inc/customer-booking.php';
+require_once get_template_directory() . '/inc/service-booking-calendar.php';
 ?>   <?php 
    echo '<div class="review-list">';
 echo hash_display_rating_summary();

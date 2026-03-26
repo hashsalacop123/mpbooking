@@ -4,6 +4,9 @@
 $(document).ready(function() {
 
     let currentDaySlots = [];
+    let selectedCourt = null;
+    let currentRate = 0;
+    let currentServiceId = null;
     let blockedTimes = {};
 
     /*
@@ -11,26 +14,33 @@ $(document).ready(function() {
     | CLICK SLOT
     |--------------------------------------------------------------------------
     */
-    $(document).on('click', '.availability-coach', function() {
+    $(document).on('click', '.availability-service', function() {
 
         const $day = $(this).closest('.day-parent');
 
-        // ✅ BUILD BLOCKED TIMES (NO NORMALIZE)
+        // ✅ BUILD BLOCKED TIMES (same as coach)
         blockedTimes = {};
-        $day.find('.availability-coach.pending, .availability-coach.booked').each(function() {
+        $day.find('.availability-service.pending, .availability-service.booked').each(function() {
             blockedTimes[$(this).data('time')] = true;
         });
 
         const selectedTime = $(this).data('time');
         const selectedDate = $(this).data('date');
 
+        selectedCourt = $(this).data('court');
+
+        // ✅ RATE
+        currentRate = parseFloat($(this).attr('data-rate')) || 0;
+
+        // ✅ SERVICE ID
+        currentServiceId = $(this)
+            .closest('.slider-calendar')
+            .data('service');
+
         const rawSlots = $day.find('.day-slots').val();
         if (!rawSlots) return;
 
         currentDaySlots = JSON.parse(rawSlots);
-
-        const rate = parseFloat($(this).closest('.slider-calendar').data('rate')) || 0;
-        $('#bookingModal').data('rate', rate);
 
         const startIndex = currentDaySlots.indexOf(selectedTime);
         const lastIndex  = currentDaySlots.length - 1;
@@ -38,12 +48,12 @@ $(document).ready(function() {
         $('#booking_start').empty();
         $('#booking_end').empty();
 
-        // 🚫 BLOCK CLICK IF START IS BLOCKED
+        // 🚫 BLOCK IF CLICKED SLOT IS BLOCKED
         if (blockedTimes[selectedTime]) return;
 
         /*
         |--------------------------------------------------------------------------
-        | LAST SLOT (1-HOUR FIX)
+        | LAST SLOT FIX (1-hour only)
         |--------------------------------------------------------------------------
         */
         if (startIndex === lastIndex) {
@@ -61,15 +71,15 @@ $(document).ready(function() {
             $('#booking_end').val(endFormatted);
 
             $('#selected_date').val(selectedDate);
-            $('#amount').val(Math.round(rate));
+            $('#amount').val(Math.round(currentRate));
 
-            $('#bookingModal').modal('show');
+            $('#bookingModalService').modal('show');
             return;
         }
 
         /*
         |--------------------------------------------------------------------------
-        | BUILD START DROPDOWN
+        | BUILD START DROPDOWN (skip blocked)
         |--------------------------------------------------------------------------
         */
         for (let i = 0; i < currentDaySlots.length; i++) {
@@ -84,7 +94,7 @@ $(document).ready(function() {
 
                 const nextTime = currentDaySlots[j];
 
-                // allow boundary (blocked next is still valid)
+                // allow boundary
                 if (blockedTimes[nextTime]) {
                     hasValidEnd = true;
                     break;
@@ -103,57 +113,57 @@ $(document).ready(function() {
         $('#selected_date').val(selectedDate);
 
         updateEndTimeDropdown(selectedTime);
-
         calculateTotal();
-        $('#bookingModal').modal('show');
+
+        $('#bookingModalService').modal('show');
     });
 
     /*
     |--------------------------------------------------------------------------
-    | START CHANGE
+    | START TIME CHANGE
     |--------------------------------------------------------------------------
     */
-    $('#booking_start').on('change', function() {
+    $(document).on('change', '#bookingModalService #booking_start', function() {
         updateEndTimeDropdown($(this).val());
         calculateTotal();
     });
 
     /*
     |--------------------------------------------------------------------------
-    | END CHANGE
+    | END TIME CHANGE
     |--------------------------------------------------------------------------
     */
-    $(document).on('change', '#booking_end', function() {
+    $(document).on('change', '#bookingModalService #booking_end', function() {
         calculateTotal();
     });
 
     /*
     |--------------------------------------------------------------------------
-    | UPDATE END TIME
+    | UPDATE END TIME (STOP AT BLOCKED)
     |--------------------------------------------------------------------------
     */
-function updateEndTimeDropdown(startTime) {
+    function updateEndTimeDropdown(startTime) {
 
-    const $end = $('#booking_end');
-    $end.empty();
+        const $end = $('#booking_end');
+        $end.empty();
 
-    const startIndex = currentDaySlots.indexOf(startTime);
+        const startIndex = currentDaySlots.indexOf(startTime);
 
-    for (let i = startIndex + 1; i < currentDaySlots.length; i++) {
+        for (let i = startIndex + 1; i < currentDaySlots.length; i++) {
 
-        const time = currentDaySlots[i];
+            const time = currentDaySlots[i];
 
-        // 🔥 ALWAYS add first next slot
-        $end.append(`<option value="${time}">${time}</option>`);
+            // always allow next slot
+            $end.append(`<option value="${time}">${time}</option>`);
 
-        // 🚫 THEN stop if it's blocked
-        if (blockedTimes[time]) break;
+            // stop if blocked
+            if (blockedTimes[time]) break;
+        }
+
+        if ($end.children().length === 0) {
+            $end.append(`<option value="${startTime}">${startTime}</option>`);
+        }
     }
-
-    if ($end.children().length === 0) {
-        $end.append(`<option value="${startTime}">${startTime}</option>`);
-    }
-}
 
     /*
     |--------------------------------------------------------------------------
@@ -171,26 +181,25 @@ function updateEndTimeDropdown(startTime) {
         const endIndex   = currentDaySlots.indexOf(endTime);
 
         let hours = endIndex - startIndex;
+
         if (hours <= 0) hours = 1;
 
-        const rate = parseFloat($('#bookingModal').data('rate')) || 0;
+        const total = hours * currentRate;
 
-        const total = hours * rate;
-
-        $('#amount').val(Math.round(total));
+        $('#amount').val(total.toFixed(2));
     }
 
     /*
     |--------------------------------------------------------------------------
-    | SUBMIT
+    | SUBMIT BOOKING
     |--------------------------------------------------------------------------
     */
-    $('#confirm_booking_btn_coach').on('click', function(e) {
+    $('#confirm_booking_btn_service').on('click', function(e) {
         e.preventDefault();
 
         const payload = {
             action: 'handle_booking',
-            type: 'coach',
+            type: 'service',
             nonce: bookingData.nonce,
 
             name: $('#booking_name').val(),
@@ -201,7 +210,8 @@ function updateEndTimeDropdown(startTime) {
             comment: $('#booking_comment').val(),
             amount: $('#amount').val(),
 
-            coach_id: bookingData.coach_id
+            court_index: selectedCourt,
+            service_id: currentServiceId
         };
 
         console.log('FINAL PAYLOAD:', payload);

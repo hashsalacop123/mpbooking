@@ -49,9 +49,10 @@ $coach = get_posts([
  <ul>
         <li><a href = "/dashboard/"><i class="fa fa-volume-up" aria-hidden="true"></i> Dashboard</a></li>
         <li><a href = "/my-account/"><i class="fa fa-user-circle" aria-hidden="true"></i> My Account</a></li>
-        <li><a href = "/update/"><i class="far fa-edit"></i>  Update List</a></li>
          <li><a href = "/review/"><i class="fa-regular fa-address-card"></i> Your Review</a></li>
-        <li><a href = "/add-list/"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Your List</a></li>
+        <li><a href = "/create-update/"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create + Update</a></li>
+        <li><a href = "/court-name-schedule/"><i class="fa fa-calendar" aria-hidden="true"></i>  Add/Update Schedule</a></li>
+
         <li>
             <a href="<?php echo wp_logout_url( home_url() ); ?>" class="logout-link">
                 <i class="fas fa-sign-out-alt" aria-hidden="true"></i>Logout

@@ -568,7 +568,18 @@ i.fa.fa-phone {
 	padding-left: 10px;
 }
 
-.availability.pending {
+.availability-coach.pending {
+	pointer-events: none;
+	/* disables clicking */
+	cursor: not-allowed;
+	/* shows blocked cursor */
+	opacity: 0.7;
+	/* optional visual effect */
+	background: red;
+	color: #fff;
+	border: 1px solid #f54945;
+}
+.availability-service.pending {
 	pointer-events: none;
 	/* disables clicking */
 	cursor: not-allowed;
@@ -580,7 +591,17 @@ i.fa.fa-phone {
 	border: 1px solid #f54945;
 }
 
-.availability.booked {
+.availability-coach.booked {
+	pointer-events: none;
+	/* disables clicking */
+	cursor: not-allowed;
+	/* shows blocked cursor */
+	opacity: 0.7;
+	/* optional visual effect */
+	background: #1e6366;
+	color: #fff;
+}
+.availability-service.booked {
 	pointer-events: none;
 	/* disables clicking */
 	cursor: not-allowed;
@@ -1544,6 +1565,40 @@ p.must-log-in a {
     padding-bottom: 20px;
 }.review .rating-box {
     padding: 0px;
-}.review .count {
+}
+.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+td.calendar-btn-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+td.calendar-btn-cell button {
+    background: #1e6366;
+    border: 1px solid;
+}h4.court-title {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Roboto';
+    color: #1e6266;
+}
+.coach-ratings-review .count {
     display: block;
+}a.main-btn-general {
+    background: #1f6367;
+    padding: 8px 20px;
+    color: #fff;
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+.container-title-and-rate h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e6266;
 }

@@ -12,7 +12,7 @@
                     ?>
                     <div class = "col-xl-6 col-lg-6 col-md-6 col-sm-12 remove-bootstrap">
                       <a href = "<?php echo get_the_permalink(); ?>">
-                        <div class = "coach-card">
+                        <div class = "coach-card coach-ratings-review">
                             <div class = "image-wrapper">
                                 <?php 
                                      $default = get_stylesheet_directory_uri().'/img/placeholder-400x400.jpg';
