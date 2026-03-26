@@ -13,6 +13,9 @@
                             } else {
                                 $image_url = get_stylesheet_directory_uri() . '/img/placeholder-400x400.jpg';
                             }
+                            echo '<pre>';
+var_dump(get_field('avalability'));
+echo '</pre>';
                         ?>
 
                         <a href = "<?php echo get_the_permalink(); ?>"><div class="item-wrapper-court" style="background-image: url('<?php echo esc_url($image_url); ?>');">
