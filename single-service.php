@@ -125,6 +125,16 @@ if ( $images ) : ?>
              <?php 
 
 require_once get_template_directory() . '/inc/service-booking-calendar.php';
+
+$path = get_template_directory() . '/inc/service-booking-calendar.php';
+
+if (file_exists($path)) {
+    echo 'FILE EXISTS';
+    require_once $path;
+} else {
+    echo 'FILE NOT FOUND: ' . $path;
+}
+
 ?>   <?php 
    echo '<div class="review-list">';
 echo hash_display_rating_summary();
