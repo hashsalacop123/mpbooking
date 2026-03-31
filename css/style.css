@@ -537,7 +537,7 @@ ul.service-availability {
 .wrappper-main-formation {
 	margin-top: 100px;
 	background: #fff;
-	padding: 35px;
+	padding: 20px;
 	border-radius: 20px;
 }
 
@@ -573,22 +573,20 @@ i.fa.fa-phone {
 	/* disables clicking */
 	cursor: not-allowed;
 	/* shows blocked cursor */
-	opacity: 0.7;
 	/* optional visual effect */
-	background: red;
+	background:#dc3545;
 	color: #fff;
-	border: 1px solid #f54945;
+	border: 1px solid #dc3545;
 }
 .availability-service.pending {
 	pointer-events: none;
 	/* disables clicking */
 	cursor: not-allowed;
 	/* shows blocked cursor */
-	opacity: 0.7;
 	/* optional visual effect */
-	background: red;
+	background: #dc3545;
 	color: #fff;
-	border: 1px solid #f54945;
+	border: 1px solid #dc3545;
 }
 
 .availability-coach.booked {
@@ -596,7 +594,6 @@ i.fa.fa-phone {
 	/* disables clicking */
 	cursor: not-allowed;
 	/* shows blocked cursor */
-	opacity: 0.7;
 	/* optional visual effect */
 	background: #1e6366;
 	color: #fff;
@@ -606,7 +603,6 @@ i.fa.fa-phone {
 	/* disables clicking */
 	cursor: not-allowed;
 	/* shows blocked cursor */
-	opacity: 0.7;
 	/* optional visual effect */
 	background: #1e6366;
 	color: #fff;
@@ -1552,7 +1548,7 @@ p.comment-form-email input {
 }
 
 form#commentform .required {
-    color: red;
+    color: #dc3545;
 }
 p.must-log-in a {
     color: #1e6366;
@@ -1601,4 +1597,34 @@ td.calendar-btn-cell button {
     font-size: 16px;
     font-weight: 700;
     color: #1e6266;
+}
+.availability-indicator li {
+    font-size: 12px;
+}.recommend-court .remove-bootstrap {
+    max-width: 100%;
+    padding: 0px;
+}
+
+.recommend-court  .item-wrapper-court {
+    height: auto!Important;
+}
+
+.recommend-court .item-wrapper-court {
+min-height: 175px!Important;
+}
+.recommend-court .item-wrapper-court:hover {
+    transform: inherit;
+}
+.recommend-court a:hover {
+	text-decoration: none;
+}
+.recommend-court .item-wrapper-court h3 {
+    display: none;
+}
+.coach-ratings-review .review-label {
+    font-size: 12px;
+}
+
+.coach-ratings-review .rating-number {
+    font-size: 12px;
 }

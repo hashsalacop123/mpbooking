@@ -1,6 +1,12 @@
 <div class="availability-of-coach" id="booknow">
 <h3>Availability Calendar</h3>
-
+<div class = "availability-indicator">
+    <h6>Color indicator to show availability.</h6>
+    <ul>
+        <li><span>Time</span> Pending</li>
+        <li><span>Time</span> Booked</li>
+    </ul>
+</div>
 <?php
 
 $courts = get_field('court_name');
@@ -85,14 +91,30 @@ if ($courts):
 
             $current = clone $start_dt;
 
-            while ($current <= $end_dt) {
-                $slot_time = $current->format('g:00 A');
+                while ($current <= $end_dt) {
+                    $slot_time = $current->format('g:00 A');
 
-                // store status (pending / approved)
-                $blocked_slots[$date][$slot_time] = $status;
+                    // Initialize if not set
+                    if (!isset($blocked_slots[$date][$slot_time])) {
+                        $blocked_slots[$date][$slot_time] = $status;
+                    } else {
 
-                $current->modify('+1 hour');
-            }
+                        // PRIORITY LOGIC
+                        $existing = $blocked_slots[$date][$slot_time];
+
+                        // approved always wins
+                        if ($status === 'approved') {
+                            $blocked_slots[$date][$slot_time] = 'approved';
+                        }
+                        // pending overrides expired
+                        elseif ($status === 'pending' && $existing === 'expired') {
+                            $blocked_slots[$date][$slot_time] = 'pending';
+                        }
+                        // expired should NOT override anything
+                    }
+
+                    $current->modify('+1 hour');
+                }
         }
 
         echo '<div class="container-title-and-rate">';
@@ -151,16 +173,18 @@ if ($courts):
                 $style = '';
                 $label = $time_val;
 
+    
+
                 if ($status === 'pending') {
                     $class .= ' pending';
                     $label .= '';
-                    $style = 'opacity:0.5;pointer-events:none;';
+                    $style = 'pointer-events:none;';
                 }
 
                 if ($status === 'approved') {
                     $class .= ' booked';
                     $label .= '';
-                    $style = 'opacity:0.5;pointer-events:none;';
+                    $style = 'pointer-events:none;';
                 }
 
                 echo '<li class="'.$class.'"

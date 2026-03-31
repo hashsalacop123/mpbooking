@@ -107,7 +107,7 @@ ul.step-1-wrapper {
 }
 
 ul.step-1-wrapper li {
-    margin: 10px 5px;
+    margin: 10px 3px;
     padding: 0px;
 }
 ul.step-2-wrapper {
@@ -123,7 +123,7 @@ ul.step-2-wrapper {
 
 ul.step-2-wrapper li {
     border: 1px solid #1e6366;
-    padding: 8px;
+    padding: 6px;
     border-radius: 25px;
     text-align: center;
     font-size: 13px;
@@ -212,3 +212,30 @@ text-align: center;
     justify-content: space-between;
 }
 
+.availability-indicator h6 {
+    font-size: 13px;
+    color: #171616;
+    font-style: italic;
+}.availability-indicator ul {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    gap: 20px;
+    padding-top: 10px;
+}
+
+.availability-indicator ul li:first-child span {
+    background: #dc3445;
+    padding: 5px 15px;
+    color: #fff;
+    border-radius: 16px;
+    font-weight: 800;
+}
+
+.availability-indicator ul li:last-child span {
+    /* background: green; */
+    background: #1e6266;
+    padding: 5px 15px;
+    color: #fff;
+    border-radius: 16px;
+}

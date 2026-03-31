@@ -399,10 +399,10 @@
         },
         {
             "key": "field_695a06f665038",
-            "label": "Hourly Rate",
+            "label": "Hourly Range",
             "name": "hourly_rate",
             "aria-label": "",
-            "type": "number",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -412,12 +412,10 @@
                 "id": ""
             },
             "default_value": "",
-            "min": "",
-            "max": "",
+            "maxlength": "",
             "allow_in_bindings": 0,
             "placeholder": "",
-            "step": "",
-            "prepend": "<span>&#8369;<\/span>",
+            "prepend": "",
             "append": ""
         },
         {
@@ -463,5 +461,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1774497475
+    "modified": 1774508139
 }

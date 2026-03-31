@@ -1,6 +1,12 @@
 <div class="availability-of-coach" id="booknow">
     <h3>Availability Calendar</h3>
-
+<div class = "availability-indicator">
+    <h6>Color indicator to show availability.</h6>
+    <ul>
+        <li><span>Time</span> Pending</li>
+        <li><span>Time</span> Booked</li>
+    </ul>
+</div>
 <?php 
 $datacoach = get_field('avalability');
 $dates = json_decode($datacoach, true);
@@ -110,10 +116,26 @@ $end->modify('+1 minute');
 //        error_log('START: ' . $start->format('H:i'));
 // error_log('END: ' . $end->format('H:i'));
 
-        while ($current < $end) {
+    while ($current < $end) {
 
             $slotKey = $current->format('g:00 A');
-            $blocked_slots[$date][$slotKey] = $status;
+
+            // Initialize if not set
+            if (!isset($blocked_slots[$date][$slotKey])) {
+                $blocked_slots[$date][$slotKey] = $status;
+            } else {
+
+                $existing = $blocked_slots[$date][$slotKey];
+
+                // PRIORITY SYSTEM
+                if ($status === 'approved') {
+                    $blocked_slots[$date][$slotKey] = 'approved';
+                }
+                elseif ($status === 'pending' && $existing === 'expired') {
+                    $blocked_slots[$date][$slotKey] = 'pending';
+                }
+                // expired should NOT override anything
+            }
 
             $current->modify('+1 hour');
         }
@@ -200,13 +222,13 @@ if (isset($blocked_slots[$slot_date])) {
             if ($status === 'pending') {
                 $class .= ' pending';
                 // $label .= ' (Pending)';
-                $style = 'cursor:not-allowed; opacity:0.5;';
+                $style = 'cursor:not-allowed;';
             }
 
             if ($status === 'approved') {
                 $class .= ' booked';
                 $label .= '';
-                $style = 'cursor:not-allowed; opacity:0.5;';
+                $style = 'cursor:not-allowed;';
             }
 
             echo '<li class="'.$class.'" 

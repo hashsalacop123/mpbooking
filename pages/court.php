@@ -31,7 +31,7 @@ get_header(); ?>
                                 $about_clean = wp_strip_all_tags($about_me);
                                 $about_trimmed = mb_substr($about_clean, 0, 100) . '...';
                                 $featured = get_field('featured_image');
-                                $court_name = get_field('court_name');
+                                $court_name = get_field('court_name_gym');
 
                                 $featured_url = '';
                                 if ($featured && is_array($featured)) {

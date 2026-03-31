@@ -10,7 +10,7 @@
     <div class = "contact-us-first-wrapper">
         <button class = "booknowdata"><i class="fa-regular fa-calendar-check"></i>
         <a href = "#booknow" class = "general-btn">Book Now</a></button>
-        <h4>Hourly Rate</h4>
+        <h4>Hourly Range Rate</h4>
 
          <div class = "rates">
         <?php
@@ -72,7 +72,21 @@ if ( $social_media ) {
 }
 echo '</div>';
 ?>
-          
+          <hr>
+<div class = "recommend-court">
+    <h5>Recommend Courts</h5>
+     <?php 
+                    $args = array(
+                        'post_type'      => 'coach',
+                        'posts_per_page' => 4 ,
+                        'post_status'    => 'publish',
+                        'orderby' => 'rand',
+                    );
+
+                     include get_template_directory() . '/loop/service-loop.php'; 
+
+                   ?>
+</div>
 
     </div>
   
