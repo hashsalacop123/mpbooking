@@ -135,8 +135,8 @@ function search_coaches_ajax() {
 
     check_ajax_referer('booking_nonce', 'nonce'); // security
 
-    $search = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
-
+    $search = isset($_REQUEST['q']) ? sanitize_text_field($_REQUEST['q']) : '';
+    error_log('AJAX REQUEST: ' . print_r($_REQUEST, true));
     if (empty($search)) {
         wp_send_json([]);
     }
@@ -182,7 +182,7 @@ function search_coaches_ajax() {
             // ACF fields (safe fallback)
             $nickname  = get_field('nick_name', $post_id) ?: '';
             $address   = get_field('address', $post_id) ?: '';
-            $court     = get_field('court_name', $post_id) ?: '';
+            $court     = get_field('court_name_gym', $post_id) ?: '';
 
             // User fields (safe fallback)
             $first = get_user_meta($author_id, 'first_name', true) ?: '';

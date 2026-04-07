@@ -2,11 +2,13 @@
 
  
     $('#coach-search').select2({
+        
         theme: 'bootstrap4',
         placeholder: 'Search coach...',
         minimumInputLength: 2,
         ajax: {
             url: booking_ajax.ajax_url,
+            type: 'GET',
             dataType: 'json',
             delay: 250,
             data: function(params) {

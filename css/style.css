@@ -390,6 +390,11 @@ ul.service-availability {
 	align-items: center;
 	overflow: hidden;
 	position: relative;
+	flex-direction: column;
+}.top-header-page p
+ {
+    color: #fff;
+    z-index: 9;
 }
 
 .top-header-page h1 {

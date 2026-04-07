@@ -1,14 +1,37 @@
 <?php 
 //Template Name: About Us
 
-get_header(); ?>
-<div class="banner-pages" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/img/banner-image.jpg' ); ?>');">
+get_header(); 
+
+$heading_title = get_field('heading_title');
+$subheading = get_field('subheading');
+
+// get featured image URL
+$featured_image = get_the_post_thumbnail_url(get_the_ID(), 'full');
+
+// fallback image
+$default_image = get_stylesheet_directory_uri() . '/img/banner-image.jpg';
+
+// use featured if exists, otherwise fallback
+$bg_image = $featured_image ? $featured_image : $default_image;
+?>
+<div class="banner-pages" style="background-image: url('<?php echo esc_url($bg_image); ?>');">
+
+
     <div class = "container">
         <div class = "row">
             <div class = "col-lg-6 col-md-6 col-sm-12">
-                <h1>About MatchPoint Booking</h1>
-                <p>Building skills, confidence, and community through tennis</p>
-            </div>
+                    <?php 
+                         if($heading_title) : 
+                            echo '<h1>'.esc_attr($heading_title).'</h1>';
+                        endif; 
+
+                        if($subheading) : 
+                            echo wp_kses_post($subheading);
+                        endif; 
+                    ?>
+
+                </div>
              <div class = "col-lg-6 col-md-6 col-sm-12">
             </div>
 
@@ -21,16 +44,29 @@ get_header(); ?>
         <div class = "row">
             <div class = "col-lg-6 col-xl-6 col-md-6 col-xs-12">
                 <div class = "about-first-col">
-                    <img src = "<?php echo get_template_directory_uri().'/img/pass.jpg' ?>" class = "img-fluid">
+<?php 
+    $image_right = get_field('image_right');
+    $image_subheading = get_field('image_subheading');
+    $image_text = get_field('image_text');
+
+    if($image_right['url']) :
+        echo '<img src = "'.$image_right['url'].'" class = "img-fluid">';
+    endif;
+?>
+
                 </div>
             </div>
             <div class = "col-lg-6 col-xl-6 col-md-6 col-xs-12">
                 <div class = "about-second-col">
-                    <h2>Who We Are</h2>
-                    <p>We are a team of passionate and experienced tennis coaches dedicated to delivering high-quality, inclusive training programs for players of all ages and skill levels. Our mission is to create a supportive and inspiring environment where youth and adults can grow their skills, build confidence, and enjoy the sport for life.</p>
+                    <?php 
+                         if($image_subheading) : 
+                            echo '<h2>'.esc_attr($image_subheading).'</h2>';
+                        endif; 
 
-    <p>We believe tennis is more than a game. It teaches discipline, resilience, teamwork, and respect. Through structured coaching and community-focused programs, we help players reach their full potential on and off the court.</p>
-                </div>
+                         if($image_text) : 
+                            echo wp_kses_post($image_text);
+                        endif; 
+                    ?>
             </div>
         </div>
     </div>
@@ -39,23 +75,51 @@ get_header(); ?>
 <section class = "our-mission">
     <div class = "container">
         <div class = "row">
+
+<?php
+    $our_mission_main_heading = get_field('our_mission_main_heading');
+    $our_mission_heading = get_field('our_mission_heading');
+    $text_our_mission = get_field('text_our_mission');
+    $our_vision_heading = get_field('our_vision_heading');
+    $text_our_vision = get_field('text_our_vision');
+    $our_mission_image = get_field('our_mission_image');
+?>
             <div class = "col-lg-6 col-xl-6 col-md-6 col-xs-12">
                 <div class = "our-mission-first-col">
-                    <h2>Our Mission</h2>
+                    <?php 
+                           if($our_mission_main_heading) : 
+                            echo '<h2>'.esc_attr($our_mission_main_heading).'</h2>';
+                        endif;
+                    ?>
                     <ul class = "our-mission-list">
                         <li> <img src = "<?php echo get_template_directory_uri().'/img/tennis-player.png' ?>" class = "img-fluid">
 
                             <div class = "colab">
-                                <h4>Our Mission</h4>
-                                <p>To make tennis accessible, enjoyable, and rewarding for everyone through professional coaching and community-focused programs.</p>
+                                  <?php 
+                                    if($our_mission_heading) : 
+                                        echo '<h4>'.esc_attr($our_mission_heading).'</h4>';
+                                    endif;
+
+                                    if($text_our_mission) : 
+                                        echo wp_kses_post($text_our_mission);
+                                    endif; 
+                                ?>
                             </div>
                         </li>
-                          <li>                                <img src = "<?php echo get_template_directory_uri().'/img/community.png' ?>" class = "img-fluid">
+                          <li>  
+                   
+                          <img src = "<?php echo get_template_directory_uri().'/img/community.png' ?>" class = "img-fluid">
 
                             <div class = "colab">
+                        <?php 
+                                    if($our_vision_heading) : 
+                                        echo '<h4>'.esc_attr($our_vision_heading).'</h4>';
+                                    endif;
 
-                                <h4>Our Vision</h4>
-                                <p>To build a strong tennis community that develops confident, skilled, and sports-minded players.</p>
+                                    if($text_our_vision) : 
+                                        echo wp_kses_post($text_our_vision);
+                                    endif; 
+                                ?>
                             </div>
                         </li>
                     </ul>
@@ -63,7 +127,11 @@ get_header(); ?>
             </div>
             <div class = "col-lg-6 col-xl-6 col-md-6 col-xs-12">
                 <div class = "our-mission-second-col">
-                                        <img src = "<?php echo get_template_directory_uri().'/img/coach.jpg' ?>" class = "img-fluid"/    >
+                         <?php 
+                            if($our_mission_image) :
+                                echo '<img src = "'.$our_mission_image['url'].'" class = "img-fluid">';
+                            endif;
+                        ?>
 
                 </div>
             </div>
@@ -72,52 +140,49 @@ get_header(); ?>
 </section>
 <section class = "our-programs">
     <div class = "container">
-        <h4>Our Programs</h4>
+    <?php 
+        $heading_program = get_field('heading_program');
+        $programs = get_field('programs');
 
-        <ul class = "programs-ul">
-            <li class = "progrmas-li">
-                <img src = "<?php echo get_template_directory_uri().'/img/promotion.png' ?>">
-                <div class = "programs-list">
-                    <h5>Beginner Lessons</h5>
-                    <p>Introductory coaching for new players of all ages.</p>
+          if($heading_program) : 
+            echo '<h4>'.esc_attr($heading_program).'</h4>';
+        endif;
+    ?>
+    <?php if (have_rows('programs')) : ?>
+    <ul class="programs-ul">
+
+        <?php while (have_rows('programs')) : the_row(); ?>
+
+            <?php
+            // Get sub fields
+            $image = get_sub_field('image_program');
+            $title = get_sub_field('title');
+            $desc  = get_sub_field('short_description');
+
+            // fallback image (optional)
+            $default_img = get_template_directory_uri() . '/img/promotion.png';
+
+            // get image URL safely
+            $image_url = $image ? $image['url'] : $default_img;
+            ?>
+
+            <li class="progrmas-li">
+
+                <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($title); ?>">
+
+                <div class="programs-list">
+                    <h5><?php echo esc_html($title); ?></h5>
+                    <p><?php echo esc_html($desc); ?></p>
                 </div>
+
             </li>
-            <li class = "progrmas-li">
-                <img src = "<?php echo get_template_directory_uri().'/img/newbie.png' ?>">
-                <div class = "programs-list">
-                    <h5>Youth Development</h5>
-                    <p>IStructured programs designed for young athletes.</p>
-                </div>
-            </li>
-            <li class = "progrmas-li">
-                <img src = "<?php echo get_template_directory_uri().'/img/mentorship.png' ?>">
-                <div class = "programs-list">
-                    <h5>Private Coaching</h5>
-                    <p>One-on-one sessions focused on personal improvement.</p>
-                </div>
-            </li>
-            <li class = "progrmas-li">
-                <img src = "<?php echo get_template_directory_uri().'/img/meeting.png' ?>">
-                <div class = "programs-list">
-                    <h5>Group Clinics</h5>
-                    <p>IFun and engaging training in small group settings.</p>
-                </div>
-            </li>
-            <li class = "progrmas-li">
-                <img src = "<?php echo get_template_directory_uri().'/img/booking.png' ?>">
-                <div class = "programs-list">
-                    <h5>Court Booking</h5>
-                    <p>Easy and flexible online court reservations.</p>
-                </div>
-            </li>
-            <li class = "progrmas-li">
-                <img src = "<?php echo get_template_directory_uri().'/img/diversity.png' ?>">
-                <div class = "programs-list">
-                    <h5>Community Events</h5>
-                    <p>Social matches, tournaments, and local tennis activities.</p>
-                </div>
-            </li>
-        </ul>
+
+        <?php endwhile; ?>
+
+    </ul>
+<?php endif; ?>
+
+
     </div>
 </section>
 

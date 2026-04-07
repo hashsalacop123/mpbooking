@@ -1,11 +1,27 @@
 <?php 
 // Template Name: Coaches 
 
-get_header(); ?>
-<div class = "coaches-wrapper">
-    <div class="top-header-page" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/img/top-heading.jpg');">
+get_header(); 
+    
+    // TOP HEADER OF SOME PAGES
+    include get_template_directory() . '/inc/top-header.php'; 
+
+?>
+
         <h1><?php echo get_the_title();?></h1>
-    </div>
+
+           <?php
+                if ( have_posts() ) :
+                    while ( have_posts() ) :
+                        the_post(); ?>
+                                <?php the_content(); ?>
+
+                        <?php
+                    endwhile;
+                endif;
+                ?>
+    </div> 
+    <!-- this is the close div of the banner -->
     <div class = "coach-inner-wrapper">
         <div class = "container">
         <div class = "row">

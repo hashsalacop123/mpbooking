@@ -1,17 +1,26 @@
 <?php 
 //Template Name: Gallery
 
-get_header(); ?>
-<div class = "gallery-main-wrapper">
-    <div class="banner-pages" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/img/contact-us-2.jpg' ); ?>'); background-position: center top;">
-        <div class = "container">
-            <div class = "row">
-                <div class = "col-lg-6 col-md-6 col-sm-12">
-                    <h1>Gallery</h1>
-                    <p>Moments from our courts, coaches and community</p>
-                </div>
-            </div>
-        </div>
+get_header(); 
+    include get_template_directory() . '/inc/top-header.php'; 
+
+?>
+
+               
+                      <h1><?php echo get_the_title();?></h1>
+
+                        <?php
+                                if ( have_posts() ) :
+                                    while ( have_posts() ) :
+                                        the_post(); ?>
+                                                <?php the_content(); ?>
+
+                                        <?php
+                                    endwhile;
+                                endif;
+                                ?>
+                
+            
     </div>
     <?php if (have_rows('gallery_tabs')) : ?>
 
