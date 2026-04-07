@@ -26,7 +26,7 @@ get_header(); ?>
   </div>
 </div>
   <div class = "court-section court-inner-wrapper">
-      <div class = "container">
+      <div class = "container service-loop-landing">
           <div class = "row">
               <div class = "col-md-12">
                   <hr>

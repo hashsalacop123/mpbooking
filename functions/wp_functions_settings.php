@@ -384,4 +384,9 @@ function hash_redirect_wp_login_safe() {
     exit;
 }
 add_action('init', 'hash_redirect_wp_login_safe');
+function theme_setup_features() {
+    // Enable Featured Image for posts
+    add_theme_support('post-thumbnails');
+}
+add_action('after_setup_theme', 'theme_setup_features');
 ?>

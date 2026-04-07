@@ -140,6 +140,8 @@ a.button-general:hover
     position: relative;
     z-index: 2;
     color: #fff;
+}.court-item-wrapper .review {
+    bottom: -75px;
 }
 /* Ensure content appears above video and overlay */
 .landing-page-wrapper .container {

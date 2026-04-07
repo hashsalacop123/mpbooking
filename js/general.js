@@ -270,35 +270,46 @@ jQuery(document).ready(function($){
     // ================================
     // INIT DATATABLE
     // ================================
-    const table = $('#hash-reviews-table').DataTable({
-        ajax: {
-            url: booking_ajax.ajax_url,
-            type: 'POST',
-            data: {
-                action: 'hash_get_reviews_table'
-            },
-            dataSrc: function(json) {
-                console.log(json); // debug
-                return json.data;
-            }
+const table = $('#hash-reviews-table').DataTable({
+    responsive: true, // 👈 REQUIRED
+    autoWidth: false,
+
+    ajax: {
+        url: booking_ajax.ajax_url,
+        type: 'POST',
+        data: {
+            action: 'hash_get_reviews_table'
         },
-        columns: [
-            { data: 'court' },
-            { data: 'name' },
-            { data: 'role' },
-            { data: 'comment' },
-            { data: 'rating' },
-            { data: 'date' },
-            { data: 'status' },
-            {
-                data: 'view',
-                render: function(data){
-                    return `<a href="${data}" target="_blank">View</a>`;
-                }
-            },
-            { data: 'action' }
-        ]
-    });
+        dataSrc: function(json) {
+            console.log(json);
+            return json.data;
+        }
+    },
+
+    columns: [
+        { data: 'court' },   // 0
+        { data: 'name' },    // 1
+        { data: 'role' },    // 2
+        { data: 'comment' }, // 3
+        { data: 'rating' },  // 4
+        { data: 'date' },    // 5
+        { data: 'status' },  // 6 👈 IMPORTANT
+        {
+            data: 'view',
+            render: function(data){
+                return `<a href="${data}" target="_blank">View</a>`;
+            }
+        },                   // 7
+        { data: 'action' }   // 8
+    ],
+
+    columnDefs: [
+        { responsivePriority: 1, targets: 0 }, // court
+        { responsivePriority: 2, targets: 1 }, // name
+        { responsivePriority: 3, targets: 6 }, // status 👈 KEEP THIS
+        { responsivePriority: 4, targets: -1 } // action
+    ]
+});
 
 
     // ================================
@@ -407,5 +418,87 @@ jQuery(document).ready(function($){
 });
 
 });
+
+
+// THIS IS THE REFUND JS
+
+
+
+  // Toggle fields
+  $('#refund_method').on('change', function(){
+    let val = $(this).val();
+
+    $('#wallet_fields, #bank_fields').addClass('d-none');
+
+    if(val === 'gcash' || val === 'maya'){
+      $('#wallet_fields').removeClass('d-none');
+    }
+
+    if(val === 'bank'){
+      $('#bank_fields').removeClass('d-none');
+    }
+  });
+
+  // Submit form
+  $('#mp-refund-form').on('submit', function(e){
+    e.preventDefault();
+
+    let $form = $(this);
+    let $btn = $form.find('button[type="submit"]');
+
+    // disable button
+    $btn.prop('disabled', true).text('Processing...');
+
+    $.ajax({
+      url: booking_ajax.ajax_url,
+      type: 'POST',
+      data: {
+        action: 'mp_submit_refund',
+        nonce: booking_ajax.nonce,
+        form_data: $form.serialize()
+      },
+      success: function(res){
+
+        // ✅ remove old alerts (important)
+        $('.mp-refund-alert').remove();
+
+        if(res.success){
+          $form.prepend(
+            '<div class="alert alert-success mp-refund-alert">'+res.data+'</div>'
+          );
+
+          // ✅ reset form after success
+          $form[0].reset();
+
+          // ✅ hide dynamic fields again
+          $('#wallet_fields, #bank_fields').addClass('d-none');
+
+        } else {
+          $form.prepend(
+            '<div class="alert alert-danger mp-refund-alert">'+res.data+'</div>'
+          );
+        }
+
+        // re-enable button
+        $btn.prop('disabled', false).text('Submit Refund Request');
+      },
+      error: function(){
+        $('.mp-refund-alert').remove();
+
+        $form.prepend(
+          '<div class="alert alert-danger mp-refund-alert">Something went wrong. Please try again.</div>'
+        );
+
+        $btn.prop('disabled', false).text('Submit Refund Request');
+      }
+    });
+
+  });
+
+
+
+
+
+
 
 })(jQuery);

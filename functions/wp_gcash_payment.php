@@ -228,4 +228,105 @@ MatchPoint
 
     return new WP_REST_Response(['received' => true], 200);
 }
+
+// Handle refund form submission
+// Handle refund form submission using PayMongo reference
+function mp_submit_refund() {
+
+    // Security check
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'booking_nonce')) {
+        wp_send_json_error('Invalid request.');
+    }
+
+    // Parse form data
+    parse_str($_POST['form_data'], $data);
+
+    // Validate required fields
+    if (empty($data['booking_reference'])) {
+        wp_send_json_error('Booking reference is required.');
+    }
+
+    $reference = sanitize_text_field($data['booking_reference']);
+
+    // 🔥 Find booking via ACF paymongo_reference
+    $query = new WP_Query([
+        'post_type'      => 'booking', // confirm this
+        'posts_per_page' => 1,
+        'meta_query'     => [
+            [
+                'key'   => 'paymongo_reference',
+                'value' => $reference,
+                'compare' => '='
+            ]
+        ]
+    ]);
+
+    if (!$query->have_posts()) {
+        wp_send_json_error('Invalid booking reference.');
+    }
+
+    $booking_id = $query->posts[0]->ID;
+
+    wp_reset_postdata();
+
+    // ✅ Get ACF booking status (your main field)
+    $status = get_field('booking_status', $booking_id);
+
+    // ❌ Prevent duplicate or completed refunds
+    if ($status === 'refund_pending') {
+        wp_send_json_error('Refund already requested.');
+    }
+
+    if ($status === 'refunded') {
+        wp_send_json_error('This booking is already refunded.');
+    }
+
+    // ✅ Only allow if APPROVED (your "paid")
+    if ($status !== 'approved') {
+        wp_send_json_error('Only approved bookings can request refund.');
+    }
+
+    // ✅ Validate refund method fields
+    if (!empty($data['refund_method'])) {
+
+        if (in_array($data['refund_method'], ['gcash', 'maya'])) {
+            if (empty($data['wallet_name']) || empty($data['wallet_number'])) {
+                wp_send_json_error('Wallet name and number are required.');
+            }
+        }
+
+        if ($data['refund_method'] === 'bank') {
+            if (
+                empty($data['bank_name']) ||
+                empty($data['bank_account_name']) ||
+                empty($data['bank_account_number'])
+            ) {
+                wp_send_json_error('Complete bank details are required.');
+            }
+        }
+    }
+
+    // Save refund data
+    foreach ($data as $key => $value) {
+        update_post_meta($booking_id, 'refund_' . $key, sanitize_text_field($value));
+    }
+
+    // Save timestamp
+    update_post_meta($booking_id, 'refund_date_requested', current_time('mysql'));
+
+    // 🔥 IMPORTANT: set to refund_pending (NOT refunded yet)
+    update_field('booking_status', 'refund_pending', $booking_id);
+
+    // Notify admin
+    wp_mail(
+        get_option('admin_email'),
+        'Refund Request Submitted',
+        'Booking Reference: ' . $reference
+    );
+
+    wp_send_json_success('Refund request submitted successfully.');
+
+}
+add_action('wp_ajax_mp_submit_refund', 'mp_submit_refund');
+add_action('wp_ajax_nopriv_mp_submit_refund', 'mp_submit_refund');
 ?>

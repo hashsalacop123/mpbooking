@@ -37,7 +37,7 @@ function theme_enqueue_styles() {
     wp_enqueue_style('innerpages', get_template_directory_uri() . '/css/inner-pages.css');
     wp_enqueue_style('global-css', get_template_directory_uri() . '/css/style.css');
     wp_enqueue_style($parent_style, get_template_directory_uri() . '/style.css');
-        wp_enqueue_style('responsive', get_template_directory_uri() . '/css/responsive.css');
+    wp_enqueue_style('responsive', get_template_directory_uri() . '/css/responsive.css');
 
     // jQuery
     wp_enqueue_script('jquery');
@@ -63,25 +63,42 @@ function theme_enqueue_styles() {
                         '2.3.7',
                         true // load in footer
                     );
+                wp_enqueue_script(
+                    'datatables-responsive-js',
+                    'https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.min.js',
+                    array('datatables-js'),
+                    '3.0.2',
+                    true
+                );
                     // Inline initialization script
-                    $datatable_init = "
-                        Object.assign(DataTable.defaults, {
-                            searching: false,
-                            ordering: false
-                        });
+            $datatable_init = "
+                Object.assign(DataTable.defaults, {
+                    searching: false,
+                    ordering: false
+                });
 
-                        new DataTable('#bookings');
-                        new DataTable('#users-table');
-                    ";
+                new DataTable('#bookings', {
+                    responsive: true,
+                    autoWidth: false,
+                    columnDefs: [
+                        { responsivePriority: 1, targets: 0 }, // Name
+                        { responsivePriority: 2, targets: 3 }, // Status (adjust if needed)
+                        { responsivePriority: 3, targets: -1 } // Action
+                    ]
+                });
 
-                    wp_add_inline_script('datatables-js', $datatable_init);
-                }
+                new DataTable('#users-table', {
+                    responsive: true,
+                    autoWidth: false
+                });
+
+                console.log('Responsive:', DataTable.Responsive);
+            ";
+
+                wp_add_inline_script('datatables-responsive-js', $datatable_init);
+                    }
                 // Dashboard script
                 
-    // wp_localize_script('general-script', 'booking_ajax', [
-    //         'ajax_url' => admin_url('admin-ajax.php'),
-    //         'nonce'    => wp_create_nonce('booking_nonce')
-    // ]);
 
     wp_enqueue_style('bootstrap','https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css');
     wp_enqueue_script('bootstrap-js','https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js', ['jquery'], null, true);
@@ -98,6 +115,7 @@ function theme_enqueue_styles() {
     wp_enqueue_script('mapbox-gl-directions-js','https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.3.1/mapbox-gl-directions.js', ['jquery'], null, true);
     // wp_enqueue_script('bootstrap-js','https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js', ['jquery'], null, true);
     wp_enqueue_script('fancy-box','https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.umd.js', ['jquery'], null, true);
+    wp_enqueue_script('share','https://platform-api.sharethis.com/js/sharethis.js', ['jquery'], null, true);
 
     // Theme JS
     wp_enqueue_script('user-js', get_stylesheet_directory_uri() . '/js/user.js', ['jquery'], null, true);

@@ -90,7 +90,10 @@ get_header(); ?>
                                         ?>
                                         <h5 class="card-title"><?php echo esc_html($marker['address']); ?></h5>
                                         <!-- <p class="card-text"><?php echo esc_html($marker['about_me']); ?></p> -->
-                                        
+
+                                        <div class = "court-review-wrapper">
+                                            <?php echo hash_display_rating_summary(); ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

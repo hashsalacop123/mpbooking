@@ -162,13 +162,13 @@ p.copy-right-bottom-text {
 
 .service-gallery-thumbs img {
 	text-align: center;
-	margin: 0 auto;
-	border-radius: 20px;
-	width: 100%;
-	padding-left: 10px;
-	padding-right: 10px;
-	margin-top: 25px;
-	margin-bottom: 55px;
+    margin: 0 auto;
+    border-radius: 20px;
+    margin-top: 25px;
+    margin-bottom: 55px;
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
 }
 
 .wrapper-data {
@@ -1627,4 +1627,35 @@ min-height: 175px!Important;
 
 .coach-ratings-review .rating-number {
     font-size: 12px;
+}
+.court-review-wrapper .rating-box {
+    padding: 0px;
+}
+
+.court-review-wrapper .review-label {
+    font-size: 12px;
+}
+
+.court-review-wrapper .rating-number {
+    font-size: 12px;
+}
+
+.court-review-wrapper .review-count {
+    font-size: 16px;
+}
+
+.court-review-wrapper .stars-outer {
+    font-size: 15px;
+}
+.refund-page {
+    padding-top: 40px;
+    padding-bottom: 50px;
+}
+.service-loop-landing .review {
+    bottom: 0;
+}.btn.general-btn {
+    background: #1e6366;
+    color: #fff;
+    font-weight: 500;
+	    width: 40%;
 }

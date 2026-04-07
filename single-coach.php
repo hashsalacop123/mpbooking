@@ -149,5 +149,11 @@ echo '</div>';
             </div> <!-- row -->
         </div> <!-- container -->
 </div> <!-- coach-wrapper -->
-
+<div class="sharethis-share-buttons" data-type="sticky-share-buttons">
+    <span data-network="facebook"></span>
+    <span data-network="twitter"></span>
+    <span data-network="linkedin"></span>
+    <span data-network="email"></span>
+    <span data-network="sharethis"></span>
+</div>
 <?php get_footer(); ?>

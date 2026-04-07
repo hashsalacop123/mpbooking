@@ -1,14 +1,14 @@
 /*
 Theme Name: Match Point Custom Theme
 Theme URI: https://hashcrafter.com/
-Author: Your Name
+Author: Hassanal S. Aguam
 Author URI: https://hashcrafter.com/
-Description: A custom WordPress theme built for [project name].
+Description: This theme is exclusive for this project matchpoint booking in cebu
 Version: 1.0
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Tags: custom-theme, responsive, bootstrap
-Text Domain: matchpoint.com
+Tags: custom-theme, responsive, bootstrap, jQuery, Ajax, Paymongo
+Text Domain: mpbooking.com
 */
 body {
   font-family: 'Roboto', sans-serif;
@@ -238,4 +238,24 @@ text-align: center;
     padding: 5px 15px;
     color: #fff;
     border-radius: 16px;
+}
+.single-blog h1 {
+    color: #1e6366;
+    font-size: 50px;
+}.post-meta span {
+    margin-left: 10px;
+}
+
+.post-meta span:first-child {
+    margin-left: 0px;
+}
+
+.post-meta span i {color: #1e6366;}
+
+.post-meta span a {
+    color: #000;
+}
+
+.post-meta span {
+    color: #000;
 }

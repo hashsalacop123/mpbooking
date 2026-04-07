@@ -1,9 +1,3 @@
-
-
-
-
-
-
 <footer>
     <div class = "footer-wrapper inner-footer">
         <div class = "container">
@@ -44,7 +38,8 @@
                                     <li><a href = "/contact-us/">Contact Us</a></li>
                                     <li><a href = "/court/">Court</a></li>
                                     <li><a href = "/coaches/">Coaches</a></li>
-                                    <li><a href = "/coaches/">Blogs</a></li>
+                                    <li><a href = "/refund/">Refund</a></li>
+                                    <li><a href = "/blogs/">Blog</a></li>
                                 </ul>
                            
                         </div>

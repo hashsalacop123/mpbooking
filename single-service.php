@@ -76,10 +76,7 @@ if ( $images ) : ?>
 
                     </div>
                     <div class = "share-and-heart">
-                        <ul>
-                            <li><a href = "#"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <!-- <li><a href = "#"><i class="fa fa-heart" aria-hidden="true"></i></a></li> -->
-                        </ul>
+                        
                     </div>
                 </div>
                 <div class = "service-maps">
@@ -135,5 +132,13 @@ echo '</div>';
                     </div>
                     
 </div>
-
+<!-- ShareThis BEGINS -->
+<div class="sharethis-share-buttons" data-type="sticky-share-buttons">
+    <span data-network="facebook"></span>
+    <span data-network="twitter"></span>
+    <span data-network="linkedin"></span>
+    <span data-network="email"></span>
+    <span data-network="sharethis"></span>
+</div>
+<!-- ShareThis ENDS -->
 <?php get_footer(); ?>

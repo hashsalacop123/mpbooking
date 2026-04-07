@@ -1,11 +1,11 @@
 {
-    "key": "group_698b5099c703c",
-    "title": "Booking",
+    "key": "group_69cc943a46f30",
+    "title": "Refund Booking",
     "fields": [
         {
-            "key": "field_69b4dcac1cb5a",
-            "label": "Reference",
-            "name": "paymongo_reference",
+            "key": "field_69cc943a3eb74",
+            "label": "Refund Reason",
+            "name": "refund_reason",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -24,9 +24,9 @@
             "append": ""
         },
         {
-            "key": "field_698b50991f423",
-            "label": "Guest Name",
-            "name": "guest_name",
+            "key": "field_69cc945d3eb75",
+            "label": "Refund Method",
+            "name": "refund_method",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -45,30 +45,9 @@
             "append": ""
         },
         {
-            "key": "field_698b51d1857ac",
-            "label": "Guest Comment",
-            "name": "guest_comment",
-            "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "allow_in_bindings": 0,
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1,
-            "delay": 0
-        },
-        {
-            "key": "field_698b50b91f424",
-            "label": "Guest Number",
-            "name": "guest_number",
+            "key": "field_69cc94683eb76",
+            "label": "Refund wallet name",
+            "name": "refund_wallet_name",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -87,29 +66,9 @@
             "append": ""
         },
         {
-            "key": "field_698b515721c01",
-            "label": "Guest Email",
-            "name": "guest_email",
-            "aria-label": "",
-            "type": "email",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_698b50c31f425",
-            "label": "Date Booked",
-            "name": "date_booked",
+            "key": "field_69cc94833eb77",
+            "label": "Refund wallet number",
+            "name": "refund_wallet_number",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -128,9 +87,9 @@
             "append": ""
         },
         {
-            "key": "field_698b50d81f426",
-            "label": "Time Start",
-            "name": "time_start",
+            "key": "field_69cc94973eb78",
+            "label": "Refund bank name",
+            "name": "refund_bank_name",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -149,9 +108,9 @@
             "append": ""
         },
         {
-            "key": "field_698b50e01f427",
-            "label": "Time End",
-            "name": "time_end",
+            "key": "field_69cc94b23eb79",
+            "label": "Refund bank account name",
+            "name": "refund_bank_account_name",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -170,9 +129,9 @@
             "append": ""
         },
         {
-            "key": "field_698b50ee1f428",
-            "label": "Amount",
-            "name": "amount",
+            "key": "field_69cc94c83eb7a",
+            "label": "Refund bank account number",
+            "name": "refund_bank_account_number",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -191,11 +150,11 @@
             "append": ""
         },
         {
-            "key": "field_698b517f21c02",
-            "label": "Coach \/ Services",
-            "name": "coach__services",
+            "key": "field_69cc94e13eb7b",
+            "label": "Refund date requested",
+            "name": "refund_date_requested",
             "aria-label": "",
-            "type": "user",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -204,45 +163,12 @@
                 "class": "",
                 "id": ""
             },
-            "role": "",
-            "return_format": "array",
-            "multiple": 0,
-            "allow_null": 0,
+            "default_value": "",
+            "maxlength": "",
             "allow_in_bindings": 0,
-            "bidirectional": 0,
-            "bidirectional_target": []
-        },
-        {
-            "key": "field_698c8665c007e",
-            "label": "Booking Status",
-            "name": "booking_status",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "pending": "Pending",
-                "rejected": "Rejected",
-                "approved": "Approved",
-                "refunded": "Refunded",
-                "refund_pending": "Refund Pending"
-            },
-            "default_value": "pending",
-            "return_format": "value",
-            "multiple": 0,
-            "allow_null": 0,
-            "allow_in_bindings": 0,
-            "ui": 0,
-            "ajax": 0,
             "placeholder": "",
-            "create_options": 0,
-            "save_options": 0
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -259,17 +185,12 @@
     "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
-    "hide_on_screen": [
-        "the_content",
-        "excerpt",
-        "discussion",
-        "comments"
-    ],
+    "hide_on_screen": "",
     "active": true,
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1775014804
+    "modified": 1775015173
 }

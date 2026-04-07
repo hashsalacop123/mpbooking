@@ -12,7 +12,7 @@ get_header();
         <?php include get_template_directory() . '/dashboard/dashboard-sidebar.php'; ?>    </div>
     <!-- CONTTENT START HERE -->
     <div class = "col-xl-9 col-lg-9 col-md-9 col-sm-12">
-
+<h3>Member</h3>
  <?php
 // Get users with specific roles
 $args = array(
@@ -27,6 +27,20 @@ $users = $user_query->get_results();
 
 <table id="users-table" class="display tables-general">
     <thead>
+        <?php
+// Get ONE post created by this user (change post_type if needed)
+$user_posts = get_posts(array(
+    'author'        => $user->ID,
+    'post_type'     => 'any', // or your CPT like 'event'
+    'posts_per_page'=> 1,     // only get 1
+));
+
+$post_link = '';
+
+if (!empty($user_posts)) {
+    $post_link = get_permalink($user_posts[0]->ID);
+}
+?>
         <tr>
             <th>User ID</th>
             <th>First Name</th>
@@ -35,6 +49,8 @@ $users = $user_query->get_results();
             <th>Role</th>
             <th>Valid ID</th>
             <th>Status</th>
+            <th>Page</th>
+
             <th>Action</th>
         </tr>
     </thead>
@@ -101,6 +117,25 @@ if (is_array($valid_id) && isset($valid_id['url'])) {
                              <?php echo esc_html($registration_status); ?>
                         </span>
                     </td>
+           <?php
+$user_posts = get_posts(array(
+    'author'        => $user->ID,
+    'post_type'     => 'any',
+    'posts_per_page'=> -1,
+));
+?>
+
+<td>
+    <?php if (!empty($user_posts)) : ?>
+        <?php foreach ($user_posts as $post) : ?>
+            <a href="<?php echo esc_url(get_permalink($post->ID)); ?>" target="_blank">
+                Link page
+            </a><br>
+        <?php endforeach; ?>
+    <?php else : ?>
+        N/A
+    <?php endif; ?>
+</td>
                    <td class="button-action">
                     <button 
                         class="btn btn-primary open-user-modal"

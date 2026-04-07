@@ -92,8 +92,7 @@ if ($courts):
             $current = clone $start_dt;
 
                 while ($current <= $end_dt) {
-                    $slot_time = $current->format('g:00 A');
-
+$slot_time = $current->format('h:00 A');
                     // Initialize if not set
                     if (!isset($blocked_slots[$date][$slot_time])) {
                         $blocked_slots[$date][$slot_time] = $status;
@@ -155,7 +154,7 @@ if ($courts):
             $temp = clone $start;
 
             while ($temp < $end) {
-                $slots[] = $temp->format('g:00 A');
+                $slots[] = $temp->format('h:00 A');
                 $temp->modify('+1 hour');
             }
 

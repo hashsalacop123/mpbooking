@@ -167,6 +167,9 @@ get_header();
             <option value="pending">Pending</option>
             <option value="approved">Approved</option>
             <option value="rejected">Rejected</option>
+            <option value="refunded">Refunded</option>
+            <option value="refund_pending">Refund pending</option>
+
         </select>
 
         <div style="margin-top:15px;">
