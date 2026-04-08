@@ -516,6 +516,10 @@
 
 
 @media only screen and (max-width:767px) {
+	ul.footer-third-new {
+    display: flex;
+    flex-direction: column;
+}
 	.post-thumbnail img {
     width: 100%;
     height: auto;
@@ -607,6 +611,17 @@
 }
 
 @media screen and (max-width:575px) {
+	.search-wrapper button {
+		font-size:14px;
+	}
+		.search-wrapper {
+			display: flex;
+			width: 100%;
+			text-align: left;
+			margin: 0 auto;
+			flex-direction: column;
+			gap: 10px;
+	}
 	ul.contact-footer {
 		padding-left: 0px;
 		display: flex;
@@ -658,8 +673,8 @@
 	}
 
 	.menu-icon {
-		width: 85px;
-		height: 35px;
+	     width: 70px;
+        height: 30px;  
 		top: -45px;
 	}
 

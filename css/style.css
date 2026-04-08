@@ -1322,8 +1322,8 @@ button#confirm_booking_btn {
 }
 
 .menu-icon div {
-	width: 40px;
-	height: 5px;
+	width: 30px;
+    height: 4px;
 	background: #1e6366;
 	margin: 5px;
 	transition: all 0.35s;

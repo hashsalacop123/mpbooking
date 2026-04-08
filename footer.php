@@ -65,7 +65,7 @@
                                 $menu_items = wp_get_nav_menu_items($menu_id);
 
                                 if ($menu_items) {
-                                    echo '<ul>';
+                                    echo '<ul class = "footer-third-new">';
 
                                     foreach ($menu_items as $item) {
                                         echo '<li>';
