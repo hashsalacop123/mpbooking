@@ -994,7 +994,7 @@ ul.social-media {
 
 
 section.faq-wrapper {
-	background: #dadddf;
+	background: #ffff;
 	padding-top: 60px;
 	padding-bottom: 60px;
 }
@@ -1004,11 +1004,7 @@ section.faq-wrapper h5 button {
 	font-size: 23px;
 }
 
-section.faq-wrapper {
-	background: #dadddf;
-	padding-top: 60px;
-	padding-bottom: 60px;
-}
+
 
 section.faq-wrapper .card {
 	margin-top: 15px;
@@ -1077,8 +1073,11 @@ section.faq-wrapper h3 {
 .footer-third-column input.wpcf7-form-control {
 	border: 1px solid #fff;
 	padding: 5px 20px;
-	border-radius: 20px;
+    border-radius: 20px 0px 0px 20px;
 	width: 100%;
+}
+.footer-third-column form.wpcf7-form.init {
+    display: flex;
 }
 
 .bottom-container {
@@ -1089,6 +1088,7 @@ section.faq-wrapper h3 {
 
 .bottom-container p {
 	color: #fff;
+	text-align: center;
 }
 
 .bottom-container a {
@@ -1487,7 +1487,7 @@ ul.comment-list {
 }
 
 .review-count {
-    font-size: 24px;
+    font-size: 14px;
     font-weight: bold;
 }
 
@@ -1504,7 +1504,7 @@ ul.comment-list {
 .stars-outer {
     position: relative;
     display: inline-block;
-    font-size: 18px;
+    font-size: 14px;
     color: #ccc;
 	margin-bottom: 10px;
 }
@@ -1663,4 +1663,72 @@ min-height: 175px!Important;
     color: #fff;
     font-weight: 500;
 	    width: 40%;
+}
+input.wpcf7-form-control.wpcf7-submit.has-spinner {
+    border-radius: 0px 20px 20px 0px;
+    font-size: 18px;
+}
+.news-loop .post-item h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1e6366;
+}
+
+.news-loop {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.news-loop .post-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.news-loop .post-item a {
+background: #1e6366;
+    padding: 6px 20px 6px 20px;
+    display: inline-block;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 13px;
+    border-radius: 3px;
+    border: 1px solid #1e6366;
+    margin-top: 15px;
+}
+
+.news-loop .post-item a:hover {
+    background: transparent;
+    border: 1px solid #1e6366;
+    color: #1e6366;
+    text-decoration: none;
+}.news-loop img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}.post-thumbnail img {
+    width: 350px;
+    height: 200px;
+    object-fit: cover;
+}
+.news-loop .post-meta {
+    margin-bottom: 10px ! Important;
+}
+.service-review .review-label {
+    color: #fff;
+    font-size: 12px;
+}
+
+.service-review .rating-number {
+    color: #fff;
+    font-size: 12px;
+}
+
+.service-review .rating-box {
+    padding: 0px;
+}
+.item-wrapper-court .wrapper-bot-comments {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 154px;
 }

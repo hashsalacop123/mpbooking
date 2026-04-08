@@ -4,63 +4,149 @@
                 <div class="row">
                     <div class = "col-xl-4 col-lg-4 col-md-4 col-sm-12">
                         <div class = "footer-first-column footer-column">
-                            <h5>Tailored for Tennis Learners</h5>
-                             <p>We are a team of passionate tennis coaches committed to delivering high-quality, inclusive training programs that empower youth, foster community engagement, and promote long-term athletic development.</p>
 
+                        <?php 
+                            $heading_footer = get_field('heading_footer','option');
+                            $about_text_footer = get_field('about_text_footer','option');
+                            $heading_column_2 = get_field('heading_column_2','option');
+                            $heading_column_3 = get_field('heading_column_3','option');
+                            $heading_column_4 = get_field('heading_column_4','option');
+                            if($heading_footer) :
+                                echo '<h5>'.esc_attr($heading_footer).'</h5>';
+                            endif;
+
+                            if($about_text_footer) :
+                                echo wp_kses_post($about_text_footer);
+                            endif;
+                        ?>
                         </div>
                     </div>
                     <div class = "col-xl-2 col-lg-2 col-md-2 col-sm-12">
                         <div class = "footer-second-column footer-column">
-                            <h5>Contact info</h5>
-                                <ul>
-                        <li>
-                            <i class="fa fa-phone" aria-hidden="true"></i>
-                            <a href = "tel:+639215369904">+0921-536-9904</a>
-                        </li>
-                        <!-- <li>
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                            <a href = "mailto:Matchpointtennis@outlook.ph
- ">Matchpointtennis@outlook.ph</a>
+                          
+                            <?php 
+                                if($heading_column_2) :
+                                    echo '<h5>'.esc_attr($heading_column_2).'</h5>';
+                                endif;
 
-                        </li> -->
-                          <li>
-                            <i class="fa-solid fa-map-pin"></i>
-                            IT Park, Lahug, Cebu City
-                        </li>
-                        </ul>
+            
+                                $menu_locations = get_nav_menu_locations();
+                                $menu_id = $menu_locations['footer_one'];
+                                $menu_items = wp_get_nav_menu_items($menu_id);
+
+                                if ($menu_items) {
+                                    echo '<ul>';
+
+                                    foreach ($menu_items as $item) {
+                                        echo '<li>';
+                                        echo '<a href="' . esc_url($item->url) . '">';
+                                        echo esc_html($item->title);
+                                        echo '</a>';
+                                        echo '</li>';
+                                    }
+
+                                    echo '</ul>';
+                                }
+                            ?>
+                              
+            
+                         
                         </div>
                     </div>
                     <div class = "col-xl-2 col-lg-2 col-md-2 col-sm-12">
                         <div class = "footer-third-column footer-column">
-                            <h5>Quick Links</h5>
-                                <ul>
-                                    <li><a href = "/about-us/">About Us</a></li>
-                                    <li><a href = "/contact-us/">Contact Us</a></li>
-                                    <li><a href = "/court/">Court</a></li>
-                                    <li><a href = "/coaches/">Coaches</a></li>
-                                    <li><a href = "/refund/">Refund</a></li>
-                                    <li><a href = "/blogs/">Blog</a></li>
-                                </ul>
+                               <?php 
+                                if($heading_column_3) :
+                                    echo '<h5>'.esc_attr($heading_column_3).'</h5>';
+                                endif;
+
+                                   $menu_locations = get_nav_menu_locations();
+                                $menu_id = $menu_locations['footer_two'];
+                                $menu_items = wp_get_nav_menu_items($menu_id);
+
+                                if ($menu_items) {
+                                    echo '<ul>';
+
+                                    foreach ($menu_items as $item) {
+                                        echo '<li>';
+                                        echo '<a href="' . esc_url($item->url) . '">';
+                                        echo esc_html($item->title);
+                                        echo '</a>';
+                                        echo '</li>';
+                                    }
+
+                                    echo '</ul>';
+                                }
+                             ?>
+                           
                            
                         </div>
                     </div>
                     <div class = "col-xl-4 col-lg-4 col-md-4 col-sm-12">
                         <div class = "footer-third-column footer-column">
-                            <h5>Subscribe</h5>
                             <?php 
-                             $subscribe = get_field('subsriptions', 'option');
-
-if (!empty($subscribe)) {
-    echo do_shortcode($subscribe);
-}
-
-
+                              
+                                if($heading_column_4) :
+                                    echo '<h5>'.esc_attr($heading_column_4).'</h5>';
+                                endif;
                             
+                             $subscribe = get_field('subsriptions', 'option');
+                                if (!empty($subscribe)) {
+                                    echo do_shortcode($subscribe);
+                                }
+
+                                $facebook = get_field('facebook','option');
+                                $youtube = get_field('youtube','option');
+                                $instagram = get_field('instagram','option');
+                                $tiktok = get_field('tiktok','option');
                             ?>
+                             <h5>Follow Us</h5>
+                                <ul class = "social-media">
+                                    <?php if($facebook) : 
+                                            echo '<li><a href = "'.esc_attr($facebook).'"  target = "_blank"><i class="fa-brands fa-facebook"></i></a></li>';
+                                        endif;
+                                        if($youtube) : 
+                                            echo '<li><a href = "'.esc_attr($youtube).'"  target = "_blank"><i class="fa-brands fa-youtube"></i></a></li>';
+                                        endif;
+
+                                        if($instagram) : 
+                                            echo '<li><a href = "'.esc_attr($instagram).'"  target = "_blank"><i class="fa-brands fa-square-instagram"></i></a></li>';
+                                        endif;
+                                        
+                                           if($tiktok) : 
+                                            echo '<li><a href = "'.esc_attr($tiktok).'"  target = "_blank"><i class="fa-brands fa-tiktok"></i></a></li>';
+                                        endif;
+                                    ?>
+                                </ul>                            
          
                         </div>
+                        
                     </div>
-                 
+                 <div class = "col-md-12">
+                            <hr>
+                            <?php 
+                                $contact_number = get_field('contact_number','option');
+                                $address = get_field('address','option');
+                                $email = get_field('email','option');
+                            ?>
+                             <ul class = "contact-footer">
+                                        <?php 
+                                            if($contact_number) :
+                                                echo '<li><i class="fas fa-phone"></i>
+                                                      <a href = "tel:+'.$contact_number.'">'.$contact_number.'</a>
+                                                     </li>';
+                                            endif;
+
+                                            if($contact_number) :
+                                                echo '<li><i class="fa-solid fa-map-pin"></i>'.$address.'</li>';
+                                            endif;
+
+                                             if($email) :
+                                                echo '<li><i class="fa fa-envelope" aria-hidden="true"></i>'.$email.'</li>';
+                                            endif;
+                                        ?>
+                        </ul>
+                        </div>
                 </div>
         </div>
     </div>
@@ -70,17 +156,14 @@ if (!empty($subscribe)) {
                 
                     <div class = "col-sm-12 col-md-12">
                         <div class = "bottom-ft-match">
-                            <p class = "copy-right-bottom-text">&copy; <?php echo date('Y'); ?>  Match Point. All rights reserved, All Right Reserved | Designed By <a href="https://hashcrafter.com/">hashcrafter</a></p>
-                         <ul class = "social-media">
+                            <?php 
+                                $copy_right_bottom_text = get_field('copy_right_bottom_text','option');
 
-                                <li><a href = "https://www.facebook.com/MatchpointTennisAcad/" target = "_blank"><i class="fa-brands fa-facebook"></i></a></li>
-                                <li><a href = "https://www.youtube.com/@matchpointtenniscebu" target = "_blank"><i class="fa-brands fa-youtube"></i>
-                                    </a></li>
-                                <li><a href = "https://www.instagram.com/mptenniscebu" target = "_blank"><i class="fa-brands fa-square-instagram"></i>
-                                    </a></li>
-                                <li><a href = "hhttps://www.tiktok.com/@matchpointtenniscebu" target = "_blank"><i class="fa-brands fa-tiktok"></i>
-                                    </a></li>
-                            </ul>
+                                if($copy_right_bottom_text) :
+                                    echo '<p class = "copy-right-bottom-text">'.$copy_right_bottom_text.'</p>';
+                                endif;
+                            ?>
+                     
                         </div>
                     </div>
             </div>

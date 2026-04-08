@@ -516,6 +516,11 @@
 
 
 @media only screen and (max-width:767px) {
+	.post-thumbnail img {
+    width: 100%;
+    height: auto;
+    object-fit: inherit;
+}
     .bottom-ft-match {
     display: flex;
     flex-direction: column;
@@ -602,6 +607,16 @@
 }
 
 @media screen and (max-width:575px) {
+	ul.contact-footer {
+		padding-left: 0px;
+		display: flex;
+		flex-direction: column;
+		align-content: center;
+		justify-content: space-between;
+		align-items: center;
+}
+
+
     .gallery-wrapper {
     text-align: center;
 }

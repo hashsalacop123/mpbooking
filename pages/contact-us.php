@@ -1,51 +1,64 @@
 <?php 
 //Template Name: Contact Us
 
-get_header(); ?>
-<div class = "contact-us-main-wrapper">
-    <div class="banner-pages" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/img/contact-us-2.jpg' ); ?>'); background-position: center top;">
-        <div class = "container">
-            <div class = "row">
-                <div class = "col-lg-6 col-md-6 col-sm-12">
-                    <h1>Contact Us</h1>
-                    <p>Have questions or want to get in touch?</p>
-                    <p>We'd love to hear from you.</p>
-                </div>
-                <div class = "col-lg-6 col-md-6 col-sm-12">
-                </div>
+get_header(); 
+  include get_template_directory() . '/inc/top-header.php'; 
 
-            </div>
-        </div>
+?>
+
+               
+                      <h1><?php echo get_the_title();?></h1>
+
+                        <?php
+                                if ( have_posts() ) :
+                                    while ( have_posts() ) :
+                                        the_post(); ?>
+                                                <?php the_content(); ?>
+
+                                        <?php
+                                    endwhile;
+                                endif;
+                                ?>
+                
+            
     </div>
-
-</div>
 
 <section class = "contact-from">
     <div class = "container">
         <div class = "row">
             <div class = "col-xl-6 col-lg-6 col-md-6 col-sm-12">
                     <div class = "form-container">
-                        <h2>Get in Touch</h2>
-                        <div class = "contact-form-wrapper">
-                        <?php if (have_posts()) : ?>
+                         <div class = "contact-form-wrapper">
+                        <?php
+                            $contact_heading = get_field('contact_heading');
+                            $paragraph_after_heading = get_field('paragraph_after_heading');
+                            $image_left = get_field('image_left');
+                           
+
+                            if($contact_heading) :
+                                echo '<h2>'.esc_attr($contact_heading).'</h2>';
+                            endif;
+
+                            $content = get_field('paragraph_after_heading');
                             
-                            <?php while (have_posts()) : the_post(); ?>
-                                
-                                
-                                <div class="post-content">
-                                    <?php the_content(); ?>
-                                </div>
-
-                            <?php endwhile; ?>
-
-                        <?php endif; ?>
+                            if ( $content ) {
+                                echo do_shortcode( $content );
+                            }
+                          
+                        ?>
+                       
+                      
                         </div>
 
                     </div>
             </div>
             <div class = "col-xl-6 col-lg-6 col-md-6 col-sm-12">
                     <div class = "form-image">
-                        <img src = "<?php echo get_template_directory_uri().'/img/pexels-lebih-dari-ini-3915826-5908430.jpg' ?>" class = "img-fluid">
+                        <?php 
+                            if($image_left['url']) :
+                            echo '<img src="' . esc_url($image_left['url']) . '" alt="' . esc_attr($image_left['alt']) . '" class="img-fluid">';    
+                        endif;
+                        ?>
 
                     </div>
             </div>
@@ -110,81 +123,84 @@ get_header(); ?>
     <div class = "container">
         <div class = "row align-items-stretch">
             <div class = "col-lg-8 col-xl-8 col-md-8 col-sm-12">
-                <h3>Frequenty Ask Questions</h3>
-     <div id="sampleAccordion" class="accordion-custom">
+                     <?php 
+                            $faq_heading = get_field('faq_heading');
+                            $faq = get_field('faq');
+                            $banner_heading = get_field('banner_heading');
 
-    <!-- Item 1 -->
-    <div class="card">
-        <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
-                <button class="btn btn-link d-flex justify-content-between align-items-center w-100" 
-                        data-toggle="collapse" 
-                        data-target="#collapseOne" 
-                        aria-expanded="true">
-                    
-                    What should i bring to my first lesson?
-                    <i class="fa fa-minus toggle-icon"></i>
-                </button>
-            </h5>
-        </div>
+                            if($faq_heading) :
+                                echo '<h3>'.esc_attr($faq_heading).'</h3>';
+                            endif;
+                ?>
+           
+<?php if (have_rows('faq')) : ?>
+    <div id="sampleAccordion" class="accordion-custom">
 
-        <div id="collapseOne" class="collapse show" data-parent="#sampleAccordion">
-            <div class="card-body">
-                This is the content for the first accordion item.
+        <?php $i = 1; // counter for unique IDs ?>
+
+        <?php while (have_rows('faq')) : the_row(); 
+            $heading = get_sub_field('heading_title');
+            $content = get_sub_field('faq_textarea');
+
+            // Unique IDs
+            $heading_id = 'heading' . $i;
+            $collapse_id = 'collapse' . $i;
+
+            // First item open by default
+            $is_first = ($i === 1);
+        ?>
+
+            <div class="card">
+                <div class="card-header" id="<?php echo $heading_id; ?>">
+                    <h5 class="mb-0">
+                        <button 
+                            class="btn btn-link d-flex justify-content-between align-items-center w-100 <?php echo !$is_first ? 'collapsed' : ''; ?>" 
+                            data-toggle="collapse" 
+                            data-target="#<?php echo $collapse_id; ?>" 
+                            aria-expanded="<?php echo $is_first ? 'true' : 'false'; ?>">
+                            
+                            <?php echo esc_html($heading);
+                                $faqtextarea = get_sub_field('faqtextarea');
+                            ?>
+
+                            <i class="fa <?php echo $is_first ? 'fa-minus' : 'fa-plus'; ?> toggle-icon"></i>
+                        </button>
+                    </h5>
+                </div>
+
+                <div 
+                    id="<?php echo $collapse_id; ?>" 
+                    class="collapse <?php echo $is_first ? 'show' : ''; ?>" 
+                    data-parent="#sampleAccordion">
+                        
+                    <div class="card-body">
+                        <?php echo esc_attr($faqtextarea); ?>
+                    </div>
+                </div>
             </div>
-        </div>
+
+        <?php $i++; endwhile; ?>
+
     </div>
-
-    <!-- Item 2 -->
-    <div class="card">
-        <div class="card-header" id="headingTwo">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed d-flex justify-content-between align-items-center w-100" 
-                        data-toggle="collapse" 
-                        data-target="#collapseTwo">
-                    
-How do i book a court
-                    <i class="fa fa-plus toggle-icon"></i>
-                </button>
-            </h5>
-        </div>
-
-        <div id="collapseTwo" class="collapse" data-parent="#sampleAccordion">
-            <div class="card-body">
-                This is the content for the second accordion item.
-            </div>
-        </div>
-    </div>
-
-    <!-- Item 3 -->
-    <div class="card">
-        <div class="card-header" id="headingThree">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed d-flex justify-content-between align-items-center w-100" 
-                        data-toggle="collapse" 
-                        data-target="#collapseThree">
-                    
-Are group lessons available?                    <i class="fa fa-plus toggle-icon"></i>
-                </button>
-            </h5>
-        </div>
-
-        <div id="collapseThree" class="collapse" data-parent="#sampleAccordion">
-            <div class="card-body">
-                This is the content for the third accordion item.
-            </div>
-        </div>
-    </div>
-
-</div>
-
+<?php endif; ?>
 
 
             </div>
             <div class = "col-lg-4 col-xl-4 col-md-4 col-sm-12">
                 <div class="banner-pages data-banner-member" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/img/pass.jpg' ); ?>'); background-position: center top;">
-                    <h3>Join our tennis community today!</h3>
-                    <a href = "/register/">Become a member</a>
+                    <?php 
+                        $banner_heading = get_field('banner_heading');
+
+                        if($banner_heading) :
+                            echo '<h3>'.esc_attr($banner_heading).'</h3>';
+                        endif;
+                        
+                       if ( is_user_logged_in() ) {
+                            echo '<a href = "/dashboard/">Dashboard</a>';
+                        } else {
+                            echo '<a href = "/register/">Become a member</a>';
+                        }
+                    ?>
                 </div>
             </div>
 

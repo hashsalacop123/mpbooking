@@ -384,9 +384,49 @@ function hash_redirect_wp_login_safe() {
     exit;
 }
 add_action('init', 'hash_redirect_wp_login_safe');
-function theme_setup_features() {
-    // Enable Featured Image for posts
+/**
+ * Theme setup features
+ */
+function theme_setup() {
+
+    // Let WordPress manage the document title
+    add_theme_support('title-tag');
+
+    // Enable Featured Images
     add_theme_support('post-thumbnails');
+
+    // Enable HTML5 markup
+    add_theme_support('html5', array(
+        'search-form',
+        'comment-form',
+        'comment-list',
+        'gallery',
+        'caption',
+        'style',
+        'script'
+    ));
+
+
+    register_nav_menus(array(
+        'header_menu'  => 'Header Menu',
+        'footer_one'  => 'Footer One',
+        'footer_two'  => 'Footer Two'
+    ));
+
+   
+
+    // Enable automatic feed links
+    add_theme_support('automatic-feed-links');
+
+    // Enable selective refresh for widgets
+    add_theme_support('customize-selective-refresh-widgets');
+
+    // Register menus
+    register_nav_menus(array(
+        'primary' => 'Primary Menu',
+        'footer'  => 'Footer Menu'
+    ));
 }
-add_action('after_setup_theme', 'theme_setup_features');
+add_action('after_setup_theme', 'theme_setup');
+
 ?>

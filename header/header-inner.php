@@ -7,34 +7,62 @@
                 <div class = "row align-items-center">
                     <div class = "col-xl-3 col-lg-3 col-md-3 col-sm-5">
                         <div class = "inner-page-logo">
-                             <a href = "<?php echo esc_url( home_url( '/' ) ); ?>"><img src = "<?php echo get_stylesheet_directory_uri(); ?>/img/match-point-logo-transparent.png" class = "img-fluid"></a>
+                            <?php 
+                                $logo = get_field('logo','option');
+                                if($logo) : 
+                                    echo '<a href = "'.esc_url(home_url('/')).'"><img src = "'.$logo['url'].'" alt = "'.$logo['alt'].'" class = "img-fluid">';
+                                endif;
+                            ?>
                         </div>
                     
                      </div>
                      <div class = "col-xl-9 col-lg-9 col-md-9 col-sm-7">
                         <div class = "navigation-wrapper deskotop-menu">
                             <nav>
-                            <ul>
-                                <li><a href = "<?php echo esc_url( home_url( '/' ) ); ?>">Home</a></li>
-                                <li><a href = "/court/">Court</a></li>
-                                <li><a href = "/coaches/">Coaches</a></li>
-                                <li><a href = "/gallery/">Gallery</a></li>
-                                <li><a href = "/about-us/">About Us</a></li>
-                                <li><a href = "/contact-us/">Contact us</a></li>
+                        <?php 
 
-                            </ul>
+                               $menu_locations = get_nav_menu_locations();
+                                $menu_id = $menu_locations['header_menu'];
+                                $menu_items = wp_get_nav_menu_items($menu_id);
+
+                                if ($menu_items) {
+                                    echo '<ul>';
+
+                                    foreach ($menu_items as $item) {
+                                        echo '<li>';
+                                        echo '<a href="' . esc_url($item->url) . '">';
+                                        echo esc_html($item->title);
+                                        echo '</a>';
+                                        echo '</li>';
+                                    }
+
+                                    echo '</ul>';
+                                }
+                                ?>
                             </nav>
                         </div>
                         <div id="navigator">
-                            <ul id="nav">
-                            
-                                <li class="nav_tab"><a href = "<?php echo esc_url( home_url( '/' ) ); ?>">Home</a></li>
-                                <li class="nav_tab"><a href = "/court/">Court</a></li>
-                                <li class="nav_tab"><a href = "/coaches/">Coaches</a></li>
-                                <li class="nav_tab"><a href = "/gallery/">Gallery</a></li>
-                                <li class="nav_tab"><a href = "/about-us/">About Us</a></li>
-                                <li class="nav_tab"><a href = "/contact-us/">Contact us</a></li>
-                            </ul>
+                                   <?php 
+
+                               $menu_locations = get_nav_menu_locations();
+                                $menu_id = $menu_locations['header_menu'];
+                                $menu_items = wp_get_nav_menu_items($menu_id);
+
+                                if ($menu_items) {
+                                    echo '<ul id="nav">';
+
+                                    foreach ($menu_items as $item) {
+                                        echo '<li class="nav_tab">';
+                                        echo '<a href="' . esc_url($item->url) . '">';
+                                        echo esc_html($item->title);
+                                        echo '</a>';
+                                        echo '</li>';
+                                    }
+
+                                    echo '</ul>';
+                                }
+                                ?>
+                       
                         </div>
                         
                         <div class="menu-icon">			

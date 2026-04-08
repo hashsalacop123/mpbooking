@@ -90,11 +90,6 @@ get_header(); ?>
                       echo '<p>'.esc_attr($coach_subtext).'</p>';
                     endif; 
 
-                    // $number_court_display = '0';
-
-                    // if($number_of_coach) : 
-                    //     echo $number_of_coach;
-                    // endif;
                 ?>
           </div>
          <?php 
