@@ -1732,3 +1732,6 @@ background: #1e6366;
     justify-content: space-between;
     height: 154px;
 }
+.service-loop-landing .wrapper-bot-comments {
+    height: auto;
+}
