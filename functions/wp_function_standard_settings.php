@@ -76,6 +76,20 @@ function my_manual_og_image_fallback() {
     }
 }
 
+/**
+ * Disable Yoast Open Graph on specific pages
+ */
+add_filter('wpseo_opengraph', 'disable_yoast_og_for_custom_pages');
+
+function disable_yoast_og_for_custom_pages($enabled) {
+
+    if (is_front_page() || is_singular('coach') || is_singular('service')) {
+        return false; // disable Yoast OG
+    }
+
+    return $enabled;
+}
+
 // ==================
 /**
  * Redirect wp-login.php to custom /login/ page
