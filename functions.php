@@ -7,4 +7,6 @@ require_once('functions/wp_services_functions.php');
 require_once('functions/wp_functions_calendar.php');
 require_once('functions/wp_gcash_payment.php');
 require_once('functions/wp_function_review.php');
+require_once('functions/wp_function_standard_settings.php');
+
 ?>
