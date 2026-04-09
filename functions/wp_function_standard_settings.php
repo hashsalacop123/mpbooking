@@ -1,92 +1,83 @@
 <?php
 
 /**
- * Override Yoast Open Graph Title
+ * Disable Yoast Open Graph ONLY for selected pages
  */
-add_filter('wpseo_opengraph_title', 'my_custom_og_title');
-function my_custom_og_title($title) {
+add_filter('wpseo_frontend_presenters', function ($presenters) {
 
-    if (is_front_page()) {
-        $acf = get_field('og_title_open_graph', get_queried_object_id());
-        if ($acf) return $acf;
+    if (is_front_page() || is_singular('coach') || is_singular('service')) {
+        return array_filter($presenters, function ($presenter) {
+            return !($presenter instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Title_Presenter
+                || $presenter instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Description_Presenter
+                || $presenter instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Image_Presenter
+                || $presenter instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Url_Presenter);
+        });
     }
 
-    if (is_singular('coach')) {
-        $acf = get_field('nick_name');
-        if ($acf) return $acf;
-    }
-
-    if (is_singular('service')) {
-        $acf = get_field('court_name_gym');
-        if ($acf) return $acf;
-    }
-
-    return $title;
-}
+    return $presenters;
+});
 
 /**
- * Override Yoast Open Graph Description
+ * Custom Open Graph (final working version)
  */
-add_filter('wpseo_opengraph_desc', 'my_custom_og_desc');
-function my_custom_og_desc($desc) {
+add_action('wp_head', 'my_final_custom_og', 5);
 
-    if (is_front_page()) {
-        $acf = get_field('og_description', get_queried_object_id());
-        if ($acf) return $acf;
-    }
-
-    if (is_singular('coach')) {
-        $acf = get_field('about_me');
-        if ($acf) return $acf;
-    }
-
-    if (is_singular('service')) {
-        $acf = get_field('additional_information');
-        if ($acf) return $acf;
-    }
-
-    return $desc;
-}
-
-/**
- * Manual OG Image (reliable fix for Yoast issue)
- */
-add_action('wp_head', 'my_manual_og_image_fallback', 20);
-function my_manual_og_image_fallback() {
+function my_final_custom_og() {
 
     if (!(is_front_page() || is_singular('coach') || is_singular('service'))) {
         return;
     }
 
+    $title = '';
+    $desc  = '';
     $image = '';
 
+    // Homepage
     if (is_front_page()) {
-        $acf = get_field('og_image', get_queried_object_id());
-        if (is_array($acf)) $image = $acf['url'];
+        $id = get_queried_object_id();
+
+        $title = get_field('og_title_open_graph', $id);
+        $desc  = get_field('og_description', $id);
+
+        $img = get_field('og_image', $id);
+        if (is_array($img)) $image = $img['url'];
     }
 
-    elseif (is_singular('coach') || is_singular('service')) {
-        $acf = get_field('featured_image');
-        if (is_array($acf)) $image = $acf['url'];
+    // Coach
+    elseif (is_singular('coach')) {
+        $title = get_field('nick_name');
+        $desc  = get_field('about_me');
+
+        $img = get_field('featured_image');
+        if (is_array($img)) $image = $img['url'];
     }
 
-    if (!empty($image)) {
-        echo '<meta property="og:image" content="' . esc_url($image) . '" />';
-        echo '<meta name="twitter:image" content="' . esc_url($image) . '" />';
+    // Service
+    elseif (is_singular('service')) {
+        $title = get_field('court_name_gym');
+        $desc  = get_field('additional_information');
+
+        $img = get_field('featured_image');
+        if (is_array($img)) $image = $img['url'];
     }
+
+    // Fallbacks
+    if (empty($title)) $title = get_bloginfo('name');
+    if (empty($desc))  $desc  = get_bloginfo('description');
+
+    ?>
+    <!-- FINAL OG -->
+    <meta property="og:title" content="<?php echo esc_attr($title); ?>" />
+    <meta property="og:description" content="<?php echo esc_attr($desc); ?>" />
+    <meta property="og:image" content="<?php echo esc_url($image); ?>" />
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="<?php echo esc_attr($title); ?>" />
+    <meta name="twitter:description" content="<?php echo esc_attr($desc); ?>" />
+    <meta name="twitter:image" content="<?php echo esc_url($image); ?>" />
+    <?php
 }
-
-/**
- * Disable Yoast Open Graph on specific pages
- */
-/**
- * Remove Yoast OG only on specific pages
- */
-add_action('wp', function () {
-    if (is_front_page() || is_singular('coach') || is_singular('service')) {
-        remove_action('wpseo_head', [\Yoast\WP\SEO\Integrations\Front_End_Integration::class, 'present_head']);
-    }
-});
 
 // ==================
 /**
