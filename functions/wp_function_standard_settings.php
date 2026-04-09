@@ -22,61 +22,73 @@ add_filter('wpseo_frontend_presenters', function ($presenters) {
  */
 add_action('wp_head', 'my_final_custom_og', 5);
 
+
 function my_final_custom_og() {
 
+    // Only run for these pages
     if (!(is_front_page() || is_singular('coach') || is_singular('service'))) {
         return;
     }
+
+    $front_id = (int) get_option('page_on_front');
 
     $title = '';
     $desc  = '';
     $image = '';
 
-    // Homepage
-    if (is_front_page()) {
-        $id = get_queried_object_id();
+    /**
+     * HOMEPAGE (most strict check first)
+     */
+    if ($front_id && is_page($front_id)) {
 
-        $title = get_field('og_title_open_graph', $id);
-        $desc  = get_field('og_description', $id);
+        $title = get_field('og_title_open_graph', $front_id);
+        $desc  = get_field('og_description', $front_id);
 
-        $img = get_field('og_image', $id);
-        if (is_array($img)) $image = $img['url'];
+        $img = get_field('og_image', $front_id);
+        if (is_array($img) && !empty($img['url'])) {
+            $image = $img['url'];
+        }
+
     }
-
-    // Coach
+    /**
+     * COACH
+     */
     elseif (is_singular('coach')) {
-        $title = get_field('nick_name');
-        $desc  = get_field('about_me');
+
+        $title = get_field('nick_name') ?: get_the_title();
+        $desc  = get_field('about_me') ?: wp_trim_words(get_the_content(), 20);
 
         $img = get_field('featured_image');
-        if (is_array($img)) $image = $img['url'];
-    }
+        if (is_array($img) && !empty($img['url'])) {
+            $image = $img['url'];
+        }
 
-    // Service
+    }
+    /**
+     * SERVICE
+     */
     elseif (is_singular('service')) {
-        $title = get_field('court_name_gym');
-        $desc  = get_field('additional_information');
+
+        $title = get_field('court_name_gym') ?: get_the_title();
+        $desc  = get_field('additional_information') ?: wp_trim_words(get_the_content(), 20);
 
         $img = get_field('featured_image');
-        if (is_array($img)) $image = $img['url'];
+        if (is_array($img) && !empty($img['url'])) {
+            $image = $img['url'];
+        }
     }
 
-    // Fallbacks
+    // Final fallback (avoid empty tags)
     if (empty($title)) $title = get_bloginfo('name');
     if (empty($desc))  $desc  = get_bloginfo('description');
 
-    ?>
-    <!-- FINAL OG -->
-    <meta property="og:title" content="<?php echo esc_attr($title); ?>" />
-    <meta property="og:description" content="<?php echo esc_attr($desc); ?>" />
-    <meta property="og:image" content="<?php echo esc_url($image); ?>" />
-    <meta property="og:type" content="website" />
+    if (!empty($image)) {
+        echo '<meta property="og:image" content="'.esc_url($image).'" />';
+        echo '<meta name="twitter:image" content="'.esc_url($image).'" />';
+    }
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="<?php echo esc_attr($title); ?>" />
-    <meta name="twitter:description" content="<?php echo esc_attr($desc); ?>" />
-    <meta name="twitter:image" content="<?php echo esc_url($image); ?>" />
-    <?php
+    echo '<meta property="og:title" content="'.esc_attr($title).'" />';
+    echo '<meta property="og:description" content="'.esc_attr($desc).'" />';
 }
 
 // ==================
