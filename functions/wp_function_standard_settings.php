@@ -79,16 +79,14 @@ function my_manual_og_image_fallback() {
 /**
  * Disable Yoast Open Graph on specific pages
  */
-add_filter('wpseo_opengraph', 'disable_yoast_og_for_custom_pages');
-
-function disable_yoast_og_for_custom_pages($enabled) {
-
+/**
+ * Remove Yoast OG only on specific pages
+ */
+add_action('wp', function () {
     if (is_front_page() || is_singular('coach') || is_singular('service')) {
-        return false; // disable Yoast OG
+        remove_action('wpseo_head', [\Yoast\WP\SEO\Integrations\Front_End_Integration::class, 'present_head']);
     }
-
-    return $enabled;
-}
+});
 
 // ==================
 /**
