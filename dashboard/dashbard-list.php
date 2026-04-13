@@ -8,6 +8,8 @@ get_header();
     <div class="container">
 <div class = "row">
     <!-- SIDEBAR START HERE -->
+     
+     <?php hash_show_pending_registration_notice(); ?>
     <div class = "col-xl-3 col-lg-3 col-md-3 col-sm-12">
         <?php include get_template_directory() . '/dashbord/dashboard-sidebar.php'; ?>
     </div>

@@ -2,6 +2,7 @@
 <div class="coach-wrapper " data-coach="<?php echo get_the_author_meta('ID'); ?>">
         <div class = "container">
             <div class = "row">
+<?php hash_show_pending_registration_notice(); ?>
 
             <div class = "col-xl-5 col-lg-5 col-md-5 col-sm-12">
                 <div class = "profile-pic">

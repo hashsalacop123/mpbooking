@@ -11,11 +11,6 @@ redirect_user_login();
 
 <div class="landing-page-wrapper registration-page-data" style="background-image: url('<?php echo esc_url( get_template_directory_uri() . '/img/banner-home.jpg' ); ?>');"> 
 
-
-
-
-  
-  
         <?php $current_page = get_queried_object();
 
 if ( isset($current_page->post_name) ) {
@@ -195,7 +190,7 @@ $error   = '';
     <select name="user_role" class="form-control" required>
         <option value="">Select Role</option>
         <option value="coach">Coach</option>
-        <option value="player">Player</option>
+        <!-- <option value="player">Player</option> -->
         <option value="court">Court</option>
     </select>
 </div>

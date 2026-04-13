@@ -73,11 +73,12 @@ $valid_id_image_url = $valid_id_image_id
     ? wp_get_attachment_image_url((int) $valid_id_image_id, 'medium')
     : '';
 ?>
+<?php hash_show_pending_registration_notice(); ?>
 
 <div class="container ">
     <div class="row justify-content-center">
+        
         <div class="col-lg-12">
-
             <div class=" shadow-sm">
                 <div class="card-body">
                     <h4 class="mb-4">My Account</h4>

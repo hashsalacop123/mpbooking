@@ -289,3 +289,62 @@ function acf_user_registration_status_email($value, $post_id, $field) {
 
     return $value;
 }
+
+/**
+ * Check if user is an approved member
+ */
+function hash_is_user_member($user_id) {
+
+    // get ACF field from user
+    $status = get_field('registration_status', 'user_' . $user_id);
+
+    // return true only if member
+    return ($status === 'member');
+}
+
+/**
+ * Show pending registration notice for users
+ */
+function hash_show_pending_registration_notice() {
+
+    // Get current user
+    $user_id = get_current_user_id();
+
+    if (!$user_id) return;
+
+    // Get user object
+    $user = get_userdata($user_id);
+
+    // ❌ Do not show for administrators
+    if (in_array('administrator', (array) $user->roles)) {
+        return;
+    }
+
+    // Get status (ACF first, fallback to user_meta)
+    $status = get_field('registration_status', 'user_' . $user_id);
+
+    if (empty($status)) {
+        $status = get_user_meta($user_id, 'registration_status', true);
+    }
+
+    // fallback default
+    if (empty($status)) {
+        $status = 'pending';
+    }
+
+    // Normalize
+    $status = strtolower(trim($status));
+
+    // Only show if pending
+    if ($status !== 'pending') return;
+
+    // ✅ Output HTML
+    ?>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-xs-12">
+        <div class="notification">
+            Your registration has been received. Good news—you can start adding your listings!
+            They won't be published until your account is approved. Approval usually takes 4–5 hours.
+        </div>
+    </div>
+    <?php
+}

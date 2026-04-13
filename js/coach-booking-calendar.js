@@ -15,7 +15,6 @@ $(document).ready(function() {
 
         const $day = $(this).closest('.day-parent');
 
-        // ✅ BUILD BLOCKED TIMES (NO NORMALIZE)
         blockedTimes = {};
         $day.find('.availability-coach.pending, .availability-coach.booked').each(function() {
             blockedTimes[$(this).data('time')] = true;
@@ -38,12 +37,11 @@ $(document).ready(function() {
         $('#booking_start').empty();
         $('#booking_end').empty();
 
-        // 🚫 BLOCK CLICK IF START IS BLOCKED
         if (blockedTimes[selectedTime]) return;
 
         /*
         |--------------------------------------------------------------------------
-        | LAST SLOT (1-HOUR FIX)
+        | LAST SLOT
         |--------------------------------------------------------------------------
         */
         if (startIndex === lastIndex) {
@@ -64,6 +62,11 @@ $(document).ready(function() {
             $('#amount').val(Math.round(rate));
 
             $('#bookingModal').modal('show');
+
+            setTimeout(function() {
+                updateBookingSummaryRealtime();
+            }, 100);
+
             return;
         }
 
@@ -81,15 +84,6 @@ $(document).ready(function() {
             let hasValidEnd = false;
 
             for (let j = i + 1; j < currentDaySlots.length; j++) {
-
-                const nextTime = currentDaySlots[j];
-
-                // allow boundary (blocked next is still valid)
-                if (blockedTimes[nextTime]) {
-                    hasValidEnd = true;
-                    break;
-                }
-
                 hasValidEnd = true;
                 break;
             }
@@ -103,9 +97,13 @@ $(document).ready(function() {
         $('#selected_date').val(selectedDate);
 
         updateEndTimeDropdown(selectedTime);
-
         calculateTotal();
+
         $('#bookingModal').modal('show');
+
+        setTimeout(function() {
+            updateBookingSummaryRealtime();
+        }, 100);
     });
 
     /*
@@ -113,9 +111,10 @@ $(document).ready(function() {
     | START CHANGE
     |--------------------------------------------------------------------------
     */
-    $('#booking_start').on('change', function() {
+    $(document).on('change', '#booking_start', function() {
         updateEndTimeDropdown($(this).val());
         calculateTotal();
+        updateBookingSummaryRealtime();
     });
 
     /*
@@ -125,6 +124,7 @@ $(document).ready(function() {
     */
     $(document).on('change', '#booking_end', function() {
         calculateTotal();
+        updateBookingSummaryRealtime();
     });
 
     /*
@@ -132,28 +132,26 @@ $(document).ready(function() {
     | UPDATE END TIME
     |--------------------------------------------------------------------------
     */
-function updateEndTimeDropdown(startTime) {
+    function updateEndTimeDropdown(startTime) {
 
-    const $end = $('#booking_end');
-    $end.empty();
+        const $end = $('#booking_end');
+        $end.empty();
 
-    const startIndex = currentDaySlots.indexOf(startTime);
+        const startIndex = currentDaySlots.indexOf(startTime);
 
-    for (let i = startIndex + 1; i < currentDaySlots.length; i++) {
+        for (let i = startIndex + 1; i < currentDaySlots.length; i++) {
 
-        const time = currentDaySlots[i];
+            const time = currentDaySlots[i];
 
-        // 🔥 ALWAYS add first next slot
-        $end.append(`<option value="${time}">${time}</option>`);
+            if (blockedTimes[time]) break;
 
-        // 🚫 THEN stop if it's blocked
-        if (blockedTimes[time]) break;
+            $end.append(`<option value="${time}">${time}</option>`);
+        }
+
+        if ($end.children().length === 0) {
+            $end.append(`<option value="${startTime}">${startTime}</option>`);
+        }
     }
-
-    if ($end.children().length === 0) {
-        $end.append(`<option value="${startTime}">${startTime}</option>`);
-    }
-}
 
     /*
     |--------------------------------------------------------------------------
@@ -182,48 +180,119 @@ function updateEndTimeDropdown(startTime) {
 
     /*
     |--------------------------------------------------------------------------
+    | REAL-TIME SUMMARY
+    |--------------------------------------------------------------------------
+    */
+    function updateBookingSummaryRealtime() {
+
+        const start = $('#booking_start').val();
+        const end   = $('#booking_end').val();
+        const date  = $('#selected_date').val();
+
+        if (!start || !end || !date) {
+            $('#booking_summary').hide();
+            return;
+        }
+
+        const rate = parseFloat($('#bookingModal').data('rate')) || 0;
+
+        const startIndex = currentDaySlots.indexOf(start);
+        const endIndex   = currentDaySlots.indexOf(end);
+
+        let hours = endIndex - startIndex;
+        if (hours <= 0) hours = 1;
+
+        const total = hours * rate;
+
+        const html = `
+            <div>Date: ${date}</div>
+            <div>Time: ${start} - ${end}</div>
+            <div>Duration: ${hours} hour(s)</div>
+            <div><strong>Total: ₱${Math.round(total)}</strong></div>
+        `;
+
+        $('#booking_summary').show();
+        $('#booking_summary .summary-content').html(html);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | SUBMIT
     |--------------------------------------------------------------------------
     */
-    $('#confirm_booking_btn_coach').on('click', function(e) {
-        e.preventDefault();
+$('#confirm_booking_btn_coach').on('click', function(e) {
+    e.preventDefault();
 
-        const payload = {
-            action: 'handle_booking',
-            type: 'coach',
-            nonce: bookingData.nonce,
+    const payload = {
+        action: 'handle_booking',
+        type: 'coach',
+        nonce: bookingData.nonce,
 
-            name: $('#booking_name').val(),
-            email: $('#booking_email').val(),
-            start: $('#booking_start').val(),
-            end: $('#booking_end').val(),
-            date: $('#selected_date').val(),
-            comment: $('#booking_comment').val(),
-            amount: $('#amount').val(),
+        name: $('#booking_name').val(),
+        email: $('#booking_email').val(),
+        start: $('#booking_start').val(),
+        end: $('#booking_end').val(),
+        date: $('#selected_date').val(),
+        comment: $('#booking_comment').val(),
+        amount: $('#amount').val(),
 
-            coach_id: bookingData.coach_id
-        };
+        coach_id: bookingData.coach_id
+    };
 
-        console.log('FINAL PAYLOAD:', payload);
+    console.log('FINAL PAYLOAD:', payload);
 
-        $.post(bookingData.ajaxurl, payload, function(res) {
+    $.post(bookingData.ajaxurl, payload, function(res) {
 
-            console.log('AJAX RESPONSE:', res);
+        console.log('AJAX RESPONSE:', res);
 
-            if (res.success && res.data && res.data.checkout_url) {
+        if (res.success && res.data && res.data.checkout_url) {
 
-                window.open(res.data.checkout_url, '_blank');
+            // ✅ open PayMongo
+            window.open(res.data.checkout_url, '_blank');
 
-                setTimeout(function(){
+            // ✅ SweetAlert hybrid (auto + manual)
+            let timerInterval;
+
+            Swal.fire({
+                title: 'Waiting for Payment',
+                html: 'Complete your payment in the new tab.<br><br>Auto refresh in <b>15</b> seconds...',
+                timer: 15000,
+                timerProgressBar: true,
+                showConfirmButton: true,
+                confirmButtonText: 'I already paid',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                    const b = Swal.getHtmlContainer().querySelector('b');
+                    timerInterval = setInterval(() => {
+                        if (b) {
+                            b.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
+                        }
+                    }, 100);
+                },
+                willClose: () => {
+                    clearInterval(timerInterval);
                     location.reload();
-                }, 15000);
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                }
+            });
 
-            } else {
-                alert(res.data || 'Error submitting booking');
-            }
+        } else {
 
-        });
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: res.data || 'Error submitting booking'
+            });
+
+        }
+
     });
+});
 
 });
 })(jQuery);

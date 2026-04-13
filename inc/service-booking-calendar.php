@@ -91,8 +91,8 @@ if ($courts):
 
             $current = clone $start_dt;
 
-                while ($current <= $end_dt) {
-$slot_time = $current->format('h:00 A');
+    while ($current < $end_dt) {
+    $slot_time = $current->format('h:00 A');
                     // Initialize if not set
                     if (!isset($blocked_slots[$date][$slot_time])) {
                         $blocked_slots[$date][$slot_time] = $status;
@@ -241,7 +241,10 @@ endif;
                 <input id="amount" type="text" class="form-control" placeholder="0.00">
 
             </div>
-
+  <div id="booking_summary" class="p-3 mt-3" style="background:#f5f5f5; border-radius:8px; display:none;">
+                    <strong>Booking Summary</strong>
+                    <div class="summary-content mt-2"></div>
+                </div>
             <div class="modal-footer border-0">
                 <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button id="confirm_booking_btn_service" class="btn btn-primary">Pay Now</button>

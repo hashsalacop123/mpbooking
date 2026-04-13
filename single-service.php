@@ -2,6 +2,8 @@
 <div class = "service-wrapper">
     <div class = "container">
         <div class = "row">
+            <?php hash_show_pending_registration_notice(); ?>
+
         <div class = "col-xl-9 col-lg-9 col-md-8 col-sm-12">
             <div class = "wrapper-data">
 

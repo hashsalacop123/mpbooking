@@ -353,4 +353,55 @@ function handle_update_user_status() {
 }
 
 
+/**
+ * AJAX: Generate booking summary
+ */
+/**
+ * AJAX: Generate booking summary
+ */
+function hash_get_booking_summary() {
+
+    // ✅ Verify nonce
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'booking_nonce')) {
+        wp_send_json_error('Invalid nonce');
+    }
+
+    // ✅ Sanitize inputs
+    $date  = sanitize_text_field($_POST['date']);
+    $start = sanitize_text_field($_POST['start']);
+    $end   = sanitize_text_field($_POST['end']);
+    $rate  = floatval($_POST['rate']);
+
+    if (!$date || !$start || !$end) {
+        wp_send_json_error('Missing data');
+    }
+
+    // ✅ Convert to timestamps
+    $start_ts = strtotime("$date $start");
+    $end_ts   = strtotime("$date $end");
+
+    // ✅ Calculate duration (in hours)
+    $hours = ($end_ts - $start_ts) / 3600;
+    if ($hours <= 0) $hours = 1;
+
+    // ✅ Calculate total
+    $total = $hours * $rate;
+
+    // ✅ Format response
+    $response = [
+        'date'  => date('F d, Y', strtotime($date)),
+        'start' => date('h:i A', strtotime($start)),
+        'end'   => date('h:i A', strtotime($end)),
+        'hours' => $hours,
+        'total' => number_format($total, 2)
+    ];
+
+    wp_send_json_success($response);
+}
+
+add_action('wp_ajax_hash_get_booking_summary', 'hash_get_booking_summary');
+add_action('wp_ajax_nopriv_hash_get_booking_summary', 'hash_get_booking_summary');
+
+
+
 ?>

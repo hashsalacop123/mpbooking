@@ -253,9 +253,9 @@ text-align: center;
 .post-meta span {
     color: #000;
 }
-.select2-container--bootstrap4 .select2-dropdown.select2-dropdown--below {
+/* .select2-container--bootstrap4 .select2-dropdown.select2-dropdown--below {
     top: 32px;
-}
+} */
 .btn-link.focus, .btn-link:focus {
     text-decoration: none;
 }

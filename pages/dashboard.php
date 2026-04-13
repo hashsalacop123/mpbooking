@@ -8,27 +8,7 @@ get_header();
     <div class="container">
         <div class="row">
 
-            <?php
-            $current_user_id = get_current_user_id();
-
-            if ($current_user_id) {
-
-                // Get registration_status or fallback to 'pending'
-                $registration_status = get_field('registration_status', 'user_' . $current_user_id) ?: 'pending';
-
-                // Only show message if status is pending
-                if ($registration_status === 'pending') :
-            ?>
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-xs-12">
-                        <div class="notification">
-                            Your registration has been received. Good news—you can start adding your listings!
-                            They won't be published until your account is approved. Approval usually takes 4–5 hours.
-                        </div>
-                    </div>
-            <?php
-                endif;
-            }
-            ?>
+          <?php hash_show_pending_registration_notice(); ?>
 
             <!-- SIDEBAR START HERE -->
             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">

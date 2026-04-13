@@ -65,6 +65,7 @@ if (get_post_field('post_author', $post_id) != $user_id) {
 <div class="dasboard-wrapper-page">
 <div class="container">
 <div class="row">
+<?php hash_show_pending_registration_notice(); ?>
 
     <!-- SIDEBAR -->
     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">

@@ -2,7 +2,15 @@
                $query = new WP_Query($args);
 
                     if ($query->have_posts()) :
-                        while ($query->have_posts()) : $query->the_post(); ?>
+                        while ($query->have_posts()) : $query->the_post(); 
+                             $author_id = get_the_author_meta('ID');
+
+                                if (!hash_is_user_member($author_id)) {
+                                    continue;
+                                }
+                        ?>
+
+                        
 
                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 court-item-wrapper remove-bootstrap">
                         <?php 

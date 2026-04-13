@@ -110,31 +110,30 @@ $date = $date_obj->format('Y-m-d');
 $end   = new DateTime($end_raw);
 
 // 🔥 FIX: ensure full last hour is included
-$end->modify('+1 minute');
+// $end->modify('+1 minute');
 
        $current = clone $start;
 //        error_log('START: ' . $start->format('H:i'));
 // error_log('END: ' . $end->format('H:i'));
 
-    while ($current < $end) {
+        $current = clone $start;
+
+        while ($current < $end) {
 
             $slotKey = $current->format('g:00 A');
 
-            // Initialize if not set
             if (!isset($blocked_slots[$date][$slotKey])) {
                 $blocked_slots[$date][$slotKey] = $status;
             } else {
 
                 $existing = $blocked_slots[$date][$slotKey];
 
-                // PRIORITY SYSTEM
                 if ($status === 'approved') {
                     $blocked_slots[$date][$slotKey] = 'approved';
                 }
                 elseif ($status === 'pending' && $existing === 'expired') {
                     $blocked_slots[$date][$slotKey] = 'pending';
                 }
-                // expired should NOT override anything
             }
 
             $current->modify('+1 hour');
@@ -284,6 +283,10 @@ endif;
                 <input id="amount" type="text" class="form-control" placeholder="0.00">
 
             </div>
+              <div id="booking_summary" class="p-3 mt-3" style="background:#f5f5f5; border-radius:8px; display:none;">
+                    <strong>Booking Summary</strong>
+                    <div class="summary-content mt-2"></div>
+                </div>
 
             <div class="modal-footer border-0">
                 <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
