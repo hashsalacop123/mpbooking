@@ -7,18 +7,19 @@
 // ==========================
 add_action('acf/save_post', 'acf_user_registration_handler', 20);
 function acf_user_registration_handler($post_id) {
+
+    // Only run on ACF front-end new user form
     if ($post_id !== 'new_user') return;
     if (!isset($_POST['acf'])) return;
 
     $acf = $_POST['acf'];
 
-    // Actual ACF field keys
+    // Sanitize fields
     $email      = sanitize_email($acf['field_6915cb87b7a42']);
     $password   = sanitize_text_field($acf['field_6915cb98b7a43']);
     $first_name = sanitize_text_field($acf['field_6915c59b88f11']);
     $last_name  = sanitize_text_field($acf['field_6915cb7bb7a41']);
-    $valid_id   = $acf['field_6915cbdab7a45']; // Image field ID
-
+    $valid_id   = $acf['field_6915cbdab7a45'];
 
     // Create user
     $userdata = [
@@ -27,8 +28,7 @@ function acf_user_registration_handler($post_id) {
         'user_pass'  => $password,
         'first_name' => $first_name,
         'last_name'  => $last_name,
-        'valid_id' => $valid_id,
-        'role'       => 'editor', // Change role if needed
+        'role'       => 'editor',
     ];
 
     $user_id = wp_insert_user($userdata);
@@ -38,15 +38,83 @@ function acf_user_registration_handler($post_id) {
         return;
     }
 
-    // Save extra fields
+    /**
+     * ----------------------------------------
+     * EMAIL SETTINGS (HTML)
+     * ----------------------------------------
+     */
+  // Force HTML emails
+add_filter('wp_mail_content_type', 'set_html_mail_content_type');
+function set_html_mail_content_type() {
+    return 'text/html';
+}
 
+    // Common Email Header & Footer
+    function custom_email_template($content) {
+        return '
+        <div style="font-family: Arial, sans-serif; background:#f5f5f5; padding:20px;">
+            <div style="max-width:600px; margin:auto; background:#ffffff; padding:20px; border-radius:8px;">
+                
+                <h2 style="color:#333;">Your Website Name</h2>
+                
+                <div style="font-size:14px; color:#555; line-height:1.6;">
+                    ' . $content . '
+                </div>
 
- 
-    // Auto-login and redirect
+                <hr style="margin:20px 0;">
+
+                <p style="font-size:12px; color:#999;">
+                    © ' . date('Y') . ' Your Website Name. All rights reserved.
+                </p>
+            </div>
+        </div>';
+    }
+
+    /**
+     * ----------------------------------------
+     * EMAIL TO ADMIN
+     * ----------------------------------------
+     */
+    $admin_email = get_option('admin_email');
+
+    $admin_subject = 'New User Registration';
+
+    $admin_message = custom_email_template("
+        <p>A new user has registered on your website.</p>
+
+        <p><strong>Name:</strong> {$first_name} {$last_name}</p>
+        <p><strong>Email:</strong> {$email}</p>
+    ");
+
+    wp_mail($admin_email, $admin_subject, $admin_message);
+
+    /**
+     * ----------------------------------------
+     * EMAIL TO USER (PENDING APPROVAL)
+     * ----------------------------------------
+     */
+    $user_subject = 'Registration Received - Pending Approval';
+
+    $user_message = custom_email_template("
+        <p>Hi {$first_name},</p>
+
+        <p>Thank you for registering.</p>
+
+        <p>Your account is currently <strong>pending approval</strong>. We will notify you once it has been approved.</p>
+
+        <p>Please wait for confirmation before accessing your dashboard.</p>
+    ");
+
+    wp_mail($email, $user_subject, $user_message);
+
+    /**
+     * ----------------------------------------
+     * AUTO LOGIN + REDIRECT
+     * ----------------------------------------
+     */
     wp_set_current_user($user_id);
     wp_set_auth_cookie($user_id);
     wp_safe_redirect(home_url('/dashboard/'));
-
     exit;
 }
 

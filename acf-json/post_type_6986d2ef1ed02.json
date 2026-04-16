@@ -7,6 +7,8 @@
     "advanced_configuration": true,
     "import_source": "",
     "import_date": "",
+    "allow_ai_access": false,
+    "ai_description": "",
     "labels": {
         "name": "Booking",
         "singular_name": "Booking",
@@ -85,5 +87,5 @@
     "delete_with_user": false,
     "register_meta_box_cb": "",
     "enter_title_here": "",
-    "modified": 1774496075
+    "modified": 1776050351
 }

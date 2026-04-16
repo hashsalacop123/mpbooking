@@ -26,7 +26,7 @@
 
                     <?php } else { ?>
 
-                          <a href="/dashboard/" class="button-general">
+                          <a href="/dashboard/" class="button-general ">
                             Dashboard <i class="fa fa-tachometer" aria-hidden="true"></i>
                         </a>
 
@@ -34,7 +34,7 @@
           
         </li>
           <li>
-            <a href="<?php echo wp_logout_url( home_url() ); ?>" class="button-general">
+            <a href="<?php echo wp_logout_url( home_url() ); ?>" class="logout-link button-general">
                 Logout <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
 
             </a>

@@ -152,22 +152,35 @@ function handle_paymongo_webhook($request) {
 
                         $subject = 'Your Booking is Confirmed';
 
-                        $message = "
-Hi {$name},
+                        $message = "<div style='max-width:600px;margin:0 auto;font-family:Arial,sans-serif;border:1px solid #eee;'>
 
-Your booking has been successfully confirmed.
+                                    <!-- Header -->
+                                    <div style='background:#0d6efd;color:#fff;padding:20px;text-align:center;'>
+                                        <h2 style='margin:0;'>MatchPoint Booking</h2>
+                                    </div>
 
-Booking Details:
-Date: {$date}
-Time: {$start} - {$end}
+                                    <!-- Body -->
+                                    <div style='padding:20px;color:#333;'>
+                                        <p>Hi {$name},</p>
 
-Reference Number: {$reference}
+                                        <p>Your booking has been successfully confirmed.</p>
 
-Thank you for your payment.
+                                        <h3 style='margin-bottom:10px;'>Booking Details:</h3>
+                                        <p>
+                                            <strong>Date:</strong> {$date}<br>
+                                            <strong>Time:</strong> {$start} - {$end}<br>
+                                            <strong>Reference #:</strong> {$reference}
+                                        </p>
 
-Regards,
-MatchPoint
-";
+                                        <p>Thank you for your payment.</p>
+                                    </div>
+
+                                    <!-- Footer -->
+                                    <div style='background:#f5f5f5;padding:15px;text-align:center;font-size:12px;color:#777;'>
+                                        <p style='margin:0;'>© " . date('Y') . " MatchPoint Cebu</p>
+                                    </div>
+
+                                </div>";
 
                         wp_mail($email, $subject, $message);
 

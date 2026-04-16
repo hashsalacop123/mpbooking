@@ -261,5 +261,7 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1774496055
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1776050351
 }

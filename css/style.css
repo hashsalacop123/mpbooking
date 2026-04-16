@@ -1738,3 +1738,6 @@ background: #1e6366;
 #booking_summary {
     border-left: 4px solid #007bff;
 }
+.left-menu-header a {
+    border: 1px solid;
+}

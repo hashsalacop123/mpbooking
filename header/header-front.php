@@ -17,7 +17,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo wp_logout_url( home_url() ); ?>" class="button-general">
+                                    <a href="<?php echo wp_logout_url( home_url() ); ?>" class="button-general logout-link">
                                         Logout <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
 
                                     </a>
