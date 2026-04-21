@@ -17,6 +17,8 @@ get_header();
 
             <!-- CONTENT START HERE -->
             <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
+
+
                 <h4>Bookings</h4>
 
                 <?php
@@ -148,6 +150,8 @@ get_header();
             <option value="approved">Approved</option>
             <option value="rejected">Rejected</option>
             <option value="refunded">Refunded</option>
+             <option value="expired">Expired</option>
+
             <option value="refund_pending">Refund pending</option>
 
         </select>

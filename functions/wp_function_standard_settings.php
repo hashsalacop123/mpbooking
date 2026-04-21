@@ -206,4 +206,31 @@ function hash_customize_login_page() {
     <?php
 }
 add_action('login_enqueue_scripts', 'hash_customize_login_page');
+
+/**
+ * Hide admin bar on frontend for non-admin users
+ */
+add_filter('show_admin_bar', function ($show) {
+    if (!current_user_can('administrator')) {
+        return false;
+    }
+    return $show;
+});
+
+/**
+ * Restrict wp-admin access to admins only
+ */
+add_action('admin_init', function () {
+
+    // Allow AJAX (important for frontend features like forms)
+    if (defined('DOING_AJAX') && DOING_AJAX) {
+        return;
+    }
+
+    // If not admin, block access
+    if (!current_user_can('administrator')) {
+        wp_redirect(home_url());
+        exit;
+    }
+});
 ?>

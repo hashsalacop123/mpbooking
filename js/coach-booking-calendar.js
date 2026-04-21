@@ -158,62 +158,86 @@ $(document).ready(function() {
     | CALCULATE TOTAL
     |--------------------------------------------------------------------------
     */
-    function calculateTotal() {
+   function calculateTotal() {
 
-        const startTime = $('#booking_start').val();
-        const endTime   = $('#booking_end').val();
+    const startTime = $('#booking_start').val();
+    const endTime   = $('#booking_end').val();
 
-        if (!startTime || !endTime) return;
+    if (!startTime || !endTime) return;
 
-        const startIndex = currentDaySlots.indexOf(startTime);
-        const endIndex   = currentDaySlots.indexOf(endTime);
+    const startIndex = currentDaySlots.indexOf(startTime);
+    const endIndex   = currentDaySlots.indexOf(endTime);
 
-        let hours = endIndex - startIndex;
-        if (hours <= 0) hours = 1;
+    let hours = endIndex - startIndex;
+    if (hours <= 0) hours = 1;
 
-        const rate = parseFloat($('#bookingModal').data('rate')) || 0;
+    const rate = parseFloat($('#bookingModal').data('rate')) || 0;
 
-        const total = hours * rate;
+    const baseTotal = hours * rate;
 
-        $('#amount').val(Math.round(total));
-    }
+    // Get percentage values
+    const paymongoFee = parseFloat($('#paymongo_fee').val()) || 0;
+    const webAdminFee = parseFloat($('#web_admin_fee').val()) || 0;
+
+    // Compute percentage amounts
+    const paymongoAmount = (paymongoFee / 100) * baseTotal;
+    const webAdminAmount = (webAdminFee / 100) * baseTotal;
+
+    const total = baseTotal + paymongoAmount + webAdminAmount;
+
+    // keep your rounding behavior
+    $('#amount').val(Math.round(total));
+}
 
     /*
     |--------------------------------------------------------------------------
     | REAL-TIME SUMMARY
     |--------------------------------------------------------------------------
     */
-    function updateBookingSummaryRealtime() {
+function updateBookingSummaryRealtime() {
 
-        const start = $('#booking_start').val();
-        const end   = $('#booking_end').val();
-        const date  = $('#selected_date').val();
+    const start = $('#booking_start').val();
+    const end   = $('#booking_end').val();
+    const date  = $('#selected_date').val();
 
-        if (!start || !end || !date) {
-            $('#booking_summary').hide();
-            return;
-        }
-
-        const rate = parseFloat($('#bookingModal').data('rate')) || 0;
-
-        const startIndex = currentDaySlots.indexOf(start);
-        const endIndex   = currentDaySlots.indexOf(end);
-
-        let hours = endIndex - startIndex;
-        if (hours <= 0) hours = 1;
-
-        const total = hours * rate;
-
-        const html = `
-            <div>Date: ${date}</div>
-            <div>Time: ${start} - ${end}</div>
-            <div>Duration: ${hours} hour(s)</div>
-            <div><strong>Total: ₱${Math.round(total)}</strong></div>
-        `;
-
-        $('#booking_summary').show();
-        $('#booking_summary .summary-content').html(html);
+    if (!start || !end || !date) {
+        $('#booking_summary').hide();
+        return;
     }
+
+    const rate = parseFloat($('#bookingModal').data('rate')) || 0;
+
+    const startIndex = currentDaySlots.indexOf(start);
+    const endIndex   = currentDaySlots.indexOf(end);
+
+    let hours = endIndex - startIndex;
+    if (hours <= 0) hours = 1;
+
+    const baseTotal = hours * rate;
+
+    // Get percentage values
+    const paymongoFee = parseFloat($('#paymongo_fee').val()) || 0;
+    const webAdminFee = parseFloat($('#web_admin_fee').val()) || 0;
+
+    // Compute percentage amounts
+    const paymongoAmount = (paymongoFee / 100) * baseTotal;
+    const webAdminAmount = (webAdminFee / 100) * baseTotal;
+
+    const total = baseTotal + paymongoAmount + webAdminAmount;
+
+    const html = `
+        <div>Date: ${date}</div>
+        <div>Time: ${start} - ${end}</div>
+        <div>Duration: ${hours} hour(s)</div>
+        <div>Base: ₱${Math.round(baseTotal)}</div>
+        <div>PayMongo Fee <span class = "perce">(${paymongoFee}%)</span>: ₱${Math.round(paymongoAmount)}</div>
+        <div>Web Fee <span class = "perce">(${webAdminFee}%)</span>: ₱${Math.round(webAdminAmount)}</div>
+        <div><strong>Total: ₱${Math.round(total)}</strong></div>
+    `;
+
+    $('#booking_summary').show();
+    $('#booking_summary .summary-content').html(html);
+}
 
     /*
     |--------------------------------------------------------------------------

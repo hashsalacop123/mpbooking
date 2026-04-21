@@ -313,6 +313,14 @@ add_action('acf/save_post', function ($post_id) {
     if ($status === 'rejected') {
         wp_mail($email, 'Booking Rejected', 'Your booking was rejected.');
     }
+
+    if ($status === 'refund_pending') {
+        wp_mail($email, 'Booking Refund', 'Your Booking has been Process.');
+    }
+
+     if ($status === 'refunded') {
+        wp_mail($email, 'Booking refunded', 'Your Refund has been successfully refunded.');
+    }
 });
 
 
@@ -332,7 +340,7 @@ function update_booking_status() {
         wp_send_json_error('Invalid booking.');
     }
 
-    $allowed_statuses = ['pending', 'approved', 'rejected'];
+    $allowed_statuses = ['pending', 'approved', 'rejected','refunded','refund_pending','expired'];
     if (!in_array($status, $allowed_statuses)) {
         wp_send_json_error('Invalid status.');
     }

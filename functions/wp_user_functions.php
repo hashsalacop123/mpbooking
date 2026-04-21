@@ -410,7 +410,7 @@ function hash_show_pending_registration_notice() {
     ?>
     <div class="col-xl-12 col-lg-12 col-md-12 col-xs-12">
         <div class="notification">
-            Your registration has been received. Good news—you can start adding your listings!
+            Your registration has been received. Good news—you can start updating your profile!
             They won't be published until your account is approved. Approval usually takes 4–5 hours.
         </div>
     </div>

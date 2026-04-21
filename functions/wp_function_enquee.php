@@ -2,6 +2,23 @@
 // -------------------------------
 // Enqueue Theme Styles & Scripts
 // -------------------------------
+function is_dashboard_tree() {
+    global $post;
+
+    if (!$post) return false;
+
+    // Get dashboard page
+    $dashboard = get_page_by_path('dashboard');
+
+    if (!$dashboard) return false;
+
+    // Check current page OR any ancestor
+    if ($post->ID == $dashboard->ID) return true;
+
+    $ancestors = get_post_ancestors($post->ID);
+
+    return in_array($dashboard->ID, $ancestors);
+}
 function theme_enqueue_styles() {
     $parent_style = 'parent-style';
 
@@ -44,9 +61,16 @@ function theme_enqueue_styles() {
 
     // JS Libraries
     // Replace the old Alpha 6 link with this stable 4.6 link
-    if ( is_page('dashboard') || is_page_template('template-dashboard.php') || is_page() ) {
+if ( is_dashboard_tree() ) {
+                    //Statistics            
+                     wp_enqueue_script(
+                            'chartjs',
+                            'https://cdn.jsdelivr.net/npm/chart.js',
+                            array(),
+                            null,
+                            true
+                        );
 
-                
                     // DataTables CSS
                     wp_enqueue_style(
                         'datatables-css',
@@ -70,6 +94,9 @@ function theme_enqueue_styles() {
                     '3.0.2',
                     true
                 );
+
+                wp_enqueue_script('dashboard',get_stylesheet_directory_uri() . '/js/dashboard.js',['jquery'],null,true);
+
                     // Inline initialization script
             $datatable_init = "
                 Object.assign(DataTable.defaults, {

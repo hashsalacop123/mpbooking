@@ -25,7 +25,8 @@ $coach = get_posts([
  <ul>
         <li><a href = "/dashboard/"><i class="fa fa-volume-up"></i> Dashboard</a></li>
         <li><a href = "/my-account/"><i class="fa fa-user-circle" aria-hidden="true"></i> Information</a></li>
-                 <li><a href = "/review/"><i class="fa-regular fa-address-card"></i> Your Review</a></li>
+        <li><a href = "/review/"><i class="fa-regular fa-address-card"></i> Your Review</a></li>
+        <li><a href = "/statistics/"><i class="fa-solid fa-arrow-up-right-dots"></i> Statistics</a></li>
 
         <?php 
             if ( ! empty($coach) ) {
@@ -49,6 +50,7 @@ $coach = get_posts([
  <ul>
         <li><a href = "/dashboard/"><i class="fa fa-volume-up" aria-hidden="true"></i> Dashboard</a></li>
         <li><a href = "/my-account/"><i class="fa fa-user-circle" aria-hidden="true"></i> My Account</a></li>
+        <li><a href = "/statistics/"><i class="fa-solid fa-arrow-up-right-dots"></i> Statistics</a></li>
          <li><a href = "/dashboard/review/"><i class="fa-regular fa-address-card"></i> Your Review</a></li>
         <li><a href = "/dashboard/create-update/"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create + Update</a></li>
         <li><a href = "/dashboard/court-name-schedule/"><i class="fa fa-calendar" aria-hidden="true"></i>  Add/Update Schedule</a></li>
@@ -64,6 +66,8 @@ $coach = get_posts([
      <ul>
         <li><a href = "/dashboard/admin"><i class="fa fa-volume-up" aria-hidden="true"></i> Dashboard</a></li>
         <li><a href = "/dashboard/my-account/"><i class="fa fa-user-circle" aria-hidden="true"></i> My Account</a></li>
+                <li><a href = "/statistics/"><i class="fa-solid fa-arrow-up-right-dots"></i> Statistics</a></li>
+
         <li><a href = "/dashboard/coach/"><i class="fa fa-users" aria-hidden="true"></i></i> Coach</a></li>
         <li><a href = "/dashboard/court/"><i class="fa fa-trophy" aria-hidden="true"></i></i> Court</a></li>
 

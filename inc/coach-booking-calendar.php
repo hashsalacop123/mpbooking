@@ -279,6 +279,13 @@ endif;
                 </div>
 
                 <textarea id="booking_comment" class="form-control mb-2" placeholder="Comment"></textarea>
+                  <?php 
+                        $paymongo_fee = get_field('percentage_paymongo','option');
+                        $percentage_web_fee = get_field('percentage_web_fee','option');
+
+                    ?>
+                    <input id = "paymongo_fee" type = "hidden" value = "<?php echo $paymongo_fee; ?>">
+                    <input id = "web_admin_fee" type = "hidden" value = "<?php echo $percentage_web_fee; ?>">
 
                 <input id="amount" type="text" class="form-control" placeholder="0.00">
 

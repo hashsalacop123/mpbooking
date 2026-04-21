@@ -165,23 +165,33 @@ $(document).ready(function() {
     | CALCULATE TOTAL
     |--------------------------------------------------------------------------
     */
-    function calculateTotal() {
+   function calculateTotal() {
 
-        const startTime = $('#booking_start').val();
-        const endTime   = $('#booking_end').val();
+    const startTime = $('#booking_start').val();
+    const endTime   = $('#booking_end').val();
 
-        if (!startTime || !endTime) return;
+    if (!startTime || !endTime) return;
 
-        const startIndex = currentDaySlots.indexOf(startTime);
-        const endIndex   = currentDaySlots.indexOf(endTime);
+    const startIndex = currentDaySlots.indexOf(startTime);
+    const endIndex   = currentDaySlots.indexOf(endTime);
 
-        let hours = endIndex - startIndex;
-        if (hours <= 0) hours = 1;
+    let hours = endIndex - startIndex;
+    if (hours <= 0) hours = 1;
 
-        const total = hours * currentRate;
+    const baseTotal = hours * currentRate;
 
-        $('#amount').val(total.toFixed(2));
-    }
+    // Get percentage values
+    const paymongoFee = parseFloat($('#paymongo_fee').val()) || 0;
+    const webAdminFee = parseFloat($('#web_admin_fee').val()) || 0;
+
+    // Convert to actual amounts
+    const paymongoAmount = (paymongoFee / 100) * baseTotal;
+    const webAdminAmount = (webAdminFee / 100) * baseTotal;
+
+    const total = baseTotal + paymongoAmount + webAdminAmount;
+
+    $('#amount').val(total.toFixed(2));
+}
 
     /*
     |--------------------------------------------------------------------------
@@ -190,33 +200,45 @@ $(document).ready(function() {
     */
     function updateBookingSummaryService() {
 
-        const start = $('#booking_start').val();
-        const end   = $('#booking_end').val();
-        const date  = $('#selected_date').val();
+    const start = $('#booking_start').val();
+    const end   = $('#booking_end').val();
+    const date  = $('#selected_date').val();
 
-        if (!start || !end || !date) {
-            $('#booking_summary').hide();
-            return;
-        }
-
-        const startIndex = currentDaySlots.indexOf(start);
-        const endIndex   = currentDaySlots.indexOf(end);
-
-        let hours = endIndex - startIndex;
-        if (hours <= 0) hours = 1;
-
-        const total = hours * currentRate;
-
-        const html = `
-            <div>Date: ${date}</div>
-            <div>Time: ${start} - ${end}</div>
-            <div>Duration: ${hours} hour(s)</div>
-            <div><strong>Total: ₱${total.toFixed(2)}</strong></div>
-        `;
-
-        $('#booking_summary').show();
-        $('#booking_summary .summary-content').html(html);
+    if (!start || !end || !date) {
+        $('#booking_summary').hide();
+        return;
     }
+
+    const startIndex = currentDaySlots.indexOf(start);
+    const endIndex   = currentDaySlots.indexOf(end);
+
+    let hours = endIndex - startIndex;
+    if (hours <= 0) hours = 1;
+
+    const baseTotal = hours * currentRate;
+
+    // Get percentage values
+    const paymongoFee = parseFloat($('#paymongo_fee').val()) || 0;
+    const webAdminFee = parseFloat($('#web_admin_fee').val()) || 0;
+
+    const paymongoAmount = (paymongoFee / 100) * baseTotal;
+    const webAdminAmount = (webAdminFee / 100) * baseTotal;
+
+    const total = baseTotal + paymongoAmount + webAdminAmount;
+
+    const html = `
+        <div>Date: ${date}</div>
+        <div>Time: ${start} - ${end}</div>
+        <div>Duration: ${hours} hour(s)</div>
+        <div>Base: ₱${baseTotal.toFixed(2)}</div>
+        <div>PayMongo Fee <span class = "perce">(${paymongoFee}%)</span>: ₱${paymongoAmount.toFixed(2)}</div>
+        <div>Web Fee <span class = "perce">(${webAdminFee}%)</span>: ₱${webAdminAmount.toFixed(2)}</div>
+        <div><strong>Total: ₱${total.toFixed(2)}</strong></div>
+    `;
+
+    $('#booking_summary').show();
+    $('#booking_summary .summary-content').html(html);
+}
 
     /*
     |--------------------------------------------------------------------------

@@ -403,5 +403,63 @@ add_action('wp_ajax_hash_get_booking_summary', 'hash_get_booking_summary');
 add_action('wp_ajax_nopriv_hash_get_booking_summary', 'hash_get_booking_summary');
 
 
+/**
+ * Get booking stats grouped by month + status
+ */
+function get_booking_chart_data() {
 
+    $current_user_id = get_current_user_id();
+
+    $args = [
+        'post_type'      => 'booking',
+        'posts_per_page' => -1,
+        'meta_query'     => [
+            [
+                'key'     => 'coach__services',
+                'value'   => $current_user_id,
+                'compare' => '='
+            ]
+        ]
+    ];
+
+    $query = new WP_Query($args);
+
+    // Prepare months (Jan–Dec)
+    $months = [
+        'January','February','March','April','May','June',
+        'July','August','September','October','November','December'
+    ];
+
+    // Initialize counters
+    $data = [
+        'approved' => array_fill(0, 12, 0),
+        'pending'  => array_fill(0, 12, 0),
+        'refunded' => array_fill(0, 12, 0),
+        'rejected' => array_fill(0, 12, 0),
+        'expired' => array_fill(0, 12, 0),
+    ];
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+
+            $status = get_field('booking_status'); // ACF field
+            $month_index = (int) get_the_date('n') - 1; // 0–11
+
+            if (isset($data[$status])) {
+                $data[$status][$month_index]++;
+            }
+        }
+        wp_reset_postdata();
+    }
+
+    return [
+        'labels' => $months,
+        'data'   => $data
+    ];
+}
+
+$chart_data = get_booking_chart_data();
+
+wp_localize_script('chart-init', 'chartData', $chart_data);
 ?>
