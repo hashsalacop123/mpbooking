@@ -85,7 +85,7 @@ var bookingEvents = availabilityData.booking_events || [];
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            right: 'timeGridWeek,timeGridDay'
         },
         navLinks: true, // Also makes the small date numbers clickable
         selectable: true,

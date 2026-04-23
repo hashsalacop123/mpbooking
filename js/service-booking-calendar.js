@@ -231,8 +231,8 @@ $(document).ready(function() {
         <div>Time: ${start} - ${end}</div>
         <div>Duration: ${hours} hour(s)</div>
         <div>Base: ₱${baseTotal.toFixed(2)}</div>
-        <div>PayMongo Fee <span class = "perce">(${paymongoFee}%)</span>: ₱${paymongoAmount.toFixed(2)}</div>
-        <div>Web Fee <span class = "perce">(${webAdminFee}%)</span>: ₱${webAdminAmount.toFixed(2)}</div>
+        <div>Bank/Wallet Fee <span class = "perce">(${paymongoFee}%)</span>: ₱${paymongoAmount.toFixed(2)}</div>
+        <div>Booking Fee <span class = "perce">(${webAdminFee}%)</span>: ₱${webAdminAmount.toFixed(2)}</div>
         <div><strong>Total: ₱${total.toFixed(2)}</strong></div>
     `;
 

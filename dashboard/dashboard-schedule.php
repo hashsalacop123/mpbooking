@@ -124,7 +124,26 @@ if (get_post_field('post_author', $post_id) != $user_id) {
         ?>
 
     </div>
+<script>
+jQuery(document).ready(function($) {
 
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.get('updated') === 'true') {
+        Swal.fire({
+            icon: 'success',
+            title: 'Saved!',
+            text: 'Court schedule has been updated.',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            // remove query param without reloading
+            const newUrl = window.location.pathname + window.location.hash;
+            window.history.replaceState({}, document.title, newUrl);
+        });
+    }
+
+});
+</script>
 </div>
 </div>
 </div>

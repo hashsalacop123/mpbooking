@@ -75,7 +75,7 @@ jQuery(function ($) {
                     headerToolbar: {
                         left: 'prev,next today',
                         center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                        right: 'timeGridWeek,timeGridDay'
                     },
 
                     selectable: true,

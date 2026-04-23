@@ -163,6 +163,7 @@ acf_form([
     'fields' => [
         'field_69b89e113985a', // court name
         'field_695342a608250', // address
+        'field_69e985a50dfec', // amenities
 
         'field_694f8fb13c33e', // are_you
 
@@ -209,7 +210,26 @@ acf_form([
 
 ]);
 ?>
+<script>
+jQuery(document).ready(function($) {
 
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.get('updated') === 'true') {
+        Swal.fire({
+            icon: 'success',
+            title: 'Saved!',
+            text: 'Court details has been updated.',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            // remove query param without reloading
+            const newUrl = window.location.pathname + window.location.hash;
+            window.history.replaceState({}, document.title, newUrl);
+        });
+    }
+
+});
+</script>
 <!-- Hidden fields for map -->
 <input type="hidden" id="acf-field_lat" name="acf[field_lat]" />
 <input type="hidden" id="acf-field_lng" name="acf[field_lng]" />

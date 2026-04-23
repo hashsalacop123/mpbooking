@@ -204,6 +204,8 @@ text-align: center;
 }.container-title-and-rate {
     display: flex;
     justify-content: space-between;
+        border-top: 2px solid #ededed;
+    padding-top: 20px;
 }
 
 .availability-indicator h6 {

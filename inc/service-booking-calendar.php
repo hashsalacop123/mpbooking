@@ -6,6 +6,12 @@
         <li><span>Time</span> Pending</li>
         <li><span>Time</span> Booked</li>
     </ul>
+<div class="notes">
+  <strong>Note:</strong>
+  <span>
+    Unpaid bookings are automatically released after 15 minutes.
+  </span>
+</div>
 </div>
 <?php
 
@@ -18,6 +24,10 @@ if ($courts):
         $court_label = $court['courth_name_number'];
         $datacoach   = $court['court_calendar'];
         $rate        = $court['rate'];
+        $courttype   = $court['court_type'];
+        $surface_type   = $court['surface_type'];
+        $court_size   = $court['court_size'];
+        $lighting_availability   = $court['lighting_availability'];
 
         $dates = json_decode($datacoach, true);
 
@@ -119,6 +129,52 @@ if ($courts):
         echo '<div class="container-title-and-rate">';
         echo '<h4>'.$court_label.'</h4>';
         echo '<h4>PHP '.$rate.'</h4>';
+        echo '</div>';
+        echo '<div class = "included">';
+    //    $courttype   = $court['court_type'];
+    //     $surface_type   = $court['surface_type'];
+    //     $court_size   = $court['court_size'];
+    //     $lighting_availability   = $court['lighting_availability'];
+             
+                echo '<ul class = "court-amenities">';
+                            if($courttype) :
+                                //echo $courttype;
+                                echo '<li><i class="fas fa-table-tennis"></i><strong> Court Type:</strong> '.$courttype.'</li>';
+                            endif;
+
+                              if($surface_type) :
+                                //echo $courttype;
+                                echo '<li><i class="fas fa-stopwatch-20"></i> <strong>Surface Type:</strong> '.$surface_type.'</li>';
+                            endif;  
+
+                              if($court_size) :
+                                //echo $courttype;
+                                echo '<li><i class="fas fa-window-maximize"></i> <strong>Court Size:</strong> '.$court_size.'</li>';
+                            endif;  
+
+                       
+
+                            // $amenities = get_field('amenities');
+
+                        if ($lighting_availability) {
+                        echo '<li class = "lighthing-data"><i class="fas fa-lightbulb"></i> <strong>Lighting availability:</strong> ';
+
+                            echo '<ul class = "light-ply">';
+                            foreach ($lighting_availability as $lightavail) {
+                                echo '<li>'.$lightavail['label'].'</li>';
+                                
+                            }
+                            echo '</ul>';
+                        echo '</li>';
+                        }
+                            
+                     
+                        ?>
+                     
+                  
+
+                    </ul>
+                <?php
         echo '</div>';
 
         echo '<ul class="step-1-wrapper slider-calendar" 

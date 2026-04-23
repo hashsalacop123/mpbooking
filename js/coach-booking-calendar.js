@@ -230,8 +230,8 @@ function updateBookingSummaryRealtime() {
         <div>Time: ${start} - ${end}</div>
         <div>Duration: ${hours} hour(s)</div>
         <div>Base: ₱${Math.round(baseTotal)}</div>
-        <div>PayMongo Fee <span class = "perce">(${paymongoFee}%)</span>: ₱${Math.round(paymongoAmount)}</div>
-        <div>Web Fee <span class = "perce">(${webAdminFee}%)</span>: ₱${Math.round(webAdminAmount)}</div>
+        <div>Bank/Wallet Fee <span class = "perce">(${paymongoFee}%)</span>: ₱${Math.round(paymongoAmount)}</div>
+        <div>Booking Fee <span class = "perce">(${webAdminFee}%)</span>: ₱${Math.round(webAdminAmount)}</div>
         <div><strong>Total: ₱${Math.round(total)}</strong></div>
     `;
 

@@ -67,7 +67,76 @@ if ( $images ) : ?>
                 <?php endif; ?>
                 </div>
                 <!-- address data -->
+
+                <div class = "amenities-wrapper">
+                    <?php 
+                        $amenities = get_field('amenities');
+
+                        if($amenities) :
+                            echo '<h3>Court Amenities</h3>';
+                        endif;
+                    ?>
+                    <?php 
+                        $amenities = get_field('amenities');
+
+                        
+                        echo '<ul class = "amenities-wrapper">';
+                            foreach ($amenities as $amenitie) {
+
+                                if($amenitie == 'shower') {
+                                    echo '<li><i class="fas fa-shower"></i> Shower</li>';
+                                }
+
+                                if($amenitie == 'lockerrooms') {
+                                    echo '<li><i class="fas fa-shower"></i> Locker Rooms</li>';
+                                }
+
+                                if($amenitie == 'parkingarea') {
+                                    echo '<li><i class="fas fa-parking"></i> Parking Area</li>';
+                                }
+
+                                if($amenitie == 'restrooms') {
+                                    echo '<li><i class="fas fa-restroom"></i> Restrooms</li>';
+                                }
+
+                                if($amenitie == 'waitingarea') {
+                                    echo '<li><i class="fas fa-umbrella-beach"></i> Waiting Area</li>';
+                                }
+
+                                if($amenitie == 'drinkingwaterorvending') {
+                                    echo '<li><i class="fas fa-faucet"></i>  Drinking water / vending machine</li>';
+                                }
+
+                                 if($amenitie == 'wifi') {
+                                    echo '<li><i class="fas fa-wifi"></i> WiFi</li>';
+                                }
+
+                                if($amenitie == 'airconditiona') {
+                                    echo '<li><i class="fas fa-thermometer-empty"></i> Air conditioning (if indoor)</li>';
+                                }
+
+                                 if($amenitie == 'cafeteria') {
+                                    echo '<li><i class="fas fa-utensils"></i> Cafeteria</li>';
+                                }
+
+                                
+                               // echo '<li>'.$amenitie.'</li>';
+                            }
+                        echo '</ul>';
+                    ?>
+                </div>
                 <div class = "divider-sp">
+
+                    <hr>
+                </div>
+
+                <div class = "about-us-wrapper-need">
+                <h3>About Us</h3>
+                <?php $about = get_field('about_me'); 
+                        echo $about;
+                    ?>
+                </div>
+                 <div class = "divider-sp">
 
                     <hr>
                 </div>
@@ -100,8 +169,8 @@ if ( $images ) : ?>
                     <hr>
                 </div>  
                 <div class = "about-us-service">
-                    <?php $about = get_field('about_me'); 
-                        echo $about;
+                    <?php $additional_information = get_field('additional_information'); 
+                        echo $additional_information;
                     ?>
 
                 </div>

@@ -516,6 +516,30 @@
 
 
 @media only screen and (max-width:767px) {
+	.service-gallery-thumbs img {
+		height:120px;
+	}
+	ul.amenities-wrapper {
+
+    gap: 5px;
+}
+.h3, h3 {
+    font-size: 1.4rem;
+}div#respond .form-submit input {
+    background: #1e6366;
+    color: #fff;
+    border: 0px;
+    padding: 10px;
+    text-transform: uppercase;
+    font-size: 13px;
+    border-radius: 10px;
+}
+	.container-title-and-rate h4 {
+    font-size: 18px;
+	}
+	ul.court-amenities {
+		gap:5px;
+	}
 	ul.footer-third-new {
     display: flex;
     flex-direction: column;
@@ -611,6 +635,9 @@
 }
 
 @media screen and (max-width:575px) {
+	.service-gallery-thumbs img {
+		height:90px;
+	}
 	.search-wrapper button {
 		font-size:14px;
 		padding:15px 25px;

@@ -50,6 +50,40 @@
             "preview_size": "medium"
         },
         {
+            "key": "field_69e985a50dfec",
+            "label": "Amenities",
+            "name": "amenities",
+            "aria-label": "",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "shower": "Shower",
+                "locakerrooms": "locker rooms",
+                "parkingarea": "Parking Area",
+                "restrooms": "Restrooms",
+                "waitingarea": "waiting area",
+                "drinkingwaterorvending": "Drinking water \/ vending machine",
+                "wifi": "WiFi (surprisingly attractive)",
+                "airconditiona": "Air conditioning (if indoor)",
+                "cafeteria": "Cafeteria"
+            },
+            "default_value": [],
+            "return_format": "value",
+            "allow_custom": 0,
+            "allow_in_bindings": 0,
+            "layout": "horizontal",
+            "toggle": 0,
+            "save_custom": 0,
+            "custom_choice_button_text": "Add new choice"
+        },
+        {
             "key": "field_695342a608250",
             "label": "Address",
             "name": "address",
@@ -331,7 +365,7 @@
         },
         {
             "key": "field_694f8f923c33d",
-            "label": "About me",
+            "label": "About Us",
             "name": "about_me",
             "aria-label": "",
             "type": "wysiwyg",
@@ -463,5 +497,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1776050351
+    "modified": 1776913403
 }

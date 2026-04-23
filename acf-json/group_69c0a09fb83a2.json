@@ -89,6 +89,116 @@
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_69c0a09fe11f0"
+                },
+                {
+                    "key": "field_69e97f248e3e2",
+                    "label": "Court Type",
+                    "name": "court_type",
+                    "aria-label": "",
+                    "type": "radio",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "indoor": "Indoor",
+                        "outdoor": "Outdoor"
+                    },
+                    "default_value": "",
+                    "return_format": "value",
+                    "allow_null": 0,
+                    "other_choice": 0,
+                    "allow_in_bindings": 0,
+                    "layout": "horizontal",
+                    "save_other_choice": 0,
+                    "parent_repeater": "field_69c0a09fe11f0"
+                },
+                {
+                    "key": "field_69e980c58e3e3",
+                    "label": "Surface type",
+                    "name": "surface_type",
+                    "aria-label": "",
+                    "type": "radio",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "hardcourt": "Hard Court",
+                        "clay": "Clay",
+                        "rubberized": "Rubberized"
+                    },
+                    "default_value": "",
+                    "return_format": "value",
+                    "allow_null": 0,
+                    "other_choice": 0,
+                    "allow_in_bindings": 0,
+                    "layout": "horizontal",
+                    "save_other_choice": 0,
+                    "parent_repeater": "field_69c0a09fe11f0"
+                },
+                {
+                    "key": "field_69e9815e8e3e4",
+                    "label": "Court size",
+                    "name": "court_size",
+                    "aria-label": "",
+                    "type": "radio",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "standard": "Standard",
+                        "halfcourt": "Half Court"
+                    },
+                    "default_value": "",
+                    "return_format": "value",
+                    "allow_null": 0,
+                    "other_choice": 0,
+                    "allow_in_bindings": 0,
+                    "layout": "horizontal",
+                    "save_other_choice": 0,
+                    "parent_repeater": "field_69c0a09fe11f0"
+                },
+                {
+                    "key": "field_69e9819b8e3e5",
+                    "label": "Lighting availability",
+                    "name": "lighting_availability",
+                    "aria-label": "",
+                    "type": "checkbox",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "day": "Day",
+                        "nightplay": "Night Play"
+                    },
+                    "default_value": [],
+                    "return_format": "array",
+                    "allow_custom": 0,
+                    "allow_in_bindings": 0,
+                    "layout": "horizontal",
+                    "toggle": 0,
+                    "save_custom": 0,
+                    "custom_choice_button_text": "Add new choice",
+                    "parent_repeater": "field_69c0a09fe11f0"
                 }
             ]
         }
@@ -114,5 +224,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1776050351
+    "modified": 1776916923
 }
