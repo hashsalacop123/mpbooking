@@ -5,7 +5,7 @@ jQuery(document).ready(function($) {
     var calendarEl = document.getElementById('availability-calendar-frontend');
     if (!calendarEl) return;
 
-    // Use localized data
+    // Use localized data 
 
 var fieldKey = availabilityData.field_key;
     
