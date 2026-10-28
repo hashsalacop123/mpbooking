@@ -7,6 +7,12 @@ function is_dashboard_tree() {
 
     if (!$post) return false;
 
+    // Several dashboard tools live at root-level page URLs, while others are
+    // children of /dashboard/. Load their shared tables and dashboard script.
+    if (is_page(['dashboard', 'my-account', 'review', 'statistics', 'update', 'add', 'create-update', 'court-name-schedule'])) {
+        return true;
+    }
+
     // Get dashboard page
     $dashboard = get_page_by_path('dashboard');
 
@@ -50,8 +56,20 @@ function theme_enqueue_styles() {
     wp_enqueue_style('fancy-box','https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1/dist/fancybox/fancybox.css');
 
     // Theme CSS
-    wp_enqueue_style('landing-page', get_template_directory_uri() . '/css/home-page.css');
-    wp_enqueue_style('innerpages', get_template_directory_uri() . '/css/inner-pages.css');
+    $home_css_path = get_template_directory() . '/css/home-page.css';
+    wp_enqueue_style(
+        'landing-page',
+        get_template_directory_uri() . '/css/home-page.css',
+        [],
+        file_exists($home_css_path) ? filemtime($home_css_path) : null
+    );
+    $inner_pages_css_path = get_template_directory() . '/css/inner-pages.css';
+    wp_enqueue_style(
+        'innerpages',
+        get_template_directory_uri() . '/css/inner-pages.css',
+        [],
+        file_exists($inner_pages_css_path) ? filemtime($inner_pages_css_path) : null
+    );
     wp_enqueue_style('global-css', get_template_directory_uri() . '/css/style.css');
     wp_enqueue_style($parent_style, get_template_directory_uri() . '/style.css');
     wp_enqueue_style('responsive', get_template_directory_uri() . '/css/responsive.css');
@@ -99,12 +117,7 @@ if ( is_dashboard_tree() ) {
 
                     // Inline initialization script
             $datatable_init = "
-                Object.assign(DataTable.defaults, {
-                    searching: false,
-                    ordering: false
-                });
-
-                new DataTable('#bookings', {
+                if (document.querySelector('#bookings')) new DataTable('#bookings', {
                     responsive: true,
                     autoWidth: false,
                     columnDefs: [
@@ -114,12 +127,10 @@ if ( is_dashboard_tree() ) {
                     ]
                 });
 
-                new DataTable('#users-table', {
+                if (document.querySelector('#users-table')) new DataTable('#users-table', {
                     responsive: true,
                     autoWidth: false
                 });
-
-                console.log('Responsive:', DataTable.Responsive);
             ";
 
                 wp_add_inline_script('datatables-responsive-js', $datatable_init);
@@ -146,7 +157,8 @@ if ( is_dashboard_tree() ) {
 
     // Theme JS
     wp_enqueue_script('user-js', get_stylesheet_directory_uri() . '/js/user.js', ['jquery'], null, true);
-    wp_enqueue_script('general-script',get_stylesheet_directory_uri() . '/js/general.js',['jquery','sweetalert','select2-js'],null,true);
+    $general_js_path = get_stylesheet_directory() . '/js/general.js';
+    wp_enqueue_script('general-script', get_stylesheet_directory_uri() . '/js/general.js', ['jquery', 'sweetalert', 'select2-js'], file_exists($general_js_path) ? filemtime($general_js_path) : null, true);
     wp_enqueue_script('jquery-script', get_stylesheet_directory_uri() . '/js/jquery-script.js', ['jquery'], null, true);
 
     wp_localize_script(
@@ -158,6 +170,7 @@ if ( is_dashboard_tree() ) {
 );
   wp_localize_script('general-script', 'booking_ajax', [
             'ajax_url' => admin_url('admin-ajax.php'),
+            'court_url' => home_url('/court/'),
             'nonce'    => wp_create_nonce('booking_nonce')
     ]);
 
@@ -191,7 +204,14 @@ function enqueue_availability_calendar() {
     wp_enqueue_script('fullcalendar','https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js',['jquery'],null,true);
 
     // Your availability JS
-    wp_enqueue_script('availability-calendar', get_stylesheet_directory_uri() . '/js/coach-availability-calendar.js', ['jquery','fullcalendar'], null, true);
+    $coach_availability_path = get_stylesheet_directory() . '/js/coach-availability-calendar.js';
+    wp_enqueue_script(
+        'availability-calendar',
+        get_stylesheet_directory_uri() . '/js/coach-availability-calendar.js',
+        ['jquery', 'fullcalendar'],
+        file_exists($coach_availability_path) ? filemtime($coach_availability_path) : null,
+        true
+    );
     wp_enqueue_script('service-availability-calendar', get_stylesheet_directory_uri() . '/js/service-availability-calendar.js', ['jquery','fullcalendar'], null, true);
 
     // Note: DO NOT localize here; localize in template after $coach_post_id is defined
@@ -261,11 +281,12 @@ wp_localize_script('service-booking-calendar', 'bookingData', [
  * Pass AJAX URL to JS
  */
   
+  $service_calendar_js_path = get_stylesheet_directory() . '/js/service-booking-calendar.js';
   wp_enqueue_script(
         'service-booking-calendar',
         get_stylesheet_directory_uri() . '/js/service-booking-calendar.js',
         ['jquery', 'fullcalendar-js'],
-        '1.0',
+        file_exists($service_calendar_js_path) ? filemtime($service_calendar_js_path) : '1.0',
         true
     );
 }

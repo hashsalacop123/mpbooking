@@ -2,9 +2,16 @@
 // TEMPLATE NAME: Add
 
 acf_form_head(); // Must be first
-get_header();
-
 $current_user = wp_get_current_user();
+
+// The /dashboard/update/ route uses this template in the current site setup.
+// Coach accounts manage their coach post and availability here, not a court service.
+if (in_array('coach', (array) $current_user->roles, true)) {
+    include get_template_directory() . '/coach/coach-update.php';
+    return;
+}
+
+get_header();
 
 /*
 |--------------------------------------------------------------------------
@@ -61,7 +68,16 @@ wp_localize_script('availability-calendar', 'availabilityData', [
 </div>
 
 <!-- CONTENT -->
-<div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
+<div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 mp-dashboard-content">
+
+<div class="mp-dashboard-page-heading">
+    <div>
+        <p class="mp-dashboard-eyebrow">Court management</p>
+        <h1>Create your court profile</h1>
+        <p>Add your venue details and booking information to publish your court listing.</p>
+    </div>
+</div>
+<div class="mp-dashboard-card mp-dashboard-form-card">
 
 <!-- Availability Button -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#calendarModal">
@@ -164,6 +180,7 @@ acf_form([
 <input type="hidden" id="acf-field_lat" name="acf[field_lat]" />
 <input type="hidden" id="acf-field_lng" name="acf[field_lng]" />
 
+</div>
 </div>
 </div>
 </div>

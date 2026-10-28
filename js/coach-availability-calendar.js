@@ -1,178 +1,165 @@
-jQuery(document).ready(function($) {
-    if (typeof FullCalendar === 'undefined') return;
-    if (typeof availabilityData === 'undefined') return;
-
+jQuery(function ($) {
     var calendarEl = document.getElementById('availability-calendar-frontend');
     if (!calendarEl) return;
 
-    // Use localized data 
-
-var fieldKey = availabilityData.field_key;
-    
-    // ACF form selector: tries ID first, then the 'name' attribute which ACF always uses
-var currentRow = window.currentRow || null;
-
-function getTargetField() {
-
-    if (window.currentRow) {
-        return window.currentRow.find('.acf-field[data-name="court_calendar"] textarea');
+    if (typeof availabilityData === 'undefined') {
+        calendarEl.innerHTML = '<p class="mp-calendar-load-message">Availability settings could not be loaded. Refresh the page and try again.</p>';
+        console.error('Coach availability calendar is missing its localized configuration.');
+        return;
+    }
+    if (typeof FullCalendar === 'undefined') {
+        calendarEl.innerHTML = '<p class="mp-calendar-load-message">The calendar could not load. Refresh the page or contact the site administrator.</p>';
+        console.error('FullCalendar did not load on the coach profile page.');
+        return;
     }
 
-    var $byID = $('#acf-field_' + fieldKey);
-    if ($byID.length) return $byID;
+    var fieldKey = availabilityData.field_key || '';
+    var calendar;
 
-    return $('[name="acf[' + fieldKey + ']"]');
-}
+    function getTargetField() {
+        if (!fieldKey) return $();
+        var $field = $('#acf-' + fieldKey);
+        if (!$field.length) $field = $('[name="acf[' + fieldKey + ']"]');
+        if (!$field.length) $field = $('.acf-field[data-key="' + fieldKey + '"] textarea');
+        return $field.first();
+    }
 
-    var $field = getTargetField();
-
-    // Load Existing Data
-    var existingEvents = [];
-    if ($field.length && $field.val()) {
+    function readAvailabilityEvents() {
+        var $field = getTargetField();
+        if (!$field.length || !$field.val()) return [];
         try {
-            existingEvents = JSON.parse($field.val());
-        } catch(e) { console.warn("New profile or invalid JSON."); }
+            var parsed = JSON.parse($field.val());
+            return Array.isArray(parsed) ? parsed.filter(function (event) {
+                return event && event.start && event.end;
+            }) : [];
+        } catch (error) {
+            console.warn('Coach availability field is not valid JSON; starting with an empty calendar.');
+            return [];
+        }
     }
 
-    // Load booking events from PHP
-var bookingEvents = availabilityData.booking_events || [];
-
-
-    // Sync Function
     function syncToACF() {
-        var events = calendar.getEvents().map(function(event) {
+        if (!calendar) return;
+        var availability = calendar.getEvents().filter(function (event) {
+            return !event.extendedProps.isBooking;
+        }).map(function (event) {
             return {
-                start: event.start.toISOString(),
-                end: event.end.toISOString(),
+                start: event.start ? event.start.toISOString() : null,
+                end: event.end ? event.end.toISOString() : null,
                 title: event.title || 'Available',
                 note: event.extendedProps.note || ''
             };
+        }).filter(function (event) {
+            return event.start && event.end;
         });
-        
-        var jsonValue = JSON.stringify(events);
-        var $currentField = getTargetField(); // re-fetch in case DOM changed
-        if ($currentField.length) {
-            $currentField.val(jsonValue);
-            console.log("Synced to " + fieldKey, jsonValue);
+
+        var $field = getTargetField();
+        if ($field.length) {
+            $field.val(JSON.stringify(availability)).trigger('change');
         }
     }
 
-    // Initialize Calendar
-    window.calendar = new FullCalendar.Calendar(calendarEl, {
-                validRange: function() {
+    function dayAtSix(date) {
+        var value = new Date(date);
+        value.setHours(6, 0, 0, 0);
+        return value;
+    }
 
-                        let now = new Date();
+    function addSelection(startValue, endValue, note) {
+        var start = new Date(startValue);
+        var end = new Date(endValue);
+        var cursor = new Date(start);
+        var firstDay = true;
 
-                        // move to tomorrow
-                        now.setDate(now.getDate() + 1);
+        while (cursor < end) {
+            var segmentStart = firstDay ? new Date(cursor) : dayAtSix(cursor);
+            var nextMidnight = new Date(cursor);
+            nextMidnight.setHours(24, 0, 0, 0);
+            var segmentEnd = end < nextMidnight ? new Date(end) : nextMidnight;
 
-                        // reset time to midnight
-                        now.setHours(0, 0, 0, 0);
+            if (segmentEnd > segmentStart) {
+                calendar.addEvent({
+                    start: segmentStart,
+                    end: segmentEnd,
+                    title: note || 'Available',
+                    extendedProps: { note: note || '' }
+                });
+            }
 
-                        return {
-                            start: now
-                        };
-                    },
-    initialView: 'timeGridWeek',
-        // 1. The "Zoom In" Logic
-    dateClick: function(info) {
-        // If the user clicks a day in Month view, jump to that Day's hourly view
-        if (calendar.view.type === 'dayGridMonth') {
-            calendar.changeView('timeGridDay', info.dateStr);
+            cursor = nextMidnight;
+            firstDay = false;
         }
-    },
-        
+    }
+
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+
+    calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'timeGridWeek',
+        timeZone: 'local',
+        firstDay: 1,
+        height: 'auto',
+        nowIndicator: true,
+        allDaySlot: false,
+        slotMinTime: '06:00:00',
+        slotMaxTime: '24:00:00',
+        slotDuration: '01:00:00',
+        slotLabelInterval: '01:00',
+        eventColor: '#4f9c61',
+        validRange: { start: tomorrow },
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
             right: 'timeGridWeek,timeGridDay'
         },
-        navLinks: true, // Also makes the small date numbers clickable
         selectable: true,
+        selectMirror: true,
+        selectOverlap: false,
         editable: true,
-        selectable: true,
-        editable: true,
-        allDaySlot: false,
-        timeZone: 'local', // Add this line
-        slotMinTime: "06:00:00",
-        slotMaxTime: "24:00:00",
-        slotDuration: '01:00:00', // <-- 1 hour slots
-
-events: existingEvents.concat(bookingEvents),
-select: function(info) {
-
-    var note = prompt('Note (Optional):');
-
-    let start = new Date(info.start);
-    let end   = new Date(info.end);
-
-    // normalize start to 6AM
-    // start.setHours(6, 0, 0, 0);
-
-    let current = new Date(start);
-
-    while (current < end) {
-
-        let dayStart = new Date(current);
-        let dayEnd   = new Date(current);
-
-        // end of that day
-     dayEnd.setHours(24, 59, 59, 0); // clean last hour
-        // if last day → respect actual drag end
-        if (dayEnd > end) {
-            dayEnd = new Date(end);
-        }
-
-        calendar.addEvent({
-            start: new Date(dayStart),
-            end: new Date(dayEnd),
-            title: note ? note : 'Available',
-            extendedProps: { note: note || '' }
-        });
-
-        // move to next day at 6AM
-        current.setDate(current.getDate() + 1);
-        current.setHours(6, 0, 0, 0);
-    }
-
-    calendar.unselect();
-    syncToACF();
-},
-        eventClick: function(info) {
-            if(confirm('Remove this slot?')) {
+        eventOverlap: false,
+        eventAllow: function (dropInfo, draggedEvent) {
+            return !draggedEvent.extendedProps.isBooking && dropInfo.start >= tomorrow;
+        },
+        events: readAvailabilityEvents().concat(availabilityData.booking_events || []),
+        select: function (info) {
+            var note = window.prompt('Add a short note for this availability? (Optional)', '');
+            if (note !== null) {
+                addSelection(info.start, info.end, note.trim());
+                syncToACF();
+            }
+            calendar.unselect();
+        },
+        eventClick: function (info) {
+            if (info.event.extendedProps.isBooking) {
+                window.alert('Bookings are locked and cannot be removed from availability.');
+                return;
+            }
+            if (window.confirm('Remove this availability time?')) {
                 info.event.remove();
                 syncToACF();
             }
         },
         eventDrop: syncToACF,
-        eventResize: syncToACF
+        eventResize: syncToACF,
+        eventDidMount: function (info) {
+            if (info.event.extendedProps.isBooking) {
+                info.el.setAttribute('title', 'This time is reserved and cannot be changed.');
+            }
+        }
     });
 
-    // Modal Display Fix
-$('#calendarModal').on('shown.bs.modal', function () {
+    calendar.render();
+    window.coachAvailabilityCalendar = calendar;
 
-    console.log('MODAL OPENED');
+    $('#calendarModal').on('shown.bs.modal', function () {
+        calendar.updateSize();
+    });
 
-    setTimeout(function () {
-
-        if (typeof calendar !== 'undefined') {
-
-            calendar.render();
-            calendar.updateSize();
-
-        } else {
-            console.warn('Calendar missing');
-        }
-
-    }, 300); // increase delay for safety
-
-});
-
-    // ACF-Specific Submit Hook (Essential for acf_form)
-    if (typeof acf !== 'undefined') {
-        acf.add_action('submit', function($form) {
+    if (typeof acf !== 'undefined' && typeof acf.add_action === 'function') {
+        acf.add_action('submit', function () {
             syncToACF();
         });
     }
+    $('.mp-coach-dashboard form').on('submit', syncToACF);
 });
-// console.log("Calendar data:", availabilityData);

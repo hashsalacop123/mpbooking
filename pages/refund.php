@@ -2,14 +2,14 @@
 //Template Name: Refund Page
 
 get_header(); ?>
-<div class = "contact-us-main-wrapper">
-    <div class="banner-pages" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/img/refund-image.jpg' ); ?>'); background-position: center top;">
+<main class="contact-us-main-wrapper mp-refund-page">
+    <div class="banner-pages mp-refund-hero" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/img/refund-image.jpg' ); ?>'); background-position: center top;">
         <div class = "container">
             <div class = "row">
                 <div class = "col-lg-6 col-md-6 col-sm-12">
-                    <h1>Refund</h1>
-                    <p>Something didn’t go as planned with your booking? No worries—just fill out the form below and we’ll take a look.</p>
-                    <p>WMake sure to include your booking details so we can process your request faster. We’ll get back to you as soon as possible.</p>
+                    <span class="mp-auth-eyebrow">MatchPoint support</span>
+                    <h1>Refund requests</h1>
+                    <p>Tell us about your booking and our team will review your request.</p>
                 </div>
                 <div class = "col-lg-6 col-md-6 col-sm-12">
                 </div>
@@ -18,14 +18,12 @@ get_header(); ?>
         </div>
     </div>
 
-</div>
-
-<div class = "container refund-page">
+<div class="container refund-page mp-refund-content">
 
 <form id="mp-refund-form" class="container mt-4">
 
-  <div class="card p-4 shadow-sm">
-    <h4 class="mb-2">Refund Request</h4>
+  <div class="card p-4 shadow-sm mp-refund-card">
+    <h2 class="mb-2">Request a refund</h2>
 
     <!-- Alert container -->
     <div id="mp-refund-message"></div>
@@ -156,4 +154,5 @@ get_header(); ?>
 
 </form>
  </div>
+</main>
 <?php get_footer(); ?>

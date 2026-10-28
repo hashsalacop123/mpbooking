@@ -3,7 +3,8 @@ jQuery(document).ready(function($){
     // ================================
     // INIT DATATABLE
     // ================================
-const table = $('#hash-reviews-table').DataTable({
+const $reviewTable = $('#hash-reviews-table');
+const table = $reviewTable.length ? $reviewTable.DataTable({
     responsive: true, // 👈 REQUIRED
     autoWidth: false,
 
@@ -14,8 +15,7 @@ const table = $('#hash-reviews-table').DataTable({
             action: 'hash_get_reviews_table'
         },
         dataSrc: function(json) {
-            console.log(json);
-            return json.data;
+            return json && Array.isArray(json.data) ? json.data : [];
         }
     },
 
@@ -42,7 +42,7 @@ const table = $('#hash-reviews-table').DataTable({
         { responsivePriority: 3, targets: 6 }, // status 👈 KEEP THIS
         { responsivePriority: 4, targets: -1 } // action
     ]
-});
+}) : null;
 
 
     // ================================
@@ -54,7 +54,7 @@ const table = $('#hash-reviews-table').DataTable({
     // ================================
     // OPEN MODAL (FIXED FOR DATATABLES)
     // ================================
-    $('#hash-reviews-table').on('click', '.manage-review', function(){
+    $reviewTable.on('click', '.manage-review', function(){
         selectedReviewID = $(this).data('id');
         $('#reviewModal').modal('show');
     });
@@ -130,7 +130,7 @@ const table = $('#hash-reviews-table').DataTable({
                     $('#reviewModal').modal('hide');
 
                     // ✅ RELOAD DATATABLE
-                    table.ajax.reload(null, false);
+                    if (table) table.ajax.reload(null, false);
 
                 } else {
 

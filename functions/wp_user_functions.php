@@ -194,9 +194,9 @@ function custom_user_login_shortcode() {
     ob_start(); ?>
   
 
-    <form method="post" class="custom-login-form">
+    <form method="post" class="custom-login-form mp-login-form">
         <p>
-            <label for="username">Username or Email</label><br>
+            <label for="username">Email address or username</label><br>
             <input type="text" name="username" id="username" required>
         </p>
         <p>
@@ -205,7 +205,7 @@ function custom_user_login_shortcode() {
         </p>
         <p>
             <input type="checkbox" name="rememberme" id="rememberme" value="1">
-            <label for="rememberme">Remember Me</label>
+            <label for="rememberme">Remember me</label>
         </p>
         <input type="hidden" name="redirect_to" value="<?php echo esc_url(home_url('/dashboard/')); ?>">
         <?php wp_nonce_field('custom-login-action','custom-login-nonce'); ?>
@@ -214,6 +214,7 @@ function custom_user_login_shortcode() {
         </p>
         <p>
             <a href="<?php echo wp_lostpassword_url(); ?>">Forgot Password?</a>
+            <span class="mp-login-register">New to MatchPoint? <a href="<?php echo esc_url(home_url('/registration/')); ?>">Create an account</a></span>
         </p>
  
     </form>

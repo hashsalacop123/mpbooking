@@ -13,15 +13,23 @@ get_header();
             </div>
 
             <!-- CONTENT -->
-            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
+            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 mp-dashboard-content">
                 <?php 
                     
                 ?>
+            <div class="mp-dashboard-page-heading">
+                <div>
+                    <p class="mp-dashboard-eyebrow">Reputation</p>
+                    <h1>Reviews</h1>
+                    <p>Review player feedback and manage its status.</p>
+                </div>
+            </div>
+            <div class="mp-dashboard-card mp-dashboard-table-card">
             <table id="hash-reviews-table" class="tables-general display">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Email</th>
+            <th>Court / Coach</th>
+            <th>Reviewer</th>
             <th>Role</th> <!-- ✅ -->
             <th>Comment</th>
             <th>Rating</th>
@@ -32,6 +40,7 @@ get_header();
         </tr>
     </thead>
 </table>
+            </div>
 
 
 

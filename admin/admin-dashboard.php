@@ -11,8 +11,14 @@ get_header();
     <div class = "col-xl-3 col-lg-3 col-md-3 col-sm-12">
         <?php include get_template_directory() . '/dashboard/dashboard-sidebar.php'; ?>    </div>
     <!-- CONTTENT START HERE -->
-    <div class = "col-xl-9 col-lg-9 col-md-9 col-sm-12">
-<h3>Member</h3>
+    <div class = "col-xl-9 col-lg-9 col-md-9 col-sm-12 mp-dashboard-content">
+<div class="mp-dashboard-page-heading">
+    <div>
+        <p class="mp-dashboard-eyebrow">Administration</p>
+        <h1>Member management</h1>
+        <p>Review member accounts, registration status, and submitted profiles.</p>
+    </div>
+</div>
  <?php
 // Get users with specific roles
 $args = array(
@@ -25,22 +31,9 @@ $user_query = new WP_User_Query($args);
 $users = $user_query->get_results();
 ?>
 
+<div class="mp-dashboard-card mp-dashboard-table-card">
 <table id="users-table" class="display tables-general">
     <thead>
-        <?php
-// Get ONE post created by this user (change post_type if needed)
-$user_posts = get_posts(array(
-    'author'        => $user->ID,
-    'post_type'     => 'any', // or your CPT like 'event'
-    'posts_per_page'=> 1,     // only get 1
-));
-
-$post_link = '';
-
-if (!empty($user_posts)) {
-    $post_link = get_permalink($user_posts[0]->ID);
-}
-?>
         <tr>
             <th>User ID</th>
             <th>First Name</th>
@@ -152,6 +145,7 @@ $user_posts = get_posts(array(
         <?php endif; ?>
     </tbody>
 </table>
+</div>
 
 
 

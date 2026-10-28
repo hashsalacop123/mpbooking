@@ -10,6 +10,9 @@
 <?php 
 $datacoach = get_field('avalability');
 $dates = json_decode($datacoach, true);
+if (!is_array($dates)) {
+    $dates = [];
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -245,6 +248,8 @@ if (isset($blocked_slots[$slot_date])) {
 
     echo '</ul>';
 
+else:
+    echo '<p class="mp-coach-no-availability">No availability has been posted yet. Please check back soon.</p>';
 endif;
 ?>
 

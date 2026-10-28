@@ -4,7 +4,7 @@
     $('#coach-search').select2({
         
         theme: 'bootstrap4',
-        placeholder: 'Search coach...',
+        placeholder: 'Where to play? Search courts, coaches, or locations',
         minimumInputLength: 2,
         ajax: {
             url: booking_ajax.ajax_url,
@@ -40,6 +40,12 @@
 
         if (selectedUrl) {
             window.location.href = selectedUrl;
+        } else if ($('#home-sport').length) {
+            var selectedSport = $('#home-sport').val();
+            var courtUrl = booking_ajax.court_url || '/court/';
+            window.location.href = selectedSport
+                ? courtUrl + '?sport=' + encodeURIComponent(selectedSport)
+                : courtUrl;
         } else {
             alert('Please select a result first');
         }
@@ -47,7 +53,7 @@
     });
 
   if ($.fn.slick) {
-      Fancybox.bind('[data-fancybox="coach-gallery"]', {
+      Fancybox.bind('[data-fancybox="coach-gallery"], [data-fancybox="court-gallery"]', {
           Thumbs: false,
           Toolbar: {
             display: [

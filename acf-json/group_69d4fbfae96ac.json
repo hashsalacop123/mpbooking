@@ -245,8 +245,7 @@
     "instruction_placement": "label",
     "hide_on_screen": [
         "permalink",
-        "the_content",
-        "page_attributes"
+        "the_content"
     ],
     "active": true,
     "description": "",
@@ -254,9 +253,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-<<<<<<< HEAD
-    "modified": 1776050351
-=======
-    "modified": 1776313131
->>>>>>> d8a52a8e70a8eb09de71ff3d4830bd6f5d52cb92
+    "modified": 1792499570
 }

@@ -12,7 +12,7 @@ get_header();
         <?php include get_template_directory() . '/dashboard/dashboard-sidebar.php'; ?>
     </div>
     <!-- CONTTENT START HERE -->
-    <div class = "col-xl-9 col-lg-9 col-md-9 col-sm-12">
+    <div class = "col-xl-9 col-lg-9 col-md-9 col-sm-12 mp-dashboard-content">
 
 <?php
 /* Template Name: My Account */
@@ -30,21 +30,21 @@ $success      = false;
  * FORM SUBMIT
  */
 if (
-    isset($_POST['update_account']) &&
-    wp_verify_nonce($_POST['account_nonce'], 'update_account_nonce')
+    isset($_POST['update_account'], $_POST['account_nonce']) &&
+    wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['account_nonce'])), 'update_account_nonce')
 ) {
 
     // Update basic user data
     wp_update_user([
         'ID'         => $user_id,
-        'first_name' => sanitize_text_field($_POST['first_name']),
-        'last_name'  => sanitize_text_field($_POST['last_name']),
-        'user_url'   => esc_url_raw($_POST['website']),
+        'first_name' => sanitize_text_field(wp_unslash($_POST['first_name'] ?? '')),
+        'last_name'  => sanitize_text_field(wp_unslash($_POST['last_name'] ?? '')),
+        'user_url'   => esc_url_raw(wp_unslash($_POST['website'] ?? '')),
     ]);
 
     // Update password (optional)
     if ( ! empty($_POST['password']) ) {
-        wp_set_password($_POST['password'], $user_id);
+        wp_set_password(wp_unslash($_POST['password']), $user_id);
     }
 
     // Handle Valid ID image upload (ACF Image Field)
@@ -75,11 +75,19 @@ $valid_id_image_url = $valid_id_image_id
 ?>
 <?php hash_show_pending_registration_notice(); ?>
 
-<div class="container ">
+<div class="mp-dashboard-page-heading">
+    <div>
+        <p class="mp-dashboard-eyebrow">Account settings</p>
+        <h1>Personal information</h1>
+        <p>Update the details connected to your MatchPoint account.</p>
+    </div>
+</div>
+
+<div class="mp-dashboard-account">
     <div class="row justify-content-center">
         
         <div class="col-lg-12">
-            <div class=" shadow-sm">
+            <div class="mp-dashboard-card mp-dashboard-form-card shadow-sm">
                 <div class="card-body">
                     <h4 class="mb-4">My Account</h4>
 

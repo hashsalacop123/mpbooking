@@ -2,10 +2,20 @@
 // Template Name: Court
 get_header(); ?>
 
-<div class = "general-filter-wrapper">
+<main class="general-filter-wrapper mp-court-finder">
     <div class = "container-fluid">
-        <div class = "row">
- <?php
+        <div class="row mp-court-finder-layout">
+<?php
+                    $sport_filter = isset($_GET['sport']) ? sanitize_key(wp_unslash($_GET['sport'])) : '';
+                    $sport_genres = array(
+                        'tennis'     => array('tennis-court'),
+                        'pickleball' => array('pickleball-court'),
+                        'padel'      => array('padel-court'),
+                    );
+                    $genre_terms = isset($sport_genres[$sport_filter])
+                        ? $sport_genres[$sport_filter]
+                        : array('pickleball-court', 'tennis-court');
+
                     $services = new WP_Query(array(
                         'post_type'      => 'service',
                         'post_status'    => 'publish',
@@ -14,7 +24,7 @@ get_header(); ?>
                         array(
                             'taxonomy' => 'genre',
                             'field'    => 'slug',
-                            'terms'    => array('pickleball-court', 'tennis-court'),
+                            'terms'    => $genre_terms,
                         ),
                     ),
                     ));
@@ -59,25 +69,37 @@ get_header(); ?>
 
                 ?>
                     <!-- INFORMATION COLUMN (now first / left) -->
-            <div class = "col-xl-4 col-lg-4 col-md-12 co-sm-12 sidebar-maps">
+            <aside class="col-xl-4 col-lg-4 col-md-12 col-sm-12 sidebar-maps mp-court-finder-sidebar">
                 <!-- INFORMATION -->
                 <!-- SLIDER SLICK  -->
-                <div class="container-data-convice">
+                <div class="container-data-convice mp-court-finder-panel">
                     <div class="row-power">
-                         <div class="text-paragraph">
-                            <h1>Find location</h1>
-                            <input type = "text" id="locationSearch" placeholder = "search your court"  class="form-control autosearch" value="" />
+                         <div class="text-paragraph mp-court-finder-heading">
+                            <span class="mp-court-finder-eyebrow">MatchPoint courts</span>
+                            <h1>Find a court</h1>
+                            <p>Explore nearby courts and choose a location that fits your game.</p>
+                            <label for="locationSearch">Search by location</label>
+                            <div class="mp-court-search-field">
+                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                                <input type="text" id="locationSearch" placeholder="Enter an address" class="form-control autosearch" value="" />
+                            </div>
+                            <div class="mp-court-result-count">
+                                <strong><?php echo esc_html(count($markers)); ?></strong>
+                                <span><?php echo count($markers) === 1 ? 'court available' : 'courts available'; ?></span>
+                            </div>
                         </div>
 
                     <div class="location-wrapper">
 
-                        <?php foreach ($markers as $index => $marker): ?>
+                        <?php if (empty($markers)) : ?>
+                            <div class="mp-court-finder-empty">No courts are listed in this area yet.</div>
+                        <?php else : foreach ($markers as $index => $marker): ?>
                             <div class="col-md-12 mb-12 wrapper-area">
                                 <div class="card marker-card" data-index="<?php echo $index; ?>" style="cursor:pointer;">
                                     <?php if($marker['featured_image']){ ?>
-                                        <img src="<?php echo esc_url($marker['featured_image']); ?>" class="card-img-top">
+                                        <img src="<?php echo esc_url($marker['featured_image']); ?>" class="card-img-top" alt="<?php echo esc_attr($marker['court_name'] ?: $marker['title']); ?>">
                                     <?php } else {
-                                        echo '<img src = "'.get_template_directory_uri() . '/img/placeholder-400x400.jpg'.'" class = "card-image-top">';
+                                        echo '<img src="' . esc_url(get_template_directory_uri() . '/img/placeholder-400x400.jpg') . '" class="card-img-top" alt="Court photo placeholder">';
 
                                     }?>
                                     <div class="card-body">
@@ -91,25 +113,25 @@ get_header(); ?>
                                         <h5 class="card-title"><?php echo esc_html($marker['address']); ?></h5>
                                         <!-- <p class="card-text"><?php echo esc_html($marker['about_me']); ?></p> -->
 
-                                        <div class = "court-review-wrapper">
+                    <div class="court-review-wrapper">
                                             <?php echo hash_display_rating_summary(); ?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
+                        <?php endforeach; endif; ?>
                     </div>
-                                            <h4>Scrool Left/Right</h4>
+                                            <h4 class="mp-court-finder-hint">Select a court to see it on the map.</h4>
 
                     </div>
                 </div>
-            </div>
+            </aside>
 
             <!-- MAP COLUMN (now second / right) -->
-            <div class = "col-xl-8 col-lg-8 col-md-12 col-sm-12 container-map">
+            <section class="col-xl-8 col-lg-8 col-md-12 col-sm-12 container-map mp-court-map-panel" aria-label="Court locations map">
                 <!-- MAPS -->
-     
-      <div id="map"></div> 
+                <div class="mp-court-map-label"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Court locations</div>
+                <div id="map" aria-label="Map of nearby courts"></div>
                 <script>
                     const markers = <?php echo json_encode($markers); ?>;
                 </script>
@@ -161,11 +183,11 @@ mapboxgl.accessToken = "<?php echo esc_js(MAPBOX_TOKEN); ?>";
                         });
                     });
                 </script>
-            </div>
+            </section>
 
         </div>
     </div>
-</div>
+</main>
 
 
 

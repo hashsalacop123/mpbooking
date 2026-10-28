@@ -2,9 +2,12 @@
 // Template Name: Service Form (Create + Update)
 
 acf_form_head();
-get_header();
-
 $current_user = wp_get_current_user();
+
+if (in_array('coach', (array) $current_user->roles, true)) {
+    include get_template_directory() . '/coach/coach-update.php';
+} else {
+get_header();
 
 /*
 |--------------------------------------------------------------------------
@@ -84,22 +87,20 @@ wp_localize_script('availability-calendar', 'availabilityData', [
 </div>
 
 <!-- CONTENT -->
-<div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
+<div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 mp-dashboard-content">
 
-<!-- ACTION BUTTONS -->
-<div class="button-data" style="margin-bottom:15px;">
-    
-    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#calendarModal">
-        Manage Availability Calendar
-    </button> -->
-
-    <?php if ($post_id !== 'new_post'): ?>
-        <a href="<?php echo get_permalink($post_id); ?>" target="_blank" class="btn btn-primary">
-            View Your Profile
-        </a>
+<div class="mp-dashboard-page-heading">
+    <div>
+        <p class="mp-dashboard-eyebrow">Court management</p>
+        <h1>Court profile</h1>
+        <p>Keep your venue information accurate so players can find and book your courts.</p>
+    </div>
+    <?php if ($post_id !== 'new_post') : ?>
+        <a href="<?php echo esc_url(get_permalink($post_id)); ?>" target="_blank" rel="noopener" class="mp-dashboard-primary-link">View public court</a>
     <?php endif; ?>
-
 </div>
+
+<div class="mp-dashboard-card mp-dashboard-form-card">
 
 <!-- CALENDAR MODAL -->
 <div class="modal fade" id="calendarModal" tabindex="-1">
@@ -235,8 +236,11 @@ jQuery(document).ready(function($) {
 <input type="hidden" id="acf-field_lng" name="acf[field_lng]" />
 
 </div>
+
+</div>
 </div>
 </div>
 </div>
 
 <?php get_footer(); ?>
+<?php } ?>

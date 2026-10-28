@@ -1,215 +1,105 @@
-<?php get_header(); ?>
-<div class = "service-wrapper">
-    <div class = "container">
-        <div class = "row">
-            <?php hash_show_pending_registration_notice(); ?>
+<?php
+get_header();
+$service_id = get_the_ID();
+$court_name = get_field('court_name_gym', $service_id) ?: get_the_title($service_id);
+$court_rows = get_field('court_name', $service_id);
+$court_count = is_array($court_rows) ? count($court_rows) : 0;
+$genres = get_the_terms($service_id, 'genre');
+$genre_names = ($genres && !is_wp_error($genres)) ? wp_list_pluck($genres, 'name') : [];
+$images = get_field('images', $service_id);
+?>
+<main class="mp-court-page">
+    <div class="mp-court-container">
+        <?php hash_show_pending_registration_notice(); ?>
 
-        <div class = "col-xl-9 col-lg-9 col-md-8 col-sm-12">
-            <div class = "wrapper-data">
-
-                <?php 
-                $court_name = get_field('court_name_gym');
-                    if($court_name ) {
-                        echo '<h1>'.$court_name.'</h1>';
-                    }else {
-                        echo '<h1>'.get_the_title().'</h1>';
-                    }
-                
-                ?>
-                <div class="service-meta">
-    <!-- Author -->
-   
-
-    <!-- Date -->
-    <span class="service-date">
-      Posted  on <?php echo get_the_date(); ?>
-    </span>
-
-    <!-- Genre (custom taxonomy) -->
-    <?php 
-    $terms = get_the_terms( get_the_ID(), 'genre' );
-    if ( $terms && ! is_wp_error( $terms ) ) : 
-        $genre_names = wp_list_pluck( $terms, 'name' ); // get names only
-    ?>
-        <span class="service-genre">
-            | Genre: <?php echo esc_html( implode( ', ', $genre_names ) ); ?>
-        </span>
-    <?php endif; ?>
-</div>
-                <div class = "gallery-image">
-                   <?php
-$images = get_field('images');
-
-if ( $images ) : ?>
-    
-    <!-- Main Slider -->
-    <div class="service-gallery-main">
-        <?php foreach ( $images as $image ) : ?>
-            <div class="slide">
-                <img 
-                    src="<?php echo esc_url( $image['sizes']['large'] ); ?>" 
-                    alt="<?php echo esc_attr( $image['alt'] ); ?>">
+        <header class="mp-court-profile-header">
+            <div>
+                <h1><?php echo esc_html($court_name); ?></h1>
+                <p><?php echo $court_count ? esc_html($court_count . ' ' . (count($genre_names) ? implode(' · ', $genre_names) : 'Court') . ($court_count === 1 ? '' : 's')) : esc_html(implode(' · ', $genre_names)); ?></p>
             </div>
-        <?php endforeach; ?>
-    </div>
+            <a class="mp-court-book-button" href="#booknow">Book A Court</a>
+        </header>
 
-    <!-- Thumbnail Navigation -->
-    <div class="service-gallery-thumbs">
-        <?php foreach ( $images as $image ) : ?>
-            <div class="thumb">
-                <img 
-                                src="<?php echo esc_url( $image['sizes']['thumbnail'] ); ?>" 
-                                alt="<?php echo esc_attr( $image['alt'] ); ?>">
-                        </div>
+        <?php require get_template_directory() . '/inc/service-booking-calendar.php'; ?>
+
+        <?php if ($images) : ?>
+            <section class="mp-court-gallery-section" aria-label="Court photos">
+                <h2>Gallery</h2>
+                <div class="mp-court-gallery">
+                    <?php foreach ($images as $image) :
+                        if (empty($image['url'])) continue;
+                        $image_large = $image['sizes']['large'] ?? $image['url'];
+                        $image_medium = $image['sizes']['medium'] ?? $image_large;
+                        ?>
+                        <a href="<?php echo esc_url($image['url']); ?>" data-fancybox="court-gallery" data-caption="<?php echo esc_attr($image['caption'] ?? ''); ?>">
+                            <img src="<?php echo esc_url($image_medium); ?>" alt="<?php echo esc_attr($image['alt'] ?? $court_name); ?>" loading="lazy">
+                        </a>
                     <?php endforeach; ?>
                 </div>
+            </section>
+        <?php endif; ?>
 
-                <?php endif; ?>
-                </div>
-                <!-- address data -->
+        <section class="mp-court-information">
+            <?php if ($about = get_field('about_me', $service_id)) : ?>
+                <article class="mp-court-info-block">
+                    <h2>About this court</h2>
+                    <div><?php echo wp_kses_post($about); ?></div>
+                </article>
+            <?php endif; ?>
 
-                <div class = "amenities-wrapper">
-                    <?php 
-                        $amenities = get_field('amenities');
+            <?php
+            $amenities = get_field('amenities', $service_id);
+            $amenity_labels = [
+                'shower' => ['fa-shower', 'Shower'],
+                'lockerrooms' => ['fa-lock', 'Locker rooms'],
+                'parkingarea' => ['fa-square-parking', 'Parking area'],
+                'restrooms' => ['fa-restroom', 'Restrooms'],
+                'waitingarea' => ['fa-chair', 'Waiting area'],
+                'drinkingwaterorvending' => ['fa-faucet', 'Drinking water / vending machine'],
+                'wifi' => ['fa-wifi', 'WiFi'],
+                'airconditiona' => ['fa-temperature-low', 'Air conditioning'],
+                'cafeteria' => ['fa-utensils', 'Cafeteria'],
+            ];
+            if ($amenities && is_array($amenities)) : ?>
+                <article class="mp-court-info-block">
+                    <h2>Court Amenities</h2>
+                    <ul class="mp-court-amenities">
+                        <?php foreach ($amenities as $amenity) :
+                            if (empty($amenity_labels[$amenity])) continue;
+                            [$icon, $label] = $amenity_labels[$amenity];
+                            ?>
+                            <li><i class="fa-solid <?php echo esc_attr($icon); ?>" aria-hidden="true"></i><?php echo esc_html($label); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </article>
+            <?php endif; ?>
 
-                        if($amenities) :
-                            echo '<h3>Court Amenities</h3>';
-                        endif;
-                    ?>
-                    <?php 
-                        $amenities = get_field('amenities');
-
-                        
-                        echo '<ul class = "amenities-wrapper">';
-                            foreach ($amenities as $amenitie) {
-
-                                if($amenitie == 'shower') {
-                                    echo '<li><i class="fas fa-shower"></i> Shower</li>';
-                                }
-
-                                if($amenitie == 'lockerrooms') {
-                                    echo '<li><i class="fas fa-shower"></i> Locker Rooms</li>';
-                                }
-
-                                if($amenitie == 'parkingarea') {
-                                    echo '<li><i class="fas fa-parking"></i> Parking Area</li>';
-                                }
-
-                                if($amenitie == 'restrooms') {
-                                    echo '<li><i class="fas fa-restroom"></i> Restrooms</li>';
-                                }
-
-                                if($amenitie == 'waitingarea') {
-                                    echo '<li><i class="fas fa-umbrella-beach"></i> Waiting Area</li>';
-                                }
-
-                                if($amenitie == 'drinkingwaterorvending') {
-                                    echo '<li><i class="fas fa-faucet"></i>  Drinking water / vending machine</li>';
-                                }
-
-                                 if($amenitie == 'wifi') {
-                                    echo '<li><i class="fas fa-wifi"></i> WiFi</li>';
-                                }
-
-                                if($amenitie == 'airconditiona') {
-                                    echo '<li><i class="fas fa-thermometer-empty"></i> Air conditioning (if indoor)</li>';
-                                }
-
-                                 if($amenitie == 'cafeteria') {
-                                    echo '<li><i class="fas fa-utensils"></i> Cafeteria</li>';
-                                }
-
-                                
-                               // echo '<li>'.$amenitie.'</li>';
-                            }
-                        echo '</ul>';
-                    ?>
-                </div>
-                <div class = "divider-sp">
-
-                    <hr>
-                </div>
-
-                <div class = "about-us-wrapper-need">
-                <h3>About Us</h3>
-                <?php $about = get_field('about_me'); 
-                        echo $about;
-                    ?>
-                </div>
-                 <div class = "divider-sp">
-
-                    <hr>
-                </div>
-                <div class = "address-data">
-                    <div class = "address-data-information">
-                        <?php $address = get_field('address');?>
-                        <h3><i class="fa fa-map-pin" aria-hidden="true"></i> <?php echo $address; ?></h3>
-
-                    </div>
-                    <div class = "share-and-heart">
-                        
-                    </div>
-                </div>
-                <div class = "service-maps">
+            <?php if ($address = get_field('address', $service_id)) : ?>
+                <article class="mp-court-info-block">
+                    <h2>Location</h2>
+                    <p><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <?php echo esc_html($address); ?></p>
                     <?php
-                        $lat = get_field('address_lat');
-                        $lng = get_field('address_lang');
+                    $lat = get_field('address_lat', $service_id);
+                    $lng = get_field('address_lang', $service_id);
+                    if ($lat && $lng) : ?>
+                        <div id="service-map" class="mp-court-map" data-lat="<?php echo esc_attr($lat); ?>" data-lng="<?php echo esc_attr($lng); ?>"></div>
+                    <?php endif; ?>
+                </article>
+            <?php endif; ?>
 
-                        if ( $lat && $lng ) : ?>
-                            <div 
-                                id="service-map"
-                                data-lat="<?php echo esc_attr($lat); ?>"
-                                data-lng="<?php echo esc_attr($lng); ?>"
-                                style="width:100%; height:200px;">
-                            </div>
-                        <?php endif; ?>
-                </div>
-                    
-                 <div class = "divider-sp">
-                    <hr>
-                </div>  
-                <div class = "about-us-service">
-                    <?php $additional_information = get_field('additional_information'); 
-                        echo $additional_information;
-                    ?>
+            <?php if ($additional_information = get_field('additional_information', $service_id)) : ?>
+                <article class="mp-court-info-block mp-court-additional-information"><?php echo wp_kses_post($additional_information); ?></article>
+            <?php endif; ?>
+        </section>
 
-                </div>
-
-
-
-            </div>
-        </div>
-                <!-- SIDEBAR START HERE -->
-        <div class = "col-xl-3 col-lg-3 col-md-4 col-sm-12">
-            <?php get_template_part( 'single-service/sidebar' ); ?>      
-        </div>
-          
-        <!-- SIDEBAR CLOSED HERE -->
-        </div>
+        <section class="mp-court-reviews" id="review" aria-label="Reviews">
+            <?php echo hash_display_rating_summary(); ?>
+            <?php comments_template(); ?>
+        </section>
     </div>
-</div>
-<div class = "single-booking-services">
-        <div class = "container">
-             <?php 
+</main>
 
-require_once get_template_directory() . '/inc/service-booking-calendar.php';
-
-?>   <?php 
-   echo '<div class="review-list">';
-echo hash_display_rating_summary();
-comments_template();
-echo '</div>';
-   ?>
-                    </div>
-                    
-</div>
-<!-- ShareThis BEGINS -->
 <div class="sharethis-share-buttons" data-type="sticky-share-buttons">
-    <span data-network="facebook"></span>
-    <span data-network="twitter"></span>
-    <span data-network="linkedin"></span>
-    <span data-network="email"></span>
-    <span data-network="sharethis"></span>
+    <span data-network="facebook"></span><span data-network="twitter"></span><span data-network="linkedin"></span><span data-network="email"></span><span data-network="sharethis"></span>
 </div>
-<!-- ShareThis ENDS -->
 <?php get_footer(); ?>

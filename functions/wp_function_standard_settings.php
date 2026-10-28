@@ -101,111 +101,108 @@ add_action('after_setup_theme', 'theme_setup');
 function hash_customize_login_page() {
     ?>
     <style type="text/css">
-
-        /* 🔥 Background */
         body.login {
-            background: url('<?php echo get_stylesheet_directory_uri(); ?>/img/banner-home 2.png') no-repeat center center;
-            background-size: cover;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 28px 16px;
+            background: linear-gradient(180deg, #fff 0%, #f3f8f6 100%);
+            color: #273d3d;
+            font-family: Poppins, Arial, sans-serif;
         }
-           body.login h1 a {
-            background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/img/match-point-logo-transparent.png')!important;
+        body.login *,
+        body.login *::before,
+        body.login *::after { box-sizing: border-box; }
+        body.login #login {
+            position: relative;
+            z-index: 1;
+            width: min(100%, 420px);
+            margin: 0 auto;
+            padding: 0;
+        }
+        body.login h1 a {
+            width: 190px !important;
+            height: 68px !important;
+            margin: 0 auto 22px;
+            background-image: url('<?php echo esc_url(get_stylesheet_directory_uri() . '/img/match-point-logo-transparent.png'); ?>') !important;
             background-size: contain !important;
             background-repeat: no-repeat !important;
             background-position: center !important;
-
-            width: 100% !important;
-            height: 80px !important;
-        }        body.login::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
+        }
+        body.login #login form {
+            margin-top: 0;
+            padding: 30px;
+            border: 1px solid #e8eeeb;
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: 0 12px 36px rgba(35, 65, 58, .08);
+        }
+        body.login #login form label {
+            color: #435655;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        body.login #login form .input,
+        body.login #login form input[type="text"],
+        body.login #login form input[type="password"] {
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* adjust opacity */
-            z-index: 0;
+            min-height: 46px;
+            padding: 9px 12px;
+            border: 1px solid #dce7e3;
+            border-radius: 8px;
+            background: #fbfdfc;
+            color: #273d3d;
+            box-shadow: none;
         }
-
-        /* 🔥 Make sure login box stays above overlay */
-        #login {
-            position: relative;
-            z-index: 1;
+        body.login #login form .input:focus {
+            border-color: #49a296;
+            box-shadow: 0 0 0 3px rgba(49, 145, 132, .13);
         }
-
-        .login form {
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        body.login #login form input[type="checkbox"] { accent-color: #168b7e; }
+        body.login #login .wp-core-ui .button-primary {
+            width: 100%;
+            min-height: 46px;
+            margin-top: 8px;
+            padding: 8px 18px;
+            border: 1px solid #168b7e;
+            border-radius: 8px;
+            background: #168b7e;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            text-shadow: none;
+            box-shadow: none;
         }
-
-        .wp-core-ui .button-primary {
-            background: #000;
-            border: none;
+        body.login #login .wp-core-ui .button-primary:hover,
+        body.login #login .wp-core-ui .button-primary:focus { border-color: #116d64; background: #116d64; }
+        body.login #login a { color: #168b7e; text-decoration: none; }
+        body.login #login a:hover { color: #116d64; text-decoration: underline; }
+        body.login #nav,
+        body.login #backtoblog { padding: 0; text-align: center; }
+        body.login #nav { margin: 18px 0 0; }
+        body.login #backtoblog { margin: 10px 0 0; }
+        body.login .message,
+        body.login .notice,
+        body.login .success { border-left: 4px solid #168b7e; background: #eaf6f2; color: #36534e; box-shadow: none; }
+        body.login p.description,
+        body.login .description.indicator-hint { color: #657572; }
+        @media (max-width: 480px) {
+            body.login #login { width: 100%; }
+            body.login #login form { padding: 24px 20px; }
         }
-        .login form label {
-             color: #fff;
-            }
-            .login form {
-                overflow: hidden!important;
-                background: #1e626674!important;
-                padding: 15px!important;
-                text-align: left!important;
-                border-radius: 15px!important;
-                border: 1px solid #1e6366!important;
-            }
-            #login .wp-core-ui .button-primary {
-    
-                color: #fff;
-                text-decoration: none;
-                text-shadow: none;
-                background: #1e6366!important;
-                border: 1px;
-                color: #fff;
-                border-radius: 15px;
-                padding: 5px 15px !important;
-            }
-            p#nav a {
-                background: #1e6366;
-                padding: 6px;
-                font-size: 12px;
-                color: #fff;
-                border-radius: 3px;
-                color: #fff!Important;
-            }
-            p#backtoblog a {
-                background: #1e6366;
-                padding: 6px;
-                font-size: 12px;
-                color: #fff!important;
-                border-radius: 3px;
-            }.wp-core-ui .button-primary {
-                background: #1e6366!important;
-                border-color: #1e6366!important;
-
-            }
-            
-            .login .message, .login .notice, .login .success {
-                color: #fff;
-                border-left: 4px solid #1e6366!important;
-                padding: 12px;
-                margin-left: 0;
-                margin-bottom: 20px;
-                background-color: #1e626674 !important;
-                box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
-                word-wrap: break-word;
-            }
-            .login form .input, .login form input[type=checkbox], .login input[type=text] {
-                background: #1e6366!important;
-                border-radius: 30px!important;
-                border: 1px solid #0000;
-                color: #fff !important;
-            }
-            p.description.indicator-hint {
-                color: #fff;
-            }
     </style>
     <?php
 }
 add_action('login_enqueue_scripts', 'hash_customize_login_page');
+
+add_filter('login_headerurl', function () {
+    return home_url('/');
+});
+add_filter('login_headertext', function () {
+    return get_bloginfo('name');
+});
 
 /**
  * Hide admin bar on frontend for non-admin users

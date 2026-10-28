@@ -7,20 +7,22 @@ get_header();
 wp_enqueue_media();
 
 redirect_user_login(); 
+$current_page = get_queried_object();
+$is_login_page = isset($current_page->post_name) && $current_page->post_name === 'login';
 ?>
 
-<div class="landing-page-wrapper registration-page-data" style="background-image: url('<?php echo esc_url( get_template_directory_uri() . '/img/banner-home.jpg' ); ?>');"> 
+<main class="registration-page-data mp-auth-page <?php echo $is_login_page ? 'mp-auth-page-login' : 'mp-auth-page-registration'; ?>">
 
-        <?php $current_page = get_queried_object();
-
-if ( isset($current_page->post_name) ) {
-    if ( $current_page->post_name === 'login' ) { ?>
-        <div class = "registration-page-wrapper">
+        <?php if ( isset($current_page->post_name) ) {
+    if ( $is_login_page ) { ?>
+        <div class="registration-page-wrapper mp-auth-layout">
             <div class = "container">
                 <div class = "row">
-                    <div class = "col-sm-12 col-md-4 offset-md-4">
-                        <div class = "registration-form-box ">
-                            <h2>Login</h2>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="registration-form-box mp-auth-card">
+                            <span class="mp-auth-eyebrow">Welcome back</span>
+                            <h2>Log in to MatchPoint</h2>
+                            <p class="mp-auth-description">Manage your bookings and get back to the game.</p>
                         <div class="registration-form login-form-box">
 
                        <?php echo do_shortcode('[user_login]'); ?>
@@ -32,14 +34,14 @@ if ( isset($current_page->post_name) ) {
     </div>
 
 <?php } else { ?>
-        <div class = "registration-page-wrapper">
+        <div class="registration-page-wrapper mp-auth-layout">
         <div class = "container">
             <div class = "row">
-                <div class = "col-sm-12 col-md-6 offset-md-3">
-                    <div class = "registration-form-box">
-<a href="https://tingbook.local/wp-login.php?loginSocial=facebook" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="facebook" data-popupwidth="600" data-popupheight="679">
-	<img src="Image url" alt="" />
-</a>                        <h2>Register</h2>
+                <div class="col-sm-12 col-md-6">
+                    <div class="registration-form-box mp-auth-card">
+                        <span class="mp-auth-eyebrow">Join MatchPoint</span>
+                        <h2>Create your account</h2>
+                        <p class="mp-auth-description">Set up your profile to book courts or offer coaching.</p>
                     <div class="registration-form">
     <?php
 if ( is_user_logged_in() ) {
@@ -253,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ?>
 
 
-</div>
+</main>
  
 
 

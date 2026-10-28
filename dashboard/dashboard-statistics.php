@@ -16,12 +16,26 @@ get_header();
             </div>
 
             <!-- CONTENT -->
-            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
-                            <?php include get_template_directory() . '/inc/booking-sales.php'; ?>
+            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 mp-dashboard-content">
+                <div class="mp-dashboard-page-heading">
+                    <div>
+                        <p class="mp-dashboard-eyebrow">Performance</p>
+                        <h1>Statistics</h1>
+                        <p>See how your bookings and revenue are trending.</p>
+                    </div>
+                </div>
+                <div class="mp-dashboard-card mp-dashboard-sales-card">
+                    <?php include get_template_directory() . '/inc/booking-sales.php'; ?>
+                </div>
 
 
             
-                         <canvas id="myChart"></canvas>
+                <div class="mp-dashboard-card mp-dashboard-chart-card">
+                    <div class="mp-dashboard-section-heading">
+                        <div><h2>Booking activity</h2><p>Monthly booking totals by status.</p></div>
+                    </div>
+                    <canvas id="myChart"></canvas>
+                </div>
 <?php 
 $chart_data = get_booking_chart_data();
 
@@ -60,7 +74,7 @@ const chartData = <?php echo wp_json_encode($chart_data); ?>;
                 {
                     label: 'Refunded',
                     data: chartData.data.refunded,
-                    borderColor: '#17A2C6!',
+                    borderColor: '#17a2b8',
                     fill: false
                 },
                 {
@@ -72,10 +86,17 @@ const chartData = <?php echo wp_json_encode($chart_data); ?>;
                  {
                     label: 'Expired',
                     data: chartData.data.expired,
-                    borderColor: '#dc3545',
+                    borderColor: '#687a86',
                     fill: false
                 }
             ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { intersect: false, mode: 'index' },
+            plugins: { legend: { position: 'bottom' } },
+            scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
         }
     });
 

@@ -16,10 +16,16 @@ get_header();
             </div>
 
             <!-- CONTENT START HERE -->
-            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
+            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 mp-dashboard-content">
 
-
-                <h4>Bookings</h4>
+                <div class="mp-dashboard-page-heading">
+                    <div>
+                        <p class="mp-dashboard-eyebrow">Workspace</p>
+                        <h1>Bookings</h1>
+                        <p>Review upcoming requests and keep track of past sessions.</p>
+                    </div>
+                    <span class="mp-dashboard-heading-chip"><i class="fa-regular fa-calendar-check" aria-hidden="true"></i> Booking management</span>
+                </div>
 
                 <?php
                 $current_user_id = get_current_user_id();
@@ -40,6 +46,7 @@ get_header();
 
                 if ($bookings) :
                 ?>
+                    <div class="mp-dashboard-card mp-dashboard-table-card">
                     <table id="bookings" class="display tables-general">
                         <thead>
                             <tr>
@@ -109,9 +116,10 @@ get_header();
                             <?php } ?>
                         </tbody>
                     </table>
+                    </div>
                 <?php
                 else :
-                    echo '<p>No bookings yet.</p>';
+                    echo '<div class="mp-dashboard-card mp-dashboard-empty"><span class="mp-dashboard-empty__icon"><i class="fa-regular fa-calendar" aria-hidden="true"></i></span><h2>No bookings yet</h2><p>When a player books one of your sessions, it will appear here.</p></div>';
                 endif;
                 ?>
 

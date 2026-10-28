@@ -41,7 +41,28 @@ $post_id = mp_get_user_service_post($user_id);
 |--------------------------------------------------------------------------
 */
 if (!$post_id) {
-    echo '<p>No service found.</p>';
+    ?>
+    <div class="dasboard-wrapper-page">
+        <div class="container">
+            <div class="row">
+                <aside class="col-xl-3 col-lg-3 col-md-4 col-sm-12">
+                    <?php include get_template_directory() . '/dashboard/dashboard-sidebar.php'; ?>
+                </aside>
+                <section class="col-xl-9 col-lg-9 col-md-8 col-sm-12 mp-dashboard-content">
+                    <div class="mp-dashboard-page-heading">
+                        <div><p class="mp-dashboard-eyebrow">Court management</p><h1>Court schedule</h1><p>Set your venue up before adding its schedule.</p></div>
+                    </div>
+                    <div class="mp-dashboard-card mp-dashboard-empty">
+                        <span class="mp-dashboard-empty__icon"><i class="fa-regular fa-calendar" aria-hidden="true"></i></span>
+                        <h2>Create your court profile first</h2>
+                        <p>Your schedule will be connected to your court listing.</p>
+                        <a href="<?php echo esc_url(home_url('/dashboard/create-update/')); ?>" class="mp-dashboard-primary-link">Create court profile</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <?php
     get_footer();
     return;
 }
@@ -73,7 +94,7 @@ if (get_post_field('post_author', $post_id) != $user_id) {
     </div>
 
     <!-- CONTENT -->
-    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
+    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 mp-dashboard-content">
 
         <?php
         /*
@@ -92,12 +113,15 @@ if (get_post_field('post_author', $post_id) != $user_id) {
 // echo '</pre>';
 
         ?>
-        <div class="mb-3 schedule-wrapper">
-            <h3>Manage Court Schedule</h3>
-
-            <p>Add courts and set availability for each one.</p>
-                     <a href = "<?php echo get_permalink($service[0]->ID); ?>" target = "_blank" class ="main-btn-general">View your Court</a>
-
+        <div class="mp-dashboard-page-heading">
+            <div>
+                <p class="mp-dashboard-eyebrow">Court management</p>
+                <h1>Court schedule</h1>
+                <p>Manage your courts and the times players can book them.</p>
+            </div>
+            <?php if (!empty($service)) : ?>
+                <a href="<?php echo esc_url(get_permalink($service[0]->ID)); ?>" target="_blank" rel="noopener" class="mp-dashboard-primary-link">View public court</a>
+            <?php endif; ?>
         </div>
 
         <?php
@@ -106,6 +130,7 @@ if (get_post_field('post_author', $post_id) != $user_id) {
         | ACF FORM (REPEATER: COURTS)
         |--------------------------------------------------------------------------
         */
+        echo '<div class="mp-dashboard-card mp-dashboard-form-card">';
         acf_form([
             'post_id' => $post_id,
 
@@ -121,6 +146,7 @@ if (get_post_field('post_author', $post_id) != $user_id) {
 
             'html_form' => true
         ]);
+        echo '</div>';
         ?>
 
     </div>
