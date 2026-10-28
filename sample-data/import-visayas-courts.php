@@ -64,7 +64,7 @@ $photos = [
 $records = [
     [
         'import_id' => 'visayas-demo-cebu-city',
-        'name' => 'DEMO: Cebu City Pickleball Courts',
+        'name' => 'Cebu City Pickleball Courts',
         'address' => 'Sample location pin: Cebu City, Cebu, Central Visayas, Philippines',
         'latitude' => '10.3157',
         'longitude' => '123.8854',
@@ -76,7 +76,7 @@ $records = [
     ],
     [
         'import_id' => 'visayas-demo-lapu-lapu',
-        'name' => 'DEMO: Lapu-Lapu City Pickleball Courts',
+        'name' => 'Lapu-Lapu City Pickleball Courts',
         'address' => 'Sample location pin: Lapu-Lapu City, Cebu, Central Visayas, Philippines',
         'latitude' => '10.3103',
         'longitude' => '123.9494',
@@ -88,7 +88,7 @@ $records = [
     ],
     [
         'import_id' => 'visayas-demo-tagbilaran',
-        'name' => 'DEMO: Tagbilaran City Pickleball Courts',
+        'name' => 'Tagbilaran City Pickleball Courts',
         'address' => 'Sample location pin: Tagbilaran City, Bohol, Central Visayas, Philippines',
         'latitude' => '9.6474',
         'longitude' => '123.8554',
@@ -100,7 +100,7 @@ $records = [
     ],
     [
         'import_id' => 'visayas-demo-mandaue',
-        'name' => 'DEMO: Mandaue City Pickleball Courts',
+        'name' => 'Mandaue City Pickleball Courts',
         'address' => 'Sample location pin: Mandaue City, Cebu, Central Visayas, Philippines',
         'latitude' => '10.3236',
         'longitude' => '123.9220',
@@ -112,7 +112,7 @@ $records = [
     ],
     [
         'import_id' => 'visayas-demo-talisay',
-        'name' => 'DEMO: Talisay City Pickleball Courts',
+        'name' => 'Talisay City Pickleball Courts',
         'address' => 'Sample location pin: Talisay City, Cebu, Central Visayas, Philippines',
         'latitude' => '10.2447',
         'longitude' => '123.8490',
@@ -124,7 +124,7 @@ $records = [
     ],
     [
         'import_id' => 'visayas-demo-danao',
-        'name' => 'DEMO: Danao City Pickleball Courts',
+        'name' => 'Danao City Pickleball Courts',
         'address' => 'Sample location pin: Danao City, Cebu, Central Visayas, Philippines',
         'latitude' => '10.5202',
         'longitude' => '124.0270',
@@ -136,7 +136,7 @@ $records = [
     ],
     [
         'import_id' => 'visayas-demo-carcar',
-        'name' => 'DEMO: Carcar City Pickleball Courts',
+        'name' => 'Carcar City Pickleball Courts',
         'address' => 'Sample location pin: Carcar City, Cebu, Central Visayas, Philippines',
         'latitude' => '10.1061',
         'longitude' => '123.6400',
@@ -148,7 +148,7 @@ $records = [
     ],
     [
         'import_id' => 'visayas-demo-toledo',
-        'name' => 'DEMO: Toledo City Pickleball Courts',
+        'name' => 'Toledo City Pickleball Courts',
         'address' => 'Sample location pin: Toledo City, Cebu, Central Visayas, Philippines',
         'latitude' => '10.3770',
         'longitude' => '123.6380',
@@ -160,7 +160,7 @@ $records = [
     ],
     [
         'import_id' => 'visayas-demo-bogo',
-        'name' => 'DEMO: Bogo City Pickleball Courts',
+        'name' => 'Bogo City Pickleball Courts',
         'address' => 'Sample location pin: Bogo City, Cebu, Central Visayas, Philippines',
         'latitude' => '11.0510',
         'longitude' => '124.0060',
@@ -172,7 +172,7 @@ $records = [
     ],
     [
         'import_id' => 'visayas-demo-cordova',
-        'name' => 'DEMO: Cordova Pickleball Courts',
+        'name' => 'Cordova Pickleball Courts',
         'address' => 'Sample location pin: Cordova, Cebu, Central Visayas, Philippines',
         'latitude' => '10.2500',
         'longitude' => '123.9500',
@@ -184,7 +184,7 @@ $records = [
     ],
     [
         'import_id' => 'visayas-demo-panglao',
-        'name' => 'DEMO: Panglao Pickleball Courts',
+        'name' => 'Panglao Pickleball Courts',
         'address' => 'Sample location pin: Panglao, Bohol, Central Visayas, Philippines',
         'latitude' => '9.5780',
         'longitude' => '123.7450',
@@ -196,7 +196,7 @@ $records = [
     ],
     [
         'import_id' => 'visayas-demo-ormoc',
-        'name' => 'DEMO: Ormoc City Pickleball Courts',
+        'name' => 'Ormoc City Pickleball Courts',
         'address' => 'Sample location pin: Ormoc City, Leyte, Eastern Visayas, Philippines',
         'latitude' => '11.0060',
         'longitude' => '124.6070',
@@ -208,7 +208,7 @@ $records = [
     ],
     [
         'import_id' => 'visayas-demo-tacloban',
-        'name' => 'DEMO: Tacloban City Pickleball Courts',
+        'name' => 'Tacloban City Pickleball Courts',
         'address' => 'Sample location pin: Tacloban City, Leyte, Eastern Visayas, Philippines',
         'latitude' => '11.2440',
         'longitude' => '125.0030',
@@ -239,7 +239,7 @@ foreach ($records as $record_index => $record) {
     } else {
         $post_id = wp_insert_post([
             'post_type'      => 'service',
-            'post_status'    => 'draft',
+            'post_status'    => 'publish',
             'post_title'     => $record['name'],
             'post_content'   => $record['about'] . ' Sample listing only: venue information, prices, and contacts are placeholders. Replace them before publishing.',
             'post_excerpt'   => $record['about'],
